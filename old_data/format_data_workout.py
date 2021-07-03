@@ -41,7 +41,7 @@ pain_side_dict = {
     "ימין" : 2
 }
 
-write_data = ["season,week,date,name,team,sesstion_type,duration,rpe,mental_alert,muscle_soreness,sleeping_hours,motivation,pain_level,pain_location,pain_side\n"]
+write_data = ["season,week,date,name,team,session_type,duration,rpe,mental_alert,muscle_soreness,sleeping_hours,motivation,pain_level,pain_location,pain_side\n"]
 with open(orig_data_path, 'r', errors='replace', encoding='utf-8') as rf:
     line = rf.readline()
     line = rf.readline()
@@ -90,7 +90,10 @@ with open(orig_data_path, 'r', errors='replace', encoding='utf-8') as rf:
 
         write_data.append(f"{season},{week},{date},{name},{team},{session_type},{duration},{rpe},{mental_alert},{muscle_soreness},{sleeping_hours},{motivation},{pain_level},{pain_location},{pain_side}".replace('\n', '') + "\n")
         if line_vec[17] != "":
-            session_type = line_vec[17]
+            try:
+                session_type = session_type_dict[line_vec[17]]
+            except KeyError:
+                session_type = 7
             duration = line_vec[18]
             rpe = line_vec[19]
         write_data.append(f"{season},{week},{date},{name},{team},{session_type},{duration},{rpe},{mental_alert},{muscle_soreness},{sleeping_hours},{motivation},{pain_level},{pain_location},{pain_side}".replace('\n', '') + "\n")

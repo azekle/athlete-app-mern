@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/form', (req, res) => {
     var form = new workoutForm(req.query);
     form.save((err, post) => {
-        if (err) { return next(err) }
+        if (err) { console.log(err) }
         res.json(201, post);
     });
 })
