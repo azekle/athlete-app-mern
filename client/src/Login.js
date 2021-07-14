@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
+import {useHistory} from 'react-router-dom'
 
 const BACKEND = "http://localhost:9000/api/v1"
 
 export default function Login() {
+    const history = useHistory()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +23,9 @@ export default function Login() {
         body: JSON.stringify({username: email, password: password})
     })
     .then(res => res.json())
-    .then(res => localStorage.setItem('token', res.token))
+    .then(res => {localStorage.setItem('token', res.token)})
+    console.log(history);
+    history.push("Hello")
   }
 
   return (

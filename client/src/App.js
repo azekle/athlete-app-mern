@@ -1,31 +1,28 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-
-const BACKEND = "http://localhost:9000/api/v1"
+import {Switch, Redirect, Route} from 'react-router-dom'
+import Hello from './Hello'
+import Login from './Login'
+import {instance} from './utils/axios'
 
 function App() {
   const [userData, setUserData] = useState({})
 
   useEffect(() => {
-    fetch(BACKEND + "/user/getall",
-    {
-        headers: {
-          'Authorization' : 'Bearer ' + localStorage.getItem('token'),
-          'Content-Type': 'application/json',
-          },
-    }
-    )
-    .then(res => res.json())
-    .then(userData => setUserData(userData[0]))
+    instance.get("/user/getall")
+    .then(res => res.data[0])
+    .then(data => setUserData(data))
   }, [])
 
   return(
     <div>
-      Hello -
-      <p></p>
-      User: {userData.username}
-      <p></p>
-      id: {userData.national_id}
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/Login" />
+        </Route>
+      <Route exact path="/Hello" render={() => <Hello userData={userData}/>}></Route>
+    <Route exact path="/Login" component={Login}></Route>
+      </Switch>
     </div>
   )
 }
