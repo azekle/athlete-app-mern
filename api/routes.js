@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const workout = require("./models/workout");
 const userService = require('./services/userService');
 const workoutService = require('./services/workoutService')
 
@@ -9,9 +8,9 @@ router.post('/user/authenticate', authenticate);
 router.post('/user/register', register);
 router.get('/user/getall', getAll);
 router.get('/current', getCurrent);
-router.get('/user/:id', getById);
-router.put('/user/:id', update);
-router.delete('/user/:id', _delete);
+router.get('/user/get', getById);
+router.put('/user/update', update);
+router.delete('/user/delete', _delete);
 
 // workout routes
 router.post('/form/post', postForm);
@@ -22,25 +21,35 @@ router.get('/form/getall', getAllForms);
 
 function postForm(req, res){
     const post = workoutService.create(req.body);
-    res.json(201, post);
 }
 
 function getForm(req, res) {
     const workout = workoutService.getById(req.body.workout_id);
-    res.json(201, workout);
 }
 
 function getAllForms(req, res) {
     const workouts = workoutService.getAll();
-    res.json(201, workouts);
 }
 
 // user functions
 
 function authenticate(req, res, next) {
+    // userService.authenticate(req.body)
+    //     .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+    //     .catch(err => next(err));
     userService.authenticate(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
-        .catch(err => next(err));
+    .then(user =>{
+        if(user)
+        {
+            res.cookie('token', user.token, {httpOnly: true});
+            res.json(user);
+        }
+        else
+        {
+            res.status(400).json({ message: 'Username or password is incorrect' })
+        }
+    })
+    .catch(err => next(err));
 }
 
 function register(req, res, next) {
@@ -50,7 +59,7 @@ function register(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    userService.getAll()
+    const users = userService.getAll()
         .then(users => res.json(users))
         .catch(err => next(err));
 }
@@ -62,7 +71,7 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
-    userService.getById(req.params.id)
+    userService.getById(req.query.id)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }

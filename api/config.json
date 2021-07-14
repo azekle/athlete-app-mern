@@ -1,5 +1,5 @@
 {
     "connectionString": "mongodb://localhost:27017/dashboarddb",
-    "port" : 3000,
+    "port" : 9000,
     "secret": "j8Sjasm2"
 }

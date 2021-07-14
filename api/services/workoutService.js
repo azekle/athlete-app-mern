@@ -21,5 +21,4 @@ async function getById(workout_id){
 
 async function getAll(){
     return workoutforms = await workout.find();
-	res.json(201, workoutforms);
 }
