@@ -14,9 +14,16 @@
     {
       "type": "pwa-node",
       "request": "launch",
-      "name": "Backend Server",
+      "name": "Backend",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\server.js"
-    }
+      "program": "${workspaceFolder}\\api\\server.js"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Frontend",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\client\\server.js"
+    },
   ]
 }

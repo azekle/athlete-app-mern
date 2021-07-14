@@ -5,31 +5,34 @@ const userService = require('./services/userService');
 const workoutService = require('./services/workoutService')
 
 // user routes
-router.post('/authenticate', authenticate);
-router.post('/register', register);
-router.get('/', getAll);
+router.post('/user/authenticate', authenticate);
+router.post('/user/register', register);
+router.get('/user/getall', getAll);
 router.get('/current', getCurrent);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.delete('/:id', _delete);
+router.get('/user/:id', getById);
+router.put('/user/:id', update);
+router.delete('/user/:id', _delete);
 
 // workout routes
-router.post('/form', postForm);
-router.get('/form', getForm);
-router.get('/forms', getAllForms);
+router.post('/form/post', postForm);
+router.get('/form/:id', getForm);
+router.get('/form/getall', getAllForms);
 
 // workout functions
 
 function postForm(req, res){
-    workoutService.create(req.body);
+    const post = workoutService.create(req.body);
+    res.json(201, post);
 }
 
 function getForm(req, res) {
-    workoutService.getById(req.body.id);
+    const workout = workoutService.getById(req.body.workout_id);
+    res.json(201, workout);
 }
 
 function getAllForms(req, res) {
-    workoutService.getAll();
+    const workouts = workoutService.getAll();
+    res.json(201, workouts);
 }
 
 // user functions

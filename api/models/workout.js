@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-    id: {type: Number, unique: true, required: true},
+    workout_id: {type: Number, unique: true, required: true},
     season: String,
     week: Number,
     date: Date,

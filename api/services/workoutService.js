@@ -10,16 +10,16 @@ async function create(body){
     var form = new workout(body);
     form.save((err, post) => {
         if (err) {console.log(err)}
-        res.json(201, post);
+        return post;
     }).catch(err => next(err));
 }
 
-async function getById(id){
-    const req_form = await workout.find(id);
-    res.json(201, req_form);
+async function getById(workout_id){
+    return req_form = await workout.find(workout_id);
+
 }
 
 async function getAll(){
-    const workoutforms = await workout.find();
+    return workoutforms = await workout.find();
 	res.json(201, workoutforms);
 }
