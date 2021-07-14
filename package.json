@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/buganim/TrainerDashboard#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
     "mongodb": "^3.6.9",
     "mongoose": "^5.13.1",
     "routes": "^2.1.0"

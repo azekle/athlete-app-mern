@@ -1,10 +1,8 @@
-const express = require("express");
+﻿const express = require('express');
 const router = express.Router();
-const workout = require("./models/workout");
-const userService = require('./services/userService');
-const workoutService = require('./services/workoutService')
+const userService = require('../services/userService');
 
-// user routes
+// routes
 router.post('/authenticate', authenticate);
 router.post('/register', register);
 router.get('/', getAll);
@@ -13,26 +11,7 @@ router.get('/:id', getById);
 router.put('/:id', update);
 router.delete('/:id', _delete);
 
-// workout routes
-router.post('/form', postForm);
-router.get('/form', getForm);
-router.get('/forms', getAllForms);
-
-// workout functions
-
-function postForm(req, res){
-    workoutService.create(req.body);
-}
-
-function getForm(req, res) {
-    workoutService.getById(req.body.id);
-}
-
-function getAllForms(req, res) {
-    workoutService.getAll();
-}
-
-// user functions
+module.exports = router;
 
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
@@ -75,6 +54,3 @@ function _delete(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
-
-
-module.exports = router

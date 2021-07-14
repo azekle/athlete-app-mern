@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const workoutForm = new mongoose.Schema({
-    id: Number,
+const schema = new mongoose.Schema({
+    id: {type: Number, unique: true, required: true},
     season: String,
     week: Number,
     date: Date,
@@ -19,4 +19,4 @@ const workoutForm = new mongoose.Schema({
     pain_side: Number
 })
 
-module.exports = mongoose.model("workoutForm", workoutForm)
+module.exports = mongoose.model("workout", schema)
