@@ -10,7 +10,7 @@ router.get('/', authTest);
 router.post('/user/authenticate', authenticate);
 router.post('/user/register', register);
 router.get('/user/getall', getAll);
-router.get('/current', getCurrent);
+router.get('/user/current', getCurrent);
 router.get('/user/get', getById);
 router.put('/user/update', update);
 router.delete('/user/delete', _delete);
