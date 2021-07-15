@@ -6,10 +6,12 @@ import NonExistingPage from './NonExistingPage'
 import Login from './Login'
 import {requests} from './utils/axios'
 import useToken from './utils/useToken';
+import {isAuthenticated} from './utils/services'
 
 function App() {
   const [userData, setUserData] = useState({})
   const {token, setToken} = useToken();
+  const [tokenValidated, setTokenValidated] = useState(false);
 
   useEffect(() => {
     requests.get("/user/current")
@@ -17,8 +19,14 @@ function App() {
     .then(data => setUserData(data))
   }, [])
 
-  // TODO: this is not good enough, token might be wrong, need to validate it
-  if(!token)
+  useEffect(() => {
+    if(!tokenValidated)
+    {
+      isAuthenticated().then(res => {setTokenValidated(res)})
+    }
+  }, [])
+
+  if(!token || !tokenValidated)
   {
     return <Login setToken={setToken} />
   }
