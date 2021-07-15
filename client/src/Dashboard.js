@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Hello({userData}) {
+function Dashboard({userData}) {
     return (
         <div>
             Hello -
@@ -13,4 +13,4 @@ function Hello({userData}) {
     )
 }
 
-export default Hello;
+export default Dashboard;

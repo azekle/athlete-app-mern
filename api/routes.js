@@ -3,6 +3,9 @@ const router = express.Router();
 const userService = require('./services/userService');
 const workoutService = require('./services/workoutService')
 
+// base route
+router.get('/', authTest);
+
 // user routes
 router.post('/user/authenticate', authenticate);
 router.post('/user/register', register);
@@ -16,6 +19,12 @@ router.delete('/user/delete', _delete);
 router.post('/form/post', postForm);
 router.get('/form/:id', getForm);
 router.get('/form/getall', getAllForms);
+
+// base functions
+
+function authTest(req, res){
+    res.json(201, {});
+}
 
 // workout functions
 
@@ -41,7 +50,6 @@ function authenticate(req, res, next) {
     .then(user =>{
         if(user)
         {
-            res.cookie('token', user.token, {httpOnly: true});
             res.json(user);
         }
         else
