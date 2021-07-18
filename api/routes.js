@@ -17,7 +17,7 @@ router.delete('/user/delete', _delete);
 
 // workout routes
 router.post('/form/post', postForm);
-router.get('/form/:id', getForm);
+router.get('/form/get', getForm);
 router.get('/form/getall', getAllForms);
 
 // base functions
@@ -29,15 +29,18 @@ function authTest(req, res){
 // workout functions
 
 function postForm(req, res){
-    const post = workoutService.create(req.body);
+    let form_body = req.body
+    form_body.user_reference = req.user.sub
+    workoutService.create(form_body);
 }
 
 function getForm(req, res) {
-    const workout = workoutService.getById(req.body.workout_id);
+    workoutService.getById(req.body.workout_id);
 }
 
 function getAllForms(req, res) {
-    const workouts = workoutService.getAll();
+   workoutService.getAll(req.user.sub)
+   .then(workouts => res.json(workouts))
 }
 
 // user functions
@@ -50,6 +53,7 @@ function authenticate(req, res, next) {
     .then(user =>{
         if(user)
         {
+            res.cookie('token', user.token, {httpOnly: true});
             res.json(user);
         }
         else

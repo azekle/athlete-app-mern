@@ -8,17 +8,13 @@ module.exports = {
 
 async function create(body){
     var form = new workout(body);
-    form.save((err, post) => {
-        if (err) {console.log(err)}
-        return post;
-    }).catch(err => next(err));
+    return await form.save();
 }
 
-async function getById(workout_id){
-    return req_form = await workout.find(workout_id);
-
+async function getById(workout_id){6
+    return await workout.find(workout_id);
 }
 
-async function getAll(){
-    return workoutforms = await workout.find();
+async function getAll(user_sub){
+    return await workout.find({user_reference: user_sub});
 }

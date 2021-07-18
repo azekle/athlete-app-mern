@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-    workout_id: {type: Number, unique: true, required: true},
+    user_reference: {type: String, required: true},
     season: String,
     week: Number,
     date: Date,

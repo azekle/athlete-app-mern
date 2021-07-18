@@ -1,7 +1,8 @@
 import ast
 import requests
 
-orig_data_path = "./old_data/data_workout_formatted.csv"
+# orig_data_path = "./old_data/data_workout_formatted.csv"
+orig_data_path = "./data_workout_formatted.csv"
 
 url = "http://localhost:3000/api/v1/form"
 count = 0
