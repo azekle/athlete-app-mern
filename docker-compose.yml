@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  node_frontend:
+    build: ./api/Dockerfile
+    image: node_backend
+    restart: always
+    build: .
+    ports:
+      - 9000:9000
+    volumes:
+      - ./:/backend
+  react_backend:
+    build: ./client/Dockerfile
+    image: react_frontend
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/frontend
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+volumes:
+  mongodb:
