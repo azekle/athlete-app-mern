@@ -1,7 +1,6 @@
 version: '3.3'
 services:
   node_frontend:
-    build: ./api/Dockerfile
     image: node_backend
     restart: always
     build: .
@@ -10,7 +9,6 @@ services:
     volumes:
       - ./:/backend
   react_backend:
-    build: ./client/Dockerfile
     image: react_frontend
     restart: always
     build: .
