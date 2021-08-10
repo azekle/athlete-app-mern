@@ -2,7 +2,7 @@ import './App.css';
 import './pages/Register.css'
 import { useState, useEffect } from 'react'
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom'
-import Dashboard from './Dashboard'
+import Dashboard from './pages/Dashboard'
 import NonExistingPage from './NonExistingPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -18,7 +18,7 @@ function App() {
   const [pathName,setPathName] = useState(window.location.pathname)
 
   useEffect(() => {
-    if(pathName=="/register"){setOnRegister(true)}
+    if(pathName==="/register"){setOnRegister(true)}
     requests.get("/user/current")
     .then(res => res.data)
     .then(data => setUserData(data))
@@ -38,17 +38,18 @@ function App() {
   }
 
   return (
-    <div className="wrapper">
-      <h1>Application</h1>
+    <div id="main-container">
       <BrowserRouter>
         <Switch>
-          <Route exact path="/dashboard">
+          <Redirect from="/dashboard" exact to="/dashboard/dashboard-panel"/>
+          <Route path="/dashboard">
            <Dashboard userData={userData}/>
           </Route>
           
-          <Redirect from="/" to="/dashboard"/>
+          <Redirect from="/" exact to="/dashboard/dashboard-panel"/>
+          
           <Route path='/404' component={NonExistingPage}/>
-          <Redirect from='*' to='/404' />
+          
         </Switch>
       </BrowserRouter>
     </div>

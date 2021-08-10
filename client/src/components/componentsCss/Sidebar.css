@@ -3,35 +3,40 @@
 
 .menu-container{
    
-    background-color: #191B1A;
-    color:#939494;
+    background-color: #043354;
+    color:#8E8E8E;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 1.4em;
-    width: fit-content;
-    padding: 20px;
-    padding-left: 20px;
-    height: all ;
+    width: 24%;
+    padding-top: 10px;
+    padding-left: 15px; 
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.side-menu{
+    margin-top: 5%;
 }
 .logo{
     font-size: 2.5em;
     margin-top: 20px;
     margin-bottom: 20px;
-    color:white
+    color:white;
+    align-self: center;
 }
 .list-menu-anchor{
     display: flex;
     flex-direction: row;
-    margin-top: 5px;
+    margin-top: 15px;
     padding-top: 15px;
     padding-bottom: 5px;
     color:#747474;
     transition-duration: .3s;
     text-decoration: none;
+    white-space: nowrap
 }
 .list-menu-anchor:hover{
     color:#e8e8e8;
@@ -44,9 +49,28 @@
     margin-left: 10px;
     width: fit-content;
 }
-.list-menu-anchor::before{
+/*.list-menu-anchor::before{
     content: "";
     width: 4px;
     color:white;
     background-color: #191B1A;
+}*/
+@media  (max-width:1024px) {
+
+    .menu-container{
+        font-size: 1em;
+        width: 30%;
+        padding-right: 0;;
+        padding: 0;
+    }
+}
+@media  (max-width:600px) {
+    .menu-container{
+        font-size: .6em;
+        width:60%;
+    }
+    .list-menu-anchor{
+        margin:0;
+        padding-top:10px;
+    }
 }

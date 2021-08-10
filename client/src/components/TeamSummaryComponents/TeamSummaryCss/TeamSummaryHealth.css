@@ -1,0 +1,10 @@
+.team-summary-health{
+    width: 100%;
+    margin-top:30px
+}
+.team-summary-health-cell{
+    font-size: 1em;
+    padding:20px;
+    border-right: 2px solid #707070;
+    border-bottom: 1px solid #afafaf;
+}

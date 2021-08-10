@@ -1,0 +1,11 @@
+.table-left-atr{
+    margin:1px;
+    padding: 10px;
+}
+.table-left-atr-bottom{
+    margin:1px;
+    padding: 10px;
+    height: 40%;
+    white-space: nowrap;
+    text-align: start;
+}

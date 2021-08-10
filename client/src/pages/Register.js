@@ -22,7 +22,7 @@ const Register = () => {
                 team:"10",
                 firstName:"10",
                 lastName:"10",
-                national_id:22,
+                national_id:112,
 
             }
         )
