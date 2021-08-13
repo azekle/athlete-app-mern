@@ -52,9 +52,8 @@ function authenticate(req, res, next) {
     //     .catch(err => next(err));
     userService.authenticate(req.body)
     .then(user =>{
-        console.log(req.body)
         if(user)
-        {
+        { 
             res.cookie('token', user.token, {httpOnly: true});
             res.json(user);
         }

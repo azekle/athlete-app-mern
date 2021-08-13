@@ -75,7 +75,7 @@ const TeamSummaryPerformance = (sideBarOnOff) => {
   };
 
   return (
-    <div className="performance">
+    <div style={{ width: sideBarOnOff.sideBarOnOff }} className="performance">
       
       <div className="prev-next-buttons">
         <button className="prev-next-button" onClick={previousWeek}>

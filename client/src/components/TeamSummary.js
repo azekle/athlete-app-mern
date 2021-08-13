@@ -26,7 +26,7 @@ const TeamSummary = (sideBarOnOff) => {
                      <TeamSummaryHealth/>
                  </Route>
             </Switch>
-            <TeamSummaryPerformance/>
+            <TeamSummaryPerformance sideBarOnOff={sideBarOnOff.sideBarOnOff}/>
             </BrowserRouter>
         </div>
     )

@@ -1,0 +1,16 @@
+.player-summary-overview{
+    width: 100%;
+}
+.pso-sub{
+    white-space: nowrap;
+    width: 10%;
+    font-size: 1.6em;
+    padding: 5px;
+}
+.pso-sub2{
+    padding: 10px;
+}
+.pso-header-cell{
+    font-size: 1.25em;
+    padding:5px
+}

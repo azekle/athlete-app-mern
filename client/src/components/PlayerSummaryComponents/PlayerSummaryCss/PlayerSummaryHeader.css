@@ -1,0 +1,57 @@
+.player-info-field{
+    display: flex;
+    flex-direction: row;
+    height: 90%;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 20px;
+    padding: 30px;
+    -webkit-box-shadow: 0px 0px 29px 0px rgba(109,109,109,0.18); 
+    box-shadow: 0px 0px 29px 0px rgba(109,109,109,0.18);
+
+}
+.player-atr{
+    font-size: 1em;
+    margin: 20px;
+    color:#8E8E8E
+}
+.player-atr label{
+    font-size: .8em;
+    color:black;
+    
+}
+.player-name-team{
+    display: flex;
+    flex-direction: row ;
+}
+.player-name-team-atr-name{
+    font-size: 1.5em;
+    margin: 5px;
+}
+.player-name-team-atr-team{
+    margin:5px;
+    color: #8e8e8e;
+}
+
+@media (max-width:600px){
+    .player-info-field{
+        padding: 20px;
+    }
+    .player-atr{
+        font-size: .7em;
+        margin: 10px;
+        color:#8E8E8E
+    }
+    .player-atr label{
+        font-size: .5em;
+        
+    }
+    .player-name-team-atr-name{
+        font-size: .7em;
+    }
+    .player-name-team-atr-team{
+        font-size: .6em;
+    }
+}

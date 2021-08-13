@@ -1,0 +1,100 @@
+.athlete-form{
+    width: 100%;
+}
+.athlete-form-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.athlete-form-logo{
+    width: 100%;
+
+    background: #1195FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    font-size: 2em;
+    padding: 20px 0;
+}
+.athlete-form-player-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.athlete-form-player-photo{
+    margin-top: 20px;
+    height: 40vw;
+    border-radius: 100%;
+
+}
+.athlete-form-player-name{
+    margin-top:20px;
+    font-size: 2em;
+
+}
+.athlete-form-player-week-buttons{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.athlete-form-week-button{
+
+    border: 1px solid #707070 ;
+    background: none;
+    padding:6px 30%;
+    transition-duration: .3s;
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+  .athlete-form-week-button:nth-child(4) {
+    
+    border-radius: 0px 5px 5px 0px;
+
+  }
+  .athlete-form-week-button:nth-child(1) {
+    border-radius:5px 0px 0px 5px;
+    
+      
+   
+  }
+  .athlete-form-week-button:hover{
+    background: #777777;
+    cursor: pointer;
+    color:white
+  }
+    .athlete-form-weeks{
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+  }
+    .week-color{
+      color:white;
+      text-align: center;
+      border-radius: 8px;
+      background: #BFBFBF;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+    .week-days{
+     font-size: 1.3em;
+}
+    .week-color-center{
+        width: 15px;
+        height: 15px;
+        background: #A4A4A4;
+        border-radius: 4px;
+    }
+    .week-color-date{
+      font-size: .8em;
+      text-align: center;
+    }
