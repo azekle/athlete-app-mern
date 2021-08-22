@@ -3,18 +3,42 @@
     display: flex;
     flex-direction: column;
     width: 80%; 
-    
+    background: #F1F3F5;
     justify-content: flex-start;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
 }
 .match-overview{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.chart{
+    width: 60%;
+    margin-right: 2%;
+    background: white;
+    padding: 20px;
+    height:90%;
+    border-radius: 10px;
+}
+.dashboard-panel-title{
+    font-size: 2em;
+    align-self: flex-start;
+    margin-top:4%;
+    margin-bottom: 2%;
+}
+.readiness{
+    background: white;
+    width: 38%;
+    height: fit-content;
+    padding: 10px;
+    padding-right: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
     
-    width: 90%;
-    height: 100%;
 }
 .players-panel{
-    width: 90%;
+    width: 100%;
     height: 25%;
     display: flex;
     flex-direction: row;
@@ -51,10 +75,55 @@
 }
 .players-label{
     align-self: flex-start;
-    margin-left: 5%;
+    margin-bottom: 1%;
     font-size: 1.5em;
     font-weight: 500;
-    margin-top: 3%;
+    margin-top: 2%;
+}
+.team-select{
+    background: none;
+    color:#1195FF;
+    outline:none;
+    border:none;
+    font-size: .6em;
+    margin-left: 20px;
+}
+.selected-tab-desktop{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 20px;
+    column-gap: 20px;
+    
+}
+.selected-player-desktop{
+    height:100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    background: white;
+    border-radius: 10px;
+    padding-top:10px;
+    -webkit-box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.5);
+
+}
+.selected-player-readiness-desktop{
+    height: 90%;
+    border-radius: 15px;
+    width: 15px;
+}
+.selected-player-name-desktop{
+    font-size: 1em;
+    font-weight: 600;
+    margin-top:10px
+}
+
+.injury-desktop{
+    font-size: .85em;
+    color:#8E8E8E;
+    margin-top: 10px;
 }
 @media  (max-width:600px) {
 

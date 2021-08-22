@@ -1,0 +1,149 @@
+.athlete-fill-form-wrapper{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fill-form-player-name{
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    margin-top:20px;
+    color:#1195FF
+}
+.fill-form-team{
+    padding:2px;
+    background: none;
+    border:none;
+    outline: none;
+    font-size: 1.1em;
+}
+.training-date-label{
+    align-self: flex-start;
+    font-size: 1.25em;
+    color:#272930;
+    margin-top:20px
+}
+.fill-form-details{
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fill-form-training-date{
+    border:1px solid #AAB2BD;
+    border-radius: 10px;
+    height: 55px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.fill-form-today{
+    margin-left: 20px;
+    width: 50%;
+    font-weight: 500;
+    font-size: 1.5em;
+    color: #AAB2BD;
+    border-right: 1px solid #AAB2BD;
+}
+.fill-form-date{
+    margin-right: 20px;
+    width: 50%;
+    font-size: 1.3em;
+    color:#AAB2BD;
+    text-align: right;
+}
+.separator{
+    width: 100vw;
+    height: 1px;
+    margin-top:40px;
+    margin-bottom: 40px;
+    background-color:#B9B9B9
+}
+.form-part{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+}
+.form-part-title{
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: #272930;
+}
+.form-part-subtitle{
+    font-size:1.4em;
+    color: #272930;
+    margin-bottom: 20px;
+}
+
+.form-part-select{
+    height: 50px;
+    width: 140px;
+    font-size: 1.5em;
+    color:#4d5157;
+    border:1px solid #AAB2BD;
+    background: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px;
+}
+.form-part-subsubtitle{
+    margin-left: 20px;
+    font-size: 1.1em;
+    color:#B9B9B9
+}
+.sub-subtitle-field{
+    margin-top: 20px;
+}
+.slider{
+    width: 100%;
+    margin-top: 20px;
+}
+.slider-indexes{
+    
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+.slider-index{
+   font-size: .8em;
+   color:#B9B9B9
+}
+.tired{
+    margin-right: 20px;
+}
+.fresh{
+    margin-left: 20px;
+}
+.session-type{
+    width: 100%;
+    height: 60px;
+    padding-left: 30px;
+    margin: 20px 0
+}
+.slider2::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #5895FF, #3FDFDD, #3FDFDD, #4CE53F, #4CE53F,#4CE53F,#F5C545,#F5C545,#F18231,#EE4025);
+    border-radius: 15px;
+}
+
+.slider-indexes2{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.slider-index2{
+    width: 20%;
+    font-size: .8em;
+    color: #AAB2BD;
+}

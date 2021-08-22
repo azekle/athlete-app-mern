@@ -9,9 +9,11 @@ import PlayerSummary from "../components/PlayerSummary";
 import PlayerDrilldown from "../components/PlayerDrilldown";
 import Tests from "../components/Tests";
 import AthleteForm from '../components/AthleteComponents/AthleteForm'
+import { useEffect } from "react";
+import CoachMobile from '../components/CoachComponents/CoachMobile'
 function Dashboard({ userData }) {
-  console.log(userData);
-  const [showSideBar, setShowSideBar] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [mobile,setMobile]= useState(window.innerWidth);
   const handleHideShow = () => {
     if (showSideBar) {
       setShowSideBar(false);
@@ -19,6 +21,10 @@ function Dashboard({ userData }) {
       setShowSideBar(true);
     }
   };
+
+  if(mobile<600 && userData.is_coach) return(
+    <CoachMobile/>
+  )
   return (
     <div className="dash">
       <BrowserRouter>
@@ -34,7 +40,7 @@ function Dashboard({ userData }) {
             <DashboardPanel sideBarOnOff={showSideBar ? "" : "100%"} />
           </Route>
           <Route path="/dashboard/team-summary">
-            <TeamSummary sideBarOnOff={showSideBar ? "" : "100%"} />
+            <TeamSummary sideBarOnOff={showSideBar ? "" : "98%"} />
           </Route>
           <Route path="/dashboard/player-summary">
             <PlayerSummary sideBarOnOff={showSideBar ? "" : "100%"} />

@@ -2,19 +2,24 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    -webkit-box-shadow: 0px 0px 33px -2px #E9F5FF; 
+box-shadow: 0px 0px 33px -2px #E9F5FF;
+    margin-top: 5%;
+    border-radius: 10px;
+    padding-bottom: 20px;
 }
 .overview-table{
     width: 100%;
     text-align: center;
     border-collapse: collapse;
-    border: 1px solid black;
+    border: 1px solid #E6E9EE;
 }
 .overview-table th{
-    border: 1px solid black;
+    border: 1px solid #E6E9EE;
 
 }
 .overview-table td{
-    border: 1px solid black
+    border: 1px solid #E6E9EE
 }
 .overview-sub-table{
     width: 100%;
@@ -75,6 +80,56 @@
     height: fit-content;
     height: 10%;
 }
+
+.attr-team-overview-red{
+    width: 90%;
+    height: 90%;
+    background: #F3CDD1;
+    padding-top: 5px;
+    color:#EC5555;
+    padding-bottom: 5px;
+    margin:0;
+    align-self: center;
+    justify-self: center;
+    border-radius: 5px;
+}
+.attr-team-overview-green{
+    width: 90%;
+    height: 90%;
+    background: #ECF7E1;
+    padding-top: 5px;
+    color:#A0D468;
+    padding-bottom: 5px;
+    margin:0;
+    align-self: center;
+    justify-self: center;
+    border-radius: 5px;
+}
+.attr-team-overview-yellow{
+    width: 90%;
+    height: 90%;
+    background: #F3E6CA;
+    padding-top: 5px;
+    color:#F6BB42;
+    padding-bottom: 5px;
+    margin:0;
+    align-self: center;
+    justify-self: center;
+    border-radius: 5px;
+}
+.attr-team-overview-blue{
+    width: 90%;
+    height: 90%;
+    background: #CEE1F9;
+    padding-top: 5px;
+    color:#5D9CEC;
+    padding-bottom: 5px;
+    margin:0;
+    align-self: center;
+    justify-self: center;
+    border-radius: 5px;
+}
+
 @media  (max-width:600px){
     .table-header-cell{
         font-size: .5em;

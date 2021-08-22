@@ -27,47 +27,47 @@ const TeamSummaryOverview = () => {
         <button className="prev-next-button" onClick={previousWeek}><AiOutlineArrowLeft/></button>
         <button className="prev-next-button" onClick={nextWeek}><AiOutlineArrowRight/></button>
       </div>
+      <label style={{fontWeight:"500",fontSize:"1.5em",margin:"20px"}}>Squad Dashboard</label>
       <table className="overview-table">
         <thead>
           <tr>
             <th rowSpan="2" colSpan="3" className="table-header-cell athlete">Athlete</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 0)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 0)}.0${
                 showMonth(currentShownWeek, 0) + 1
-              }`}
-              <br></br>Sunday</th>
+              } `}</label>
+               Sun</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 1)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 1)}.0${
                 showMonth(currentShownWeek, 1) + 1
-              }`}
-              <br></br>Monday</th>
+              } `}</label>
+               Mon</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 2)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 2)}.0${
                 showMonth(currentShownWeek, 2) + 1
-              }`}
-              <br></br>Tuesday</th>
+              } `}</label>
+               Tue</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 3)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 3)}.0${
                 showMonth(currentShownWeek, 3) + 1
-              }`}
-              <br></br>Wednesday</th>
+              } `}</label>
+               Wed</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 4)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 4)}.0${
                 showMonth(currentShownWeek, 4) + 1
-              }`}
-              <br></br>Thursday</th>
+              } `}</label>
+               Thu</th>
             <th colSpan="3" className="table-header-cell">
-              {`${showDate(currentShownWeek, 5)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 5)}.0${
                 showMonth(currentShownWeek, 5) + 1
-              }`}
-              <br></br>Friday</th>
+              } `}</label>
+               Friday</th>
             <th colSpan="3" className="table-header-cell">
-            {`${showDate(currentShownWeek, 6)}.0${
+             <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 6)}.0${
                 showMonth(currentShownWeek, 6) + 1
-              }`}
-              <br></br>Saturday
+              } `}</label>
+               Sat
             </th>
-            
           </tr>
           <tr className="overview-sub-table">
             <th className="th-sub-table">ACWR</th>
@@ -96,10 +96,10 @@ const TeamSummaryOverview = () => {
         <tbody>
           <tr>
             <td colSpan="3">$name</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
+            <td><div className="attr-team-overview-red">1</div></td>
+            <td><div className="attr-team-overview-yellow">2</div></td>
+            <td><div className="attr-team-overview-blue">3</div></td>
+            <td><div className="attr-team-overview-green">1</div></td>
             <td>2</td>
             <td>3</td>
             <td>1</td>

@@ -73,6 +73,38 @@ const TeamSummaryPerformance = (sideBarOnOff) => {
       },
     ],
   };
+  var options = {
+    maintainAspectRatio:false,
+    scales: {
+      x: {
+        grid: {
+         display:false
+        },
+        ticks: {
+            
+            font:{
+               
+                
+            },
+            
+        }
+      },
+      y: {
+        grid: {
+            
+            display: true,
+            drawBorder: false,
+        },
+        ticks: {
+            beginAtZero: true,
+            callback: function(value, index, values) {
+              return value == 300 ? "300" : null;
+            },
+            
+          }
+      }
+    }
+  }
 
   return (
     <div style={{ width: sideBarOnOff.sideBarOnOff }} className="performance">
@@ -85,7 +117,7 @@ const TeamSummaryPerformance = (sideBarOnOff) => {
           <AiOutlineArrowRight />
         </button>
       </div>Performance
-      <Bar options={{ maintainAspectRatio: false }} data={chartData}></Bar>
+      <Bar options={options} data={chartData}></Bar>
     </div>
   );
 };

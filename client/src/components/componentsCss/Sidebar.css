@@ -7,11 +7,11 @@
     color:#8E8E8E;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 1.4em;
-    width: 24%;
+    font-size: 1.2em;
+    width: 20%;
     padding-top: 10px;
     padding-left: 15px; 
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

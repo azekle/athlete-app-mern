@@ -19,12 +19,11 @@ const Register = () => {
             {
                 username:email,
                 password:password,
-                is_coach:true,
-                team:"10",
-                firstName:"10",
-                lastName:"10",
-                national_id:177,
-
+                is_coach:false,
+                team:"Junior A",
+                firstName:"Smith",
+                lastName:"Mark",
+                national_id:199,
             }
         )
     }
