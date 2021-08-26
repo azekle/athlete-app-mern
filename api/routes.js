@@ -1,4 +1,5 @@
 const express = require("express");
+const user = require("./models/user");
 const router = express.Router();
 const userService = require('./services/userService');
 const workoutService = require('./services/workoutService')
@@ -16,6 +17,7 @@ router.put('/user/update', update);
 router.delete('/user/delete', _delete);
 
 // workout routes
+router.post('/form/checkforform',checkForFormFilling)
 router.post('/form/post', postForm);
 router.get('/form/get', getForm);
 router.get('/form/getall', getAllForms);
@@ -28,10 +30,25 @@ function authTest(req, res){
 
 // workout functions
 
-function postForm(req, res){
-    let form_body = req.body
-    form_body.user_reference = req.user.sub
-    workoutService.create(form_body);
+async function postForm(req, res){
+    res.send("ok")
+    const dateToDb = req.body.details.date;
+    console.log(dateToDb,'datedb');
+    const theUser = await user.findOne({username:req.body.username});
+    var canSave = true;
+    for(value in theUser.training) {console.log(theUser.training[value].date);if(theUser.training[value].date==dateToDb) {console.log("s-a gasit");canSave=false;break;}}
+    await theUser.training.push(req.body.details);
+    if(canSave) theUser.save();
+    
+}
+async function checkForFormFilling(req,res){
+    var message = ""
+    const theUser = await user.findOne({username:req.body.username});
+    console.log(req.body)
+    theUser.training.map((value)=>{
+        console.log(value.date, req.body.date)
+        if(value.date===req.body.date) message=`You already filled the form for ${value.date}!`;})
+    res.send(message)
 }
 
 function getForm(req, res) {

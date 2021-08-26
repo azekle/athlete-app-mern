@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const training = new mongoose.Schema({
-     date: {type:String},
+     date: {type:String,unique:true},
      sleep:{type:String},
      fatigue:{type:String},
      session1: {type:String},

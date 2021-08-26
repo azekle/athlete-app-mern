@@ -3,23 +3,27 @@ import React, { useEffect, useState } from 'react'
 import {Bar} from 'react-chartjs-2'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-const Monitoring = () => {
+
+const Monitoring = (props) => {
+  var totalPlayers = [];
+  props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
     //State START
+    var currentWeekDates=[]
     const [activeTab,setActiveTab] = useState(true);
     const [injuriesProgress,setInjuriesProgress]= useState([1,1,1,1,1,1,1,1,1,1,1,1]);//array
     const [injuriesAverage,setInjuriesAverage] = useState(.8);//array
     const [injuryLabel,setInjuryLabel] = useState(injuriesProgress.length);
-    const [fatigueProgress,setFatigueProgress]= useState(2.2);//0-5
+    var fatigueProgress = 0
     const [fatigueAverage,setFatigueAverage] = useState(1.5);//0-5
-    const [enjoymentProgress,setEnjoymentProgress]= useState(4);//0-5
+    var enjoymentProgress = 0//0-5
     const [enjoymentAverage,setEnjoymentAverage] = useState(3);//0-5
-    const [sleepingProgress,setSleepingProgress]= useState(3);//0-12
+    var sleepingProgress = 0//0-12
     const [sleepingAverage,setSleepingAverage] = useState(7);//0-12
     const [donutPercent,setDonutPercent] = useState(77)//0-100
     const [selectedActive,setSelectedActive] = useState(true);
     const [alertActive,setAlertActive] = useState(false);
     const [selectedPlayers,setSelectedPlayers] = useState([{name:"Matei Sorin",injury:"Knee Injury"},{name:"Sorin Matei",injury:"Hand Injury"}]);
-    const [alertPlayers,setAlertPlayers] = useState([{name:"Alfred John",injury:""},{name:"Josh Smith",injury:"Leg Injury"}]);
+    const [alertPlayers,setAlertPlayers] = useState(totalPlayers);
     let initialWeightToday=[];
     let initialColorToday=[]
     let totalDays = [];
@@ -32,10 +36,35 @@ const Monitoring = () => {
     const startWeek = today.startOf("week").add(days,"d").toDate().getDate()+"/0"+(today.startOf("week").add(days,"d").toDate().getMonth()+1)
     return startWeek
     }*/
+    var universalCounter=0;
+    let load = [0,0,0,0,0,0,0]
+    const determineAverageForEverything = () =>{
+      totalPlayers.map((value)=>{value.training.map((value2)=>{;if(currentWeekDates.includes(value2.date)) {
+        value2.fatigue=parseInt(value2.fatigue);
+        value2.wellness1=parseInt(value2.wellness1)
+        value2.wellness2=parseInt(value2.wellness2)
+        value2.sleep=parseInt(value2.sleep)
+        fatigueProgress+=value2.fatigue;
+        enjoymentProgress+=value2.wellness1+value2.wellness2;
+        sleepingProgress+=value2.sleep;
+        universalCounter++
+      }})})
+      fatigueProgress=fatigueProgress/universalCounter
+      fatigueProgress=Math.round(fatigueProgress*10)/10
+      enjoymentProgress=enjoymentProgress/(universalCounter*2);
+      enjoymentProgress=Math.round(enjoymentProgress*10)/10
+      sleepingProgress=sleepingProgress/universalCounter;
+      sleepingProgress=Math.round(sleepingProgress*10)/10;
+      //determine data for weekly load↓↓↓
+      currentWeekDates.map((value,index)=>{totalPlayers.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);console.log(value3.duration1)}})})})
+      console.log(load)
+    }
+    
     const findWeek = () =>{
         for (let i = 0; i <7 ; i++) {
            const theDay =  today.startOf("week").add(i,"d").toDate().getDate();
-           totalDays.push(theDay)
+           totalDays.push(theDay);
+           currentWeekDates.push(today.startOf("week").add(i,"d").format("DD/MM/YY"));
         }
         totalDays.map((value,index)=>{
             if (value===moment().toDate().getDate()) {initialWeightToday.push(900);indexOfToday=index;}
@@ -46,6 +75,7 @@ const Monitoring = () => {
         })
     }
     findWeek()
+    determineAverageForEverything()
     function createCircleChart(percent, color, size, stroke) {
       let svg = `<svg class="mkc_circle-chart" viewbox="0 0 36 36" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
           <path class="mkc_circle-bg" stroke="#eeeeee" stroke-width="${stroke * 0.5}" fill="none" d="M18 2.0845
@@ -76,10 +106,10 @@ const Monitoring = () => {
     useEffect(() => {
       if(injuriesProgress.length>14) {setInjuriesProgress([1,1,1,1,1,1,1,1,1,1,1,1,1,1]);}
       initChart()
-    }, [activeTab,injuriesProgress])
+    }, [activeTab,injuriesProgress,])
 
     const changeMonitoringTab = () =>{
-        setActiveTab(!activeTab)
+        setActiveTab(!activeTab);
     }
   let chartData = {
       
@@ -111,7 +141,7 @@ const Monitoring = () => {
           "#DBDADA",
         ],
         borderColor: "#1195FF",
-        data: [255, 246, 243, 262, 268, 324, 216, 237, 227, 357, 217, 127],
+        data: load,
         maintainAspectRatio: false,
         maxBarThickness: 10,
         borderRadius: 10,
@@ -175,7 +205,7 @@ const Monitoring = () => {
                              <label className="stats-nr">{injuryLabel}</label>
                              <label className="stats-label">Fatigue</label>
                              <div className="wellness-progress-bar">
-                                 <div style={{width:`${fatigueProgress*20}%`}} className="wellness-progress-bar-fill"></div>
+                                 <div style={{width:`${(fatigueProgress)*20}%`}} className="wellness-progress-bar-fill"></div>
                                  <div style={{width:`${fatigueAverage*8.4}%`}} className="progress-bar-average"></div>
                              </div>
                              <label className="stats-nr">{fatigueProgress}/5</label>
@@ -221,11 +251,11 @@ const Monitoring = () => {
                 </div>)}
             </div>:""}
             {alertActive?<div className="selected-tab">
-                {alertPlayers.map((value)=>
+                {totalPlayers.map((value)=>
                 <div className="selected-player">
                   <img className="selected-player-img"></img>
                     <div className="injured-player-info">
-                      <label className="selected-player-name">{value.name}</label>
+                      <label className="selected-player-name">{`${value.firstName} ${value.lastName}`}</label>
                       <label className="injury">{value.injury}</label>
                     </div>
                   <div className={value.injury ? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>

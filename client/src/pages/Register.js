@@ -21,9 +21,9 @@ const Register = () => {
                 password:password,
                 is_coach:false,
                 team:"Junior A",
-                firstName:"Smith",
-                lastName:"Mark",
-                national_id:199,
+                firstName:"John",
+                lastName:"Doe",
+                national_id:1099,
             }
         )
     }

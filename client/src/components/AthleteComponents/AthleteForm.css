@@ -73,6 +73,7 @@
     padding: 10px;
     color:black;
     border: 1px solid transparent;
+    display: flex;
     
   }
   .date-day:hover{

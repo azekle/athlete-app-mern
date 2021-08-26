@@ -228,7 +228,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     background: white;
     border-radius: 10px;
     height: 100%;
@@ -241,12 +241,14 @@
 .selected-player-img{
     height: 64px;
     width: 64px;
-    margin:10px
+    margin:10px;
+    margin-left: 20px;
 }
 .injured-player-info{
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 50%;
 
 }
 .selected-player-name{
@@ -259,7 +261,7 @@
 .selected-player-readiness{
     height: 100%;
     width: 20px;
-    
+    margin-right: 20px;
     border-radius: 20px;
 }
 .ready{

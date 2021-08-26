@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./AthleteForm.css";
 import imag from "../../assets/ball.png";
 import moment from "moment";
+import {requests} from '../../utils/axios';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 import hideArrow from "../../assets/hide-arrow.svg";
 import AthleteFormActual from './AthleteFormActual'
-const AthleteForm = (user) => {
+const AthleteForm = (props) => {
   var intermediate = [];
   const [today, setToday] = useState(new Date());
+  const [fillFormColorState,setFillFormColorState] = useState()
+  const [theDayForForm,setTheDayForForm] = useState(moment().format('DD/MM/YY'));
   const makeCalendar = () => {
     const startDate = moment(today).startOf("month").startOf("week");
     const endDate = moment(today).endOf("month").endOf("week");
@@ -24,10 +27,13 @@ const AthleteForm = (user) => {
   };
   const [datess, setDatess] = useState([]);
   const [canNext,setCanNext] = useState();
-  user = user.user;
+  const  user =  props.user;
   const [fillForm,setFillForm] = useState(false);
   const [numberOfExercises, setNumberOfExercises] = useState([1, 1, 1, 1]);
   const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+  const formNotFilled = {position:"absolute",background:"#C41F1F",width:"4px",height:"4px",borderRadius:"10px"}
+  const formFilled = {background:"transparent",width:"4px",height:"4px",borderRadius:"10px"};
+  let styleForDot={};
   const [rotateArrowTraining, setRotateArrowTraining] = useState("");
   const [rotateArrowBody, setRotateArrowBody] = useState("");
   const [rotateArrowFitness, setRotateArrowFitness] = useState("");
@@ -82,12 +88,40 @@ const AthleteForm = (user) => {
   const prevMonth = () => {
     setToday(moment(today).subtract(1, "month").toDate());
   };
+  const goToFillForm = (info)=>{
+    
+    info = {
+      date:theDayForForm,
+      username:user.username
+    }
+    const todayArray = moment().format("DD/MM/YY").split("/")
+    const theDayForFormArray = theDayForForm.split("/");
+  
+    if((parseInt(todayArray[0])<parseInt(theDayForFormArray[0])&&parseInt(todayArray[1])===parseInt(theDayForFormArray[1]))||(parseInt(todayArray[1])<parseInt(theDayForFormArray[1])&&todayArray[2]===theDayForFormArray[2])) {return}
+    requests.post("/form/checkforform",info)
+    .then(res => {if (res.data)alert(res.data);else setFillForm(!fillForm)})
+  }
   useEffect(() => {
     determineToday(today);
     makeCalendar();
     checkArrow()
-    
   }, [today]);
+var trainingDates=[]
+const determineTrainingDays = () =>{
+  if(user.username){
+    user.training.map((value)=>{
+      trainingDates.push(value.date);
+    })
+  datess.map((value)=>{if(moment(value).isAfter(moment())) trainingDates.push(moment(value).format("DD/MM/YY"))})
+  }}
+const fillFormColor=(e)=>{
+  if(trainingDates.includes(e.target.id)) setFillFormColorState({background:"grey"});
+  else setFillFormColorState({})
+}
+  determineTrainingDays()
+  const checkAfterToday = (day) =>{
+   return( moment(day).isAfter(moment()))
+  }
   return (
     <div className="athlete-form">
      {!fillForm? <div className="athlete-form-header">
@@ -102,7 +136,7 @@ const AthleteForm = (user) => {
         <div className="month-form">
           <label className="display-month">{getMonthName(today)}</label>
           <div className="fill-form-field">
-            <button onClick={()=> setFillForm(!fillForm)} className="fill-form-button">Fill Form</button>
+            <button onClick={goToFillForm} style={fillFormColorState} className="fill-form-button">Fill Form</button>
           </div>
         </div>
         <div className="athlete-form-weeks">
@@ -120,8 +154,10 @@ const AthleteForm = (user) => {
           <button onClick={prevMonth} className="change-month-btn prev-month-btn"><IoIosArrowBack/></button>
           <div className="athlete-form-calendar">
             {datess.map((day,index) => {
+             {if(trainingDates.includes(moment(day).format("DD/MM/YY"))) {styleForDot={formFilled};}else styleForDot=formNotFilled;if(checkAfterToday(day)) styleForDot=formFilled}
               return (
-                <div key={index} style={determineToday(day)} className="date-day">
+                <div id={moment(day).format("DD/MM/YY")} onClick={(e)=>{setTheDayForForm(e.target.id); fillFormColor(e)}}   key={index} style={determineToday(day)} className="date-day">
+                  <div style={styleForDot}></div>
                   {day.getDate()}
                 </div>
               );
@@ -276,7 +312,7 @@ const AthleteForm = (user) => {
         </div>
       </div>:""}
       {fillForm?
-        <AthleteFormActual today = {today}/>
+        <AthleteFormActual fillForm={setFillForm} user={user} theDayForForm = {theDayForForm}/>
         :""}
     </div>
   );

@@ -11,9 +11,11 @@ import Tests from "../components/Tests";
 import AthleteForm from '../components/AthleteComponents/AthleteForm'
 import { useEffect } from "react";
 import CoachMobile from '../components/CoachComponents/CoachMobile'
+import { requests } from "../utils/axios";
 function Dashboard({ userData }) {
   const [showSideBar, setShowSideBar] = useState(false);
   const [mobile,setMobile]= useState(window.innerWidth);
+  const [players,setPlayers]=useState([]);
   const handleHideShow = () => {
     if (showSideBar) {
       setShowSideBar(false);
@@ -21,9 +23,12 @@ function Dashboard({ userData }) {
       setShowSideBar(true);
     }
   };
-
+  useEffect(() => {
+    requests.get("/user/getall")
+    .then(res=>{setPlayers([...res.data])})
+  }, [])
   if(mobile<600 && userData.is_coach) return(
-    <CoachMobile/>
+    <CoachMobile players = {players}/>
   )
   return (
     <div className="dash">

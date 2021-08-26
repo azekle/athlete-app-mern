@@ -4,7 +4,7 @@ import './CoachMobile.css'
 import Monitoring from './Monitoring.js'
 import CoachCalendar from './CoachCalendar.js'
 import { useState } from 'react'
-const CoachMobile = () => {
+const CoachMobile = (props) => {
     const[monitoringActive,setMonitoringActive] = useState(true)
     const[calendarActive,setCalendarActive] = useState(false)
     return (
@@ -28,7 +28,7 @@ const CoachMobile = () => {
             
                 <Switch>
                     <Route path="/dashboard/dashboard-panel/monitoring" >
-                        <Monitoring/>
+                        <Monitoring players={props.players}/>
                     </Route>
                     <Route path="/dashboard/dashboard-panel/calendar" >
                         <CoachCalendar/>

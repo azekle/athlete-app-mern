@@ -147,3 +147,30 @@
     font-size: .8em;
     color: #AAB2BD;
 }
+.submit-athlete-form{
+    margin:30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1.4em;
+    border-radius: 60px;
+    color:white;
+    background: rgb(17,149,255);
+    background: linear-gradient(90deg, rgba(17,149,255,1) 0%, rgba(90,181,255,1) 100%);
+}
+.congratulation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.congratulation-button{
+    font-size: 1.5em;
+    padding: 15px 20px;
+    font-weight: 4  00;
+    background: rgb(17,149,255);
+    background: linear-gradient(90deg, rgba(17,149,255,1) 0%, rgba(90,181,255,1) 100%);
+    color:white;
+    border-radius: 200px;
+
+}

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import moment from "moment";
+import {requests} from '../../utils/axios';
+import {Redirect } from "react-router-dom";
 import './AthleteFormActual.css'
 const AthleteFormActual = (props) => {
+  const user = props.user;
+  const [formSubmitted,setFormSubmitted] = useState(false);
   const [today, setToday] = useState(moment(props.today));
-  const [dateForForm,setDateForForm] = useState(moment(props.today).format('DD/MM/YY'));
+  const [dateForForm,setDateForForm] = useState(props.theDayForForm);
   const [sleepForForm,setSleepForForm]= useState()
   const [fatigueForForm,setFatigueForForm] = useState()
   const [session1ForForm,setSession1ForForm] = useState()
@@ -14,56 +18,100 @@ const AthleteFormActual = (props) => {
   const [duration2ForForm,setDuration2ForForm] = useState()
   const [rpe2ForForm,setRpe2ForForm] = useState()
   const [wellness2ForForm,setWellness2ForForm] = useState()
+  const [session3ForForm,setSession3ForForm] = useState()
+  const [duration3ForForm,setDuration3ForForm] = useState()
+  const [rpe3ForForm,setRpe3ForForm] = useState()
+  const [wellness3ForForm,setWellness3ForForm] = useState()
   
-
+{// UPDATE FUNCTIONS ---START---
+}
   const updateSleep = (e)=>{
       setSleepForForm(e.target.value)
   }
   const updateFatigue = (e)=>{
     setFatigueForForm(e.target.value)
   }
+    const updateSession1 = (e)=>{
+      setSession1ForForm(e.target.value)
+    }
+    const updateDuration1 = (e)=>{
+      setDuration1ForForm(e.target.value)
+    }
+    const updateRpe1 = (e)=>{
+      setRpe1ForForm(e.target.value)
+    }
+    const updateWellness1 = (e)=>{
+      setWellness1ForForm(e.target.value)
+    }
+    const updateSession2 = (e)=>{
+      setSession2ForForm(e.target.value)
+    }
+    const updateDuration2 = (e)=>{
+      setDuration2ForForm(e.target.value)
+    }
+    const updateRpe2 = (e)=>{
+      setRpe2ForForm(e.target.value)
+    }
+    const updateWellness2 = (e)=>{
+      setWellness2ForForm(e.target.value)
+    }
+    const updateSession3 = (e)=>{
+      setSession3ForForm(e.target.value)
+    }
+    const updateDuration3 = (e)=>{
+      setDuration3ForForm(e.target.value)
+    }
+    const updateRpe3 = (e)=>{
+      setRpe3ForForm(e.target.value)
+    }
+    const updateWellness3 = (e)=>{
+      setWellness3ForForm(e.target.value)
+    }
+  {// UPDATE FUNCTIONS ---END---
+}
 
+    const submitForm = (e,reque) =>{
+     
+      e.preventDefault()
+      
+      reque={username:user.username,
+      details:{
+              date:dateForForm,
+              sleep:sleepForForm,
+              fatigue:fatigueForForm,
+              session1: session1ForForm,
+              duration1:duration1ForForm,
+              rpe1:rpe1ForForm,
+              wellness1: wellness1ForForm,
+              session2: session2ForForm,
+              duration2:duration2ForForm,
+              rpe2:rpe2ForForm,
+              wellness2:wellness2ForForm,
+              }}
+       for(var propName in reque.details){if(!reque.details[propName]){alert("You need to fill every field!");return}}       
+     return(requests.post("/form/post",reque)
+      .then(res => console.log(res)))
+      .then(()=>setFormSubmitted(true))
+      
 
-  const updateSession1 = (e)=>{
-    setSession1ForForm(e.target.value)
-  }
-  const updateDuration1 = (e)=>{
-    setDuration1ForForm(e.target.value)
-  }
-  const updateRpe1 = (e)=>{
-    setRpe1ForForm(e.target.value)
-  }
-  const updateWellness1 = (e)=>{
-    setWellness1ForForm(e.target.value)
-  }
-  const updateSession2 = (e)=>{
-    setSession2ForForm(e.target.value)
-  }
-  const updateDuration2 = (e)=>{
-    setDuration2ForForm(e.target.value)
-  }
-  const updateRpe2 = (e)=>{
-    setRpe2ForForm(e.target.value)
-  }
-  const updateWellness2 = (e)=>{
-    setWellness2ForForm(e.target.value)
-  }
+    }
+    if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>props.fillForm(false)}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
-      {duration2ForForm}-{rpe2ForForm}-{wellness2ForForm}
       <div className="athlete-form-logo">
         <div>LOGO</div>
+        
       </div>
-      <label className="fill-form-player-name">$name</label>
-      <form className="athlete-fill-form">
+      <label className="fill-form-player-name">{`${user.lastName} ${user.firstName}`}</label>
+      <form method="post" onSubmit={submitForm} className="athlete-fill-form">
         <select className="fill-form-team">
-          <option value="Junior">Junior</option>
+          <option value="Junior">{user.team}</option>
         </select>
         <div className="fill-form-details">
             <label className="training-date-label">Training Date</label>
             <div className="fill-form-training-date">
                 <div className="fill-form-today">Today</div>
-                <div className="fill-form-date">{today.format('DD/MM/YY')}</div>
+                <div className="fill-form-date">{dateForForm}</div>
             </div>
             <div className="separator"></div>
             <div className="form-part">
@@ -199,12 +247,12 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subtitle">Session type</label>
                     <label className="form-part-subsubtitle">Type of Training</label>
                 </div>
-                <select className="form-part-select session-type">
+                <select onChange={updateSession3} className="form-part-select session-type">
                     <option value="basketball">Basketball</option>
                     <option value="gym">Gym</option>
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
-                    <select className="form-part-select">
+                    <select onChange={updateDuration3} className="form-part-select">
                     <option value="60">60</option>
                     <option value="70">70</option>
                     <option value="80">80</option>
@@ -214,7 +262,7 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
                 </div>
-                <input className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
+                <input onChange={updateRpe3} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
                 <div className="slider-indexes">
                   <label className="slider-index">1</label>
                   <label className="slider-index">2</label>
@@ -231,7 +279,7 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subtitle">Wellness</label>
                     <label className="form-part-subsubtitle">How was training?</label>
                 </div>
-                <input className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
+                <input onChange={updateWellness3} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
                 <div className="slider-indexes2">
                   <label style={{textAlign:"start"}} className="slider-index2">Poor</label>
                   <label style={{textAlign:"start"}} className="slider-index2">Fair</label>
@@ -241,6 +289,7 @@ const AthleteFormActual = (props) => {
                 </div>
             </div>
         </div>
+        <button onClick={submitForm} type="submit" className="submit-athlete-form">Submit</button>
       </form>
     </div>
   );
