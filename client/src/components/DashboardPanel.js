@@ -4,23 +4,26 @@ import imag from "../assets/ball.png";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
 import { useEffect } from "react";
-const DashboardPanel = (sideBarOnOff) => {
+const DashboardPanel = (props) => {
   const today = moment();
   let totalDays = [];
   let indexOfToday = [];
   let initialWeightToday = [];
   let initialColorToday = [];
+  var totalPlayers = [];
+  var currentWeekDates=[]
+  props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
   const [activeTab, setActiveTab] = useState(true);
   const [injuriesProgress, setInjuriesProgress] = useState([
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   ]); //array
   const [injuriesAverage, setInjuriesAverage] = useState(0.8); //array
   const [injuryLabel, setInjuryLabel] = useState(injuriesProgress.length);
-  const [fatigueProgress, setFatigueProgress] = useState(2.2); //0-5
+  let fatigueProgress = 0 //0-5
   const [fatigueAverage, setFatigueAverage] = useState(1.5); //0-5
-  const [enjoymentProgress, setEnjoymentProgress] = useState(4); //0-5
+  let enjoymentProgress = 0 //0-5
   const [enjoymentAverage, setEnjoymentAverage] = useState(3); //0-5
-  const [sleepingProgress, setSleepingProgress] = useState(3); //0-12
+ let sleepingProgress = 0 //0-12
   const [sleepingAverage, setSleepingAverage] = useState(7); //0-12
   const [donutPercent, setDonutPercent] = useState(77); //0-100
   const [selectedActive, setSelectedActive] = useState(true);
@@ -39,10 +42,7 @@ const DashboardPanel = (sideBarOnOff) => {
     { name: "John Doe", injury: "Knee Injury" },
     
   ]);
-  const [alertPlayers, setAlertPlayers] = useState([
-    { name: "Alfred John", injury: "" },
-    { name: "Josh Smith", injury: "Leg Injury" },
-  ]);
+  const [alertPlayers,setAlertPlayers] = useState(totalPlayers);
   useEffect(()=>{
     initChart()
   },[])
@@ -50,6 +50,7 @@ const DashboardPanel = (sideBarOnOff) => {
     for (let i = 0; i < 7; i++) {
       const theDay = today.startOf("week").add(i, "d").toDate().getDate();
       totalDays.push(theDay);
+      currentWeekDates.push(today.startOf("week").add(i,"d").format("DD/MM/YY"));
     }
     totalDays.map((value, index) => {
       if (value === moment().toDate().getDate()) {
@@ -63,6 +64,31 @@ const DashboardPanel = (sideBarOnOff) => {
       else initialColorToday.push("#8E8E8E");
     });
   };
+  var universalCounter=0;
+    let load = [0,0,0,0,0,0,0]
+    const determineAverageForEverything = () =>{
+      console.log(currentWeekDates)
+      totalPlayers.map((value)=>{value.training.map((value2)=>{;if(currentWeekDates.includes(value2.date)) {
+        
+        value2.fatigue=parseInt(value2.fatigue);
+        value2.wellness1=parseInt(value2.wellness1)
+        value2.wellness2=parseInt(value2.wellness2)
+        value2.sleep=parseInt(value2.sleep);
+        fatigueProgress+=value2.fatigue;
+        enjoymentProgress+=value2.wellness1+value2.wellness2;
+        sleepingProgress+=value2.sleep;
+        universalCounter++
+      }})})
+      fatigueProgress=fatigueProgress/universalCounter
+      fatigueProgress=Math.round(fatigueProgress*10)/10
+      enjoymentProgress=enjoymentProgress/(universalCounter*2);
+      enjoymentProgress=Math.round(enjoymentProgress*10)/10
+      sleepingProgress=sleepingProgress/universalCounter;
+      sleepingProgress=Math.round(sleepingProgress*10)/10;
+      //determine data for weekly load↓↓↓
+      currentWeekDates.map((value,index)=>{totalPlayers.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
+      console.log(load)
+    }
   function createCircleChart(percent, color, size, stroke) {
     let svg = `<svg class="mkc_circle-chart" viewbox="0 0 36 36" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
         <path class="mkc_circle-bg" stroke="#eeeeee" stroke-width="${stroke * 0.5}" fill="none" d="M18 2.0845
@@ -89,7 +115,7 @@ const initChart =  () =>{
     charts[i].innerHTML = createCircleChart(percent, color, size, stroke);
 }}
   findWeek();
-
+  determineAverageForEverything()
   let chartData = {
       
     labels: [
@@ -120,7 +146,7 @@ const initChart =  () =>{
           "#DBDADA",
         ],
         borderColor: "#1195FF",
-        data: [4, 5, 2, 4, 6, 7, 2, 5, 1, 2, 5, 6],
+        data: load,
         maintainAspectRatio: false,
         maxBarThickness: 15,
         borderRadius: 10,
@@ -156,7 +182,7 @@ const initChart =  () =>{
     },
   };
   return (
-    <div style={{ width: sideBarOnOff.sideBarOnOff }} className="dashboard-panel">
+    <div style={{ width: props.sideBarOnOff }} className="dashboard-panel">
       <div className="dashboard-panel-title">
         <label >Dashboard panel</label>
         <select className="team-select">
@@ -201,11 +227,11 @@ const initChart =  () =>{
       </div>
       <label className="players-label">Players</label>
       <div className="selected-tab-desktop">
-                {selectedPlayers.map((value,index)=>
-                <div className="selected-player-desktop">
+                {totalPlayers.map((value,index)=>
+                <div key={value} className="selected-player-desktop">
                   <img className="selected-player-img"></img>
                   <div className="injured-player-info">
-                      <label className="selected-player-name-desktop">{value.name}</label>
+                      <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
                       <label className="injury-desktop">{value.injury}</label>
                     </div>
                   <div className={value.injury ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>

@@ -2,9 +2,10 @@ import React, { useState,useEffect } from "react";
 import{Link} from 'react-router-dom';
 import { BsCircleFill } from "react-icons/bs";
 import "./TeamSummaryCss/TeamSummaryHeader.css";
-const TeamSummaryHeader = () => {
+const TeamSummaryHeader = (props) => {
     const[activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
+    const[user,setUser] = useState(props.user)
      useEffect(() => {
          allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/team-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
@@ -18,9 +19,9 @@ const TeamSummaryHeader = () => {
       <div className="team-summary-title">Team Summary</div>
       <div className="player-coach">
         <div className="player-number">$</div>
-        <div className="player-namee"> $player-name</div>
+        <div className="player-namee"> player-name</div>
         <div className="coach-name">
-          <BsCircleFill style={{ fontSize: ".5em", color: "#8E8E8E" }} /> $coach-name
+          <BsCircleFill style={{ fontSize: ".5em", color: "#8E8E8E" }} /> {`${user.firstName} ${user.lastName}`}
         </div>
       </div>
       <div className="next-game-label">

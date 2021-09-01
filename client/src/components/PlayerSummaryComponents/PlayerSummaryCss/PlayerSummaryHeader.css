@@ -25,6 +25,7 @@
 .player-name-team{
     display: flex;
     flex-direction: row ;
+    width: 40%;
 }
 .player-name-team-atr-name{
     font-size: 1.5em;

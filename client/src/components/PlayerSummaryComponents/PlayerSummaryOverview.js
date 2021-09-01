@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./PlayerSummaryCss/PlayerSummaryOverview.css";
-const PlayerSummaryOverview = () => {
+const PlayerSummaryOverview = (props) => {
     var startOfWeek = moment().startOf("week").toDate();
     const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
     const showDate = (date, numberDays) => {

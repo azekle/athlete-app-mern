@@ -27,6 +27,7 @@ function Dashboard({ userData }) {
     requests.get("/user/getall")
     .then(res=>{setPlayers([...res.data])})
   }, [])
+  
   if(mobile<600 && userData.is_coach) return(
     <CoachMobile players = {players}/>
   )
@@ -42,13 +43,13 @@ function Dashboard({ userData }) {
         {userData.is_coach ? <Switch>
           {/*sideBarOnOff = {showSideBar ?  : 100%}  is used in order for the right panel to adjust it's dimensions according to the disappeareance of the sidebar*/}
           <Route path="/dashboard/dashboard-panel" exact>
-            <DashboardPanel sideBarOnOff={showSideBar ? "" : "100%"} />
+            <DashboardPanel players = {players} sideBarOnOff={showSideBar ? "" : "100%"} />
           </Route>
           <Route path="/dashboard/team-summary">
-            <TeamSummary sideBarOnOff={showSideBar ? "" : "98%"} />
+            <TeamSummary players={players} user={userData} sideBarOnOff={showSideBar ? "" : "98%"} />
           </Route>
           <Route path="/dashboard/player-summary">
-            <PlayerSummary sideBarOnOff={showSideBar ? "" : "100%"} />
+            <PlayerSummary players={players} sideBarOnOff={showSideBar ? "" : "100%"} />
           </Route>
           <Route path="/dashboard/player-drilldown" exact>
             <PlayerDrilldown sideBarOnOff={showSideBar ? "" : "100%"} />

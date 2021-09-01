@@ -1,28 +1,47 @@
 import React, { useState,useEffect } from "react";
 import{Link} from 'react-router-dom';
-import { BsCircleFill } from "react-icons/bs";
 import "./PlayerSummaryCss/PlayerSummaryHeader.css"
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import imag from "../../assets/ball.png";
-const PlayerSummaryHeader = () => {
+const PlayerSummaryHeader = (props) => {
+    var players = props.players;
+    var totalPlayers = [];
+    const[indexOfActivePlayer,setIndexOfActivePlayer] = useState(0)
+    const[activePlayer,setActivePlayer] = useState();
     const[activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
+    players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
+    
+    const prevPlayer = () =>{
+      if(totalPlayers[indexOfActivePlayer-1]){
+        setActivePlayer(totalPlayers[indexOfActivePlayer-1])
+        setIndexOfActivePlayer(indexOfActivePlayer-1)
+        props.direction("back-player")
+      }
+    }
+    const nextPlayer = () =>{
+      if(totalPlayers[indexOfActivePlayer+1]){
+        setActivePlayer(totalPlayers[indexOfActivePlayer+1])
+        setIndexOfActivePlayer(indexOfActivePlayer+1)
+        props.direction("forward-player")
+    }}
      useEffect(() => {
-         allTabs.map((el)=> {document.getElementById(el).style.background = ""})
+       setActivePlayer(players[indexOfActivePlayer]);
+       allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/player-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/training-load") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/health") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/test") {document.getElementById(activeTab).style.background="#1195FF"}
-    }, [activeTab])
+    }, [activeTab,players])
     
   return (
     <div className="team-summary-header">
       <div className="team-summary-title">Player Summary</div>
       <div className="prev-next-buttons">
-      <button className="prev-next-button" >
-          <AiOutlineArrowLeft />
+      <button onClick={prevPlayer}  className="prev-next-button" >
+          <AiOutlineArrowLeft  />
         </button>
-        <button className="prev-next-button" >
+        <button onClick={nextPlayer} className="prev-next-button" >
           <AiOutlineArrowRight/>
         </button>
         </div>
@@ -31,8 +50,8 @@ const PlayerSummaryHeader = () => {
         <div className="player-name-team"> 
             <img className="player-photo" src={imag} ></img>
             <div>
-                <div className="player-name-team-atr-name">$Name</div>
-                <div className="player-name-team-atr-team">$Team</div>
+                <div className="player-name-team-atr-name">{activePlayer?activePlayer.firstName:""} {activePlayer?activePlayer.lastName:""}</div>
+                <div className="player-name-team-atr-team">{activePlayer?activePlayer.team:""}</div>
             </div>
         </div>
         <div>

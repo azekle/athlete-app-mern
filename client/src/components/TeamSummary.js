@@ -7,11 +7,11 @@ import TeamSummaryTrainingLoad from './TeamSummaryComponents/TeamSummaryTraining
 import TeamSummaryTest from'./TeamSummaryComponents/TeamSummaryTest';
 import TeamSummaryHealth from './TeamSummaryComponents/TeamSummaryHealth';
 import TeamSummaryPerformance from './TeamSummaryComponents/TeamSummaryPerformance';
-const TeamSummary = (sideBarOnOff) => {
+const TeamSummary = (props) => {
     return (
-        <div  className="team-summary" style={{ width: sideBarOnOff.sideBarOnOff }}>
+        <div  className="team-summary" style={{ width: props.sideBarOnOff }}>
             <BrowserRouter>
-            <TeamSummaryHeader/>
+            <TeamSummaryHeader user={props.user} players={props.players}/>
             <Switch>
                  <Route path="/dashboard/team-summary/overview"exact>
                      <TeamSummaryOverview/>
@@ -26,7 +26,7 @@ const TeamSummary = (sideBarOnOff) => {
                      <TeamSummaryHealth/>
                  </Route>
             </Switch>
-            <TeamSummaryPerformance sideBarOnOff={sideBarOnOff.sideBarOnOff}/>
+            <TeamSummaryPerformance players={props.players} sideBarOnOff={props.sideBarOnOff}/>
             </BrowserRouter>
         </div>
     )
