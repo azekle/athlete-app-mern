@@ -1,36 +1,114 @@
 import moment from "moment";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./PlayerSummaryCss/PlayerSummaryOverview.css";
 const PlayerSummaryOverview = (props) => {
-    var startOfWeek = moment().startOf("week").toDate();
-    const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
-    const showDate = (date, numberDays) => {
-      return moment(date).add(numberDays, "day").toDate().getDate();
-    };
-    const showMonth = (date, numberDays) => {
-      return moment(date).add(numberDays, "day").toDate().getMonth();
-    };
-    const previousWeek = () => {
-      setCurrentShownWeek(moment(currentShownWeek).subtract(7, "day").toDate());
-    };
-    const nextWeek = () => {
-      if (isDateBeforeToday(moment(currentShownWeek).add(7, "day").toDate()))
-        setCurrentShownWeek(moment(currentShownWeek).add(7, "day").toDate());
-    };
-    function isDateBeforeToday(date) {
-      return new Date(date.toDateString()) < new Date(new Date().toDateString());
+  const [player, setPlayer] = useState();
+  var startOfWeek = moment().startOf("week").toDate();
+  const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
+  const showDate = (date, numberDays) => {
+    return moment(date).add(numberDays, "day").toDate().getDate();
+  };
+  const showMonth = (date, numberDays) => {
+    return moment(date).add(numberDays, "day").toDate().getMonth();
+  };
+  const previousWeek = () => {
+    setCurrentShownWeek(moment(currentShownWeek).subtract(7, "day").toDate());
+  };
+  const nextWeek = () => {
+    if (isDateBeforeToday(moment(currentShownWeek).add(7, "day").toDate()))
+      setCurrentShownWeek(moment(currentShownWeek).add(7, "day").toDate());
+  };
+  function isDateBeforeToday(date) {
+    return new Date(date.toDateString()) < new Date(new Date().toDateString());
+  }
+  const findDailyLoad=(value)=>{
+    return(value.duration1*value.rpe1 + value.duration2 * value.rpe2)
+  }
+  const findACWR=()=>{
+    const daysForACWR = [];
+    var loadFor4Weeks = 0;
+    const fourWeekAgo = currentShownWeek;
+    var fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+    for (var i=0;i<28;i++){
+      fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+      daysForACWR.push(fourWeekAgoStart.add(i,"d").format("DD/MM/YY"))
     }
+    daysForACWR.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadFor4Weeks+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    const currentWeek = currentShownWeek;
+    var currentWeekStart = moment(currentWeek)
+    var loadForCurrenWeek  = 0
+    const daysForCurrentWeekLoad = []
+    for(var i = 0 ; i<7; i++){
+      currentWeekStart = moment(currentWeek)
+      daysForCurrentWeekLoad.push(currentWeekStart.add(i,"d").format("DD/MM/YY"))
+    }
+    
+    daysForCurrentWeekLoad.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadForCurrenWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    loadFor4Weeks=loadFor4Weeks/4
+    return(Math.round(loadForCurrenWeek/loadFor4Weeks*100)/100)
+    
+  }
+  const findWtoW = () =>{
+    const daysForWtoW = [];
+    var loadForLastWeek = 0;
+    const lastWeek = currentShownWeek;
+    var lastWeekStart = moment(lastWeek).subtract(7,"day");
+    for (var i=0;i<7;i++){
+      lastWeekStart = moment(lastWeek).subtract(7,"day");
+      daysForWtoW.push(lastWeekStart.add(i,"d").format("DD/MM/YY"))
+    }
+    daysForWtoW.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadForLastWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    const currentWeek = currentShownWeek;
+    var currentWeekStart = moment(currentWeek)
+    var loadForCurrenWeek  = 0
+    const daysForCurrentWeekLoad = []
+    for(var i = 0 ; i<7; i++){
+      currentWeekStart = moment(currentWeek)
+      daysForCurrentWeekLoad.push(currentWeekStart.add(i,"d").format("DD/MM/YY"))
+    }
+    daysForCurrentWeekLoad.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadForCurrenWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    return(Math.round((loadForCurrenWeek-loadForLastWeek)/((loadForCurrenWeek+loadForLastWeek)/2)*100)+"%")
+  }
+  const findSleep = (value)=>{
+    return(value.sleep)
+  }
+  const findFatigue = (value) =>{
+    return(value.fatigue)
+  }
+  const findMood = (value) =>{
+    return(value.wellness1/2+value.wellness1/2)
+  }
+  useEffect(() => {
+    setPlayer(props.player);
+    findACWR()
+  }, [props.player,currentShownWeek]);
   return (
     <div className="player-summary-overview">
       <div className="overview">
         <div className="prev-next-buttons">
           <button onClick={previousWeek} className="prev-next-button">
-            <AiOutlineArrowLeft  />
+            <AiOutlineArrowLeft />
           </button>
           <button onClick={nextWeek} className="prev-next-button">
-            <AiOutlineArrowRight   />
+            <AiOutlineArrowRight />
           </button>
         </div>
         <table className="overview-table">
@@ -39,10 +117,12 @@ const PlayerSummaryOverview = (props) => {
               <th rowSpan="2" colSpan="3" className="table-header-cell athlete">
                 Date
               </th>
-              <th colSpan="6" className="table-header-cell pso-header-cell">Load</th>
-              <th colSpan="3" className="table-header-cell pso-header-cell">wellness</th>
-              
-        
+              <th colSpan="6" className="table-header-cell pso-header-cell">
+                Load
+              </th>
+              <th colSpan="3" className="table-header-cell pso-header-cell">
+                wellness
+              </th>
             </tr>
             <tr className="overview-sub-table">
               <th className="pso-sub">ACWR</th>
@@ -54,93 +134,618 @@ const PlayerSummaryOverview = (props) => {
               <th className="pso-sub">Sleep</th>
               <th className="pso-sub">Mood</th>
               <th className="pso-sub">Fatigue</th>
-              
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,0)}.0${showMonth(currentShownWeek,0)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                0
+              )}.0${showMonth(currentShownWeek, 0) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">s</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,1)}.0${showMonth(currentShownWeek,1)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                1
+              )}.0${showMonth(currentShownWeek, 1) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
+              
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,2)}.0${showMonth(currentShownWeek,2)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                2
+              )}.0${showMonth(currentShownWeek, 2) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,3)}.0${showMonth(currentShownWeek,3)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                3
+              )}.0${showMonth(currentShownWeek, 3) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,4)}.0${showMonth(currentShownWeek,4)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                4
+              )}.0${showMonth(currentShownWeek, 4) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,5)}.0${showMonth(currentShownWeek,5)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                5
+              )}.0${showMonth(currentShownWeek, 5) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(currentShownWeek,6)}.0${showMonth(currentShownWeek,6)+1}`}</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
-              <td className="pso-sub2">1</td>
-              <td className="pso-sub2">2</td>
-              <td className="pso-sub2">3</td>
+              <td className="pso-sub2" colSpan="3">{`${showDate(
+                currentShownWeek,
+                6
+              )}.0${showMonth(currentShownWeek, 6) + 1}`}</td>
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek,6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                  })
+                : ""}
             </tr>
           </tbody>
         </table>

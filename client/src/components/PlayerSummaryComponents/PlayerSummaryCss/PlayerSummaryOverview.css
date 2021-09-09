@@ -6,9 +6,10 @@
     width: 10%;
     font-size: 1.6em;
     padding: 5px;
+    
 }
 .pso-sub2{
-    padding: 10px;
+    padding: 10px;text-transform:capitalize
 }
 .pso-header-cell{
     font-size: 1.25em;

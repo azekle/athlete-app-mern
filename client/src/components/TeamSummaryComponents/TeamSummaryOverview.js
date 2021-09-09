@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import moment from "moment";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import "./TeamSummaryCss/TeamSummaryOverview.css";
-const TeamSummaryOverview = () => {
+const TeamSummaryOverview = (props) => {
+  const players = []
+  props.players.map((value)=>{
+    if(!value.is_coach) players.push(value)
+  })
   var startOfWeek = moment().startOf("week").toDate();
   const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
   const showDate = (date, numberDays) => {
@@ -20,6 +24,53 @@ const TeamSummaryOverview = () => {
   };
   function isDateBeforeToday(date) {
     return new Date(date.toDateString()) < new Date(new Date().toDateString());
+  }
+  const findACWR = (player) =>{
+    const daysForACWR = [];
+    var loadFor4Weeks = 0;
+    const fourWeekAgo = currentShownWeek;
+    var fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+    for (var i=0;i<28;i++){
+      fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+      daysForACWR.push(fourWeekAgoStart.add(i,"d").format("DD/MM/YY"))
+    }
+    daysForACWR.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadFor4Weeks+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    const currentWeek = currentShownWeek;
+    var currentWeekStart = moment(currentWeek)
+    var loadForCurrenWeek  = 0
+    const daysForCurrentWeekLoad = []
+    for(var i = 0 ; i<7; i++){
+      currentWeekStart = moment(currentWeek)
+      daysForCurrentWeekLoad.push(currentWeekStart.add(i,"d").format("DD/MM/YY"))
+    }
+    
+    daysForCurrentWeekLoad.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadForCurrenWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    loadFor4Weeks=loadFor4Weeks/4
+    return(Math.round(loadForCurrenWeek/loadFor4Weeks*100)/100)
+  }
+  const findDailyLoad=(value,nrDays)=>{
+    var trainingSession = {};
+    var day = currentShownWeek;
+    day = moment(day).add(nrDays,"day");
+    console.log(day.format("DD/MM/YY"))
+    value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
+    return(trainingSession.duration1*trainingSession.rpe1 + trainingSession.duration2 * trainingSession.rpe2||"none")
+  }
+  const findMood = (value,nrDays) =>{
+    var trainingSession = {};
+    var day = currentShownWeek;
+    day = moment(day).add(nrDays,"day");
+    console.log(day.format("DD/MM/YY"))
+    value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
+    return(trainingSession.wellness1/2+trainingSession.wellness1/2||"none")
   }
   return (
     <div className="overview">
@@ -94,30 +145,31 @@ const TeamSummaryOverview = () => {
           </tr>
         </thead>
         <tbody>
+          {players.map((value)=>{return(
           <tr>
-            <td colSpan="3">$name</td>
-            <td><div className="attr-team-overview-red">1</div></td>
-            <td><div className="attr-team-overview-yellow">2</div></td>
-            <td><div className="attr-team-overview-blue">3</div></td>
-            <td><div className="attr-team-overview-green">1</div></td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
+            <td colSpan="3">{value.firstName} {value.lastName}</td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-yellow">{findDailyLoad(value,0)}</div></td>
+            <td><div className="attr-team-overview-blue">{findMood(value,0)}</div></td>
+            <td><div className="attr-team-overview-green">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,1)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,1)}</div></td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,2)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,2)}</div></td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,3)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,3)}</div></td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,4)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,4)}</div></td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,5)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,5)}</div></td>
+            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview-red">{findDailyLoad(value,6)}</div></td>
+            <td><div className="attr-team-overview-red">{findMood(value,6)}</div></td>
+          </tr>)})}
         </tbody>
       </table>
     </div>

@@ -10,6 +10,7 @@ const PlayerSummaryHeader = (props) => {
     const[activePlayer,setActivePlayer] = useState();
     const[activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
+    
     players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
     
     const prevPlayer = () =>{
@@ -25,8 +26,11 @@ const PlayerSummaryHeader = (props) => {
         setIndexOfActivePlayer(indexOfActivePlayer+1)
         props.direction("forward-player")
     }}
+    
      useEffect(() => {
-       setActivePlayer(players[indexOfActivePlayer]);
+      
+       if(!props.player)setActivePlayer(players[indexOfActivePlayer]);
+       props.activePlayer(players[indexOfActivePlayer]);
        allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/player-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/training-load") {document.getElementById(activeTab).style.background="#1195FF"}

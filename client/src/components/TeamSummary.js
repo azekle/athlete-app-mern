@@ -14,7 +14,7 @@ const TeamSummary = (props) => {
             <TeamSummaryHeader user={props.user} players={props.players}/>
             <Switch>
                  <Route path="/dashboard/team-summary/overview"exact>
-                     <TeamSummaryOverview/>
+                     <TeamSummaryOverview players={props.players}/>
                  </Route>
                  <Route path="/dashboard/team-summary/training-load"exact>
                      <TeamSummaryTrainingLoad/>

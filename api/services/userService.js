@@ -9,6 +9,7 @@ module.exports = {
     getById,
     create,
     update,
+    getByUsername,
     delete: _delete
 };
 
@@ -26,7 +27,10 @@ async function authenticate({ username, password }) {
 async function getAll() {
     return await User.find();
 }
-
+async function getByUsername(name){
+   
+    return await User.find({username:name})
+}
 async function getById(id) {
     return await User.findById(id);
 }
@@ -56,15 +60,15 @@ async function update(id, userParam) {
     if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
-
     // hash password if it was entered
     if (userParam.password) {
         userParam.hash = bcrypt.hashSync(userParam.password, 10);
     }
-
+    
     // copy userParam properties to user
-    Object.assign(user, userParam);
-
+    Object.assign(user.tests, userParam);
+    
+    
     await user.save();
 }
 

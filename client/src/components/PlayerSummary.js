@@ -9,7 +9,7 @@ import TeamSummaryHealth from "./TeamSummaryComponents/TeamSummaryHealth";
 
 import TeamSummaryPerformance from "./TeamSummaryComponents/TeamSummaryPerformance";
 import TeamSummaryTest from "./TeamSummaryComponents/TeamSummaryTest";
-import TeamSummaryTrainingLoad from "./TeamSummaryComponents/TeamSummaryTrainingLoad";
+import PlayerSummaryTrainingLoad from "./PlayerSummaryComponents/PlayerSummaryTrainingLoad";
 const PlayerSummary = (props) => {
   const [direction, setDirection] = useState();
   var refToday = moment();
@@ -28,10 +28,11 @@ const PlayerSummary = (props) => {
   const changePlayer = () =>{
     if(direction==="forward-player") {setIndexOfActivePlayer(indexOfActivePlayer+1)}
     if(direction==="back-player"){setIndexOfActivePlayer(indexOfActivePlayer-1)}
-    setDirection("")
+    setDirection("");
   }
   useEffect(() => {
-      changePlayer()
+      changePlayer();
+    
   }, [direction])
 
   useEffect(() => {
@@ -41,16 +42,16 @@ const PlayerSummary = (props) => {
   return (
     <div className="team-summary" style={{ width: props.sideBarOnOff }}>
       <BrowserRouter>
-        <PlayerSummaryHeader direction={setDirection} players={players} />
+        <PlayerSummaryHeader player = {activePlayer} activePlayer={setActivePlayer} direction={setDirection} players={players} />
         <Switch>
           <Route path="/dashboard/player-summary/overview" exact>
             <PlayerSummaryOverview player = {activePlayer} />
           </Route>
           <Route path="/dashboard/player-summary/training-load" exact>
-            <TeamSummaryTrainingLoad />
+            <PlayerSummaryTrainingLoad player = {activePlayer}/>
           </Route>
           <Route path="/dashboard/player-summary/test" exact>
-            <TeamSummaryTest />
+            <TeamSummaryTest players={players} />
           </Route>
           <Route path="/dashboard/player-summary/health" exact>
             <TeamSummaryHealth />

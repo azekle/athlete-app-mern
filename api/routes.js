@@ -15,7 +15,7 @@ router.get('/user/current', getCurrent);
 router.get('/user/get', getById);
 router.put('/user/update', update);
 router.delete('/user/delete', _delete);
-
+router.post('/user/username',getByUsername)
 // workout routes
 router.post('/form/checkforform',checkForFormFilling)
 router.post('/form/post', postForm);
@@ -54,7 +54,12 @@ async function checkForFormFilling(req,res){
 function getForm(req, res) {
     workoutService.getById(req.body.workout_id);
 }
-
+function getByUsername(req,res){
+    
+    userService.getByUsername(req.body.username)
+    .then(response=>res.json(response))
+    
+}
 function getAllForms(req, res) {
    workoutService.getAll(req.user.sub)
    .then(workouts => res.json(workouts))
@@ -107,7 +112,7 @@ function getById(req, res, next) {
 }
 
 function update(req, res, next) {
-    userService.update(req.params.id, req.body)
+    userService.update(req.body._id, req.body.tests)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

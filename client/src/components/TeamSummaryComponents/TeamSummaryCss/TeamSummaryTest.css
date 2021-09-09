@@ -19,7 +19,38 @@
     white-space: nowrap;
     text-align: start;
 }
-
+.lock-locked{
+    width:40px;
+    height:40px;
+    font-size: 1.5em;
+    border-radius: 40px;
+    border:2px solid rgb(175, 3, 3);
+    padding: 5px;
+    align-self: center;
+    color:rgb(175, 3, 3);
+    transition-duration: .3s;   
+}
+.lock-locked:hover{
+    color: #1195FF;
+    cursor: pointer;
+    border-color: #1195FF;
+}
+.lock-unlocked{
+    width:40px;
+    height:40px;
+    font-size: 1.5em;
+    border-radius: 40px;
+    border:2px solid #1195FF;
+    padding: 5px;
+    align-self: center;
+    color:#1195FF;
+    transition-duration: .3s;   
+}
+.lock-unlocked:hover{
+    color: rgb(175, 3, 3);
+    cursor: pointer;
+    border-color: rgb(175, 3, 3);
+}
 @media  (max-width:600px){
     .team-summary-test-cell{
         font-size: .5em;
