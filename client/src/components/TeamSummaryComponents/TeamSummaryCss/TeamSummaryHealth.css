@@ -1,6 +1,8 @@
 .team-summary-health{
     width: 100%;
-    margin-top:30px
+    margin-top:30px;
+    background: white;
+    border-radius: 5px;
 }
 .team-summary-health-cell{
     font-size: 1em;

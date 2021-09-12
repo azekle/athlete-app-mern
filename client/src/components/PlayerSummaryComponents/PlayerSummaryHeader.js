@@ -7,29 +7,18 @@ const PlayerSummaryHeader = (props) => {
     var players = props.players;
     var totalPlayers = [];
     const[indexOfActivePlayer,setIndexOfActivePlayer] = useState(0)
-    const[activePlayer,setActivePlayer] = useState();
+    
     const[activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
     
     players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
-    
-    const prevPlayer = () =>{
-      if(totalPlayers[indexOfActivePlayer-1]){
-        setActivePlayer(totalPlayers[indexOfActivePlayer-1])
-        setIndexOfActivePlayer(indexOfActivePlayer-1)
-        props.direction("back-player")
-      }
+    const[activePlayer,setActivePlayer] = useState(totalPlayers[0]);
+    const changePlayer = (e) =>{
+      setActivePlayer(totalPlayers[e.target.value])
     }
-    const nextPlayer = () =>{
-      if(totalPlayers[indexOfActivePlayer+1]){
-        setActivePlayer(totalPlayers[indexOfActivePlayer+1])
-        setIndexOfActivePlayer(indexOfActivePlayer+1)
-        props.direction("forward-player")
-    }}
-    
      useEffect(() => {
       
-       if(!props.player)setActivePlayer(players[indexOfActivePlayer]);
+       if(!props.player)setActivePlayer(totalPlayers[indexOfActivePlayer]);
        props.activePlayer(players[indexOfActivePlayer]);
        allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/player-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
@@ -42,29 +31,28 @@ const PlayerSummaryHeader = (props) => {
     <div className="team-summary-header">
       <div className="team-summary-title">Player Summary</div>
       <div className="prev-next-buttons">
-      <button onClick={prevPlayer}  className="prev-next-button" >
-          <AiOutlineArrowLeft  />
-        </button>
-        <button onClick={nextPlayer} className="prev-next-button" >
-          <AiOutlineArrowRight/>
-        </button>
+      
         </div>
-      <div className="player-info-field">
+      <div style={props.sideBarOnOff?{width:"93%"}:{width:"91%"}} className="player-info-field">
          
         <div className="player-name-team"> 
             <img className="player-photo" src={imag} ></img>
             <div>
-                <div className="player-name-team-atr-name">{activePlayer?activePlayer.firstName:""} {activePlayer?activePlayer.lastName:""}</div>
+                <select onChange={changePlayer} defaultValue={"Select"} className="player-name-team-atr-name" >
+                {totalPlayers.map((value,index)=>{
+                  return(<option key={value.firstName} value={index} >{activePlayer?value.firstName:""} {activePlayer?value.lastName:""}</option>)
+              })}
+                </select>
                 <div className="player-name-team-atr-team">{activePlayer?activePlayer.team:""}</div>
             </div>
         </div>
         <div>
             <div className="player-atr">Age<br></br><label>$Age</label></div>
-            <div className="player-atr">Weight<br></br><label>$Weight</label></div>
+            <div className="player-atr">Weight<br></br><label>{activePlayer?activePlayer.measurements.weight:""}</label></div>
         </div>
         <div>
-            <div className="player-atr">Height<br></br><label>$Height</label></div>
-            <div className="player-atr">Fat<br></br><label>$Fat</label></div>
+            <div className="player-atr">Height<br></br><label>{activePlayer?activePlayer.measurements.height:""}</label></div>
+            <div className="player-atr">Fat<br></br><label>{activePlayer?activePlayer.measurements.fat:""}</label></div>
         </div>
       </div>
       <div style={{marginTop:"3%"}} className="team-summary-links">

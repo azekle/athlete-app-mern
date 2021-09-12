@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
 import { useState, useEffect } from "react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import arrow from "../../assets/arrow left-right.svg"
 import "./PlayerSummaryCss/PlayerSummaryOverview.css";
 const PlayerSummaryOverview = (props) => {
   const [player, setPlayer] = useState();
@@ -96,6 +96,9 @@ const PlayerSummaryOverview = (props) => {
   const findMood = (value) =>{
     return(value.wellness1/2+value.wellness1/2)
   }
+  const verToday = (days)=>{
+    if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1
+  }
   useEffect(() => {
     setPlayer(props.player);
     findACWR()
@@ -104,11 +107,12 @@ const PlayerSummaryOverview = (props) => {
     <div className="player-summary-overview">
       <div className="overview">
         <div className="prev-next-buttons">
-          <button onClick={previousWeek} className="prev-next-button">
-            <AiOutlineArrowLeft />
+          {moment(currentShownWeek).startOf("week").format("DD/MM/YYYY")} - {moment(currentShownWeek).startOf("week").add(6,"d").format("DD/MM/YYYY")}
+          <button onClick={previousWeek} className="prev-next">
+            <img className="left-arrow" src={arrow}></img>
           </button>
-          <button onClick={nextWeek} className="prev-next-button">
-            <AiOutlineArrowRight />
+          <button onClick={nextWeek} className="prev-next">
+          <img className="right-arrow" src={arrow}></img>
           </button>
         </div>
         <table className="overview-table">
@@ -138,17 +142,18 @@ const PlayerSummaryOverview = (props) => {
           </thead>
           <tbody>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(0) ? "today":(
+              `${showDate(
                 currentShownWeek,
                 0
-              )}.0${showMonth(currentShownWeek, 0) + 1}`}</td>
+              )}.0${showMonth(currentShownWeek, 0) + 1}`)}</td>
               {player
                 ? player.training.map((val) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -157,7 +162,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -166,7 +171,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">s</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">s</div></td>;
                   })
                 : ""}
                 {player
@@ -175,7 +180,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -184,7 +189,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -193,7 +198,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -202,7 +207,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -211,7 +216,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -220,12 +225,12 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(1)?"Today":`${showDate(
                 currentShownWeek,
                 1
               )}.0${showMonth(currentShownWeek, 1) + 1}`}</td>
@@ -235,7 +240,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -244,7 +249,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -253,7 +258,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -262,7 +267,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -271,7 +276,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -280,7 +285,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -289,7 +294,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -298,7 +303,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -307,13 +312,13 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
               
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(2)?"Today": `${showDate(
                 currentShownWeek,
                 2
               )}.0${showMonth(currentShownWeek, 2) + 1}`}</td>
@@ -323,7 +328,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -332,7 +337,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -341,7 +346,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -350,7 +355,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -359,7 +364,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -368,7 +373,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -377,7 +382,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -386,7 +391,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -395,12 +400,12 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(3)?"Today":`${showDate(
                 currentShownWeek,
                 3
               )}.0${showMonth(currentShownWeek, 3) + 1}`}</td>
@@ -410,7 +415,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -419,7 +424,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -428,7 +433,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -437,7 +442,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -446,7 +451,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -455,7 +460,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -464,7 +469,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -473,7 +478,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -482,12 +487,12 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(4)?"Today":`${showDate(
                 currentShownWeek,
                 4
               )}.0${showMonth(currentShownWeek, 4) + 1}`}</td>
@@ -497,7 +502,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -506,7 +511,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -515,7 +520,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -524,7 +529,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -533,7 +538,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -542,7 +547,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -551,7 +556,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -560,7 +565,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -569,12 +574,12 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(5)?"Today":`${showDate(
                 currentShownWeek,
                 5
               )}.0${showMonth(currentShownWeek, 5) + 1}`}</td>
@@ -584,7 +589,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -593,7 +598,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -602,7 +607,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -611,7 +616,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -620,7 +625,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -629,7 +634,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -638,7 +643,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -647,7 +652,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -656,12 +661,12 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>
             <tr>
-              <td className="pso-sub2" colSpan="3">{`${showDate(
+              <td className="pso-sub2" colSpan="3">{verToday(6)?"Today":`${showDate(
                 currentShownWeek,
                 6
               )}.0${showMonth(currentShownWeek, 6) + 1}`}</td>
@@ -671,7 +676,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -680,7 +685,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findDailyLoad(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -689,7 +694,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findACWR()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
                   })
                 : ""}
                 {player
@@ -698,7 +703,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findWtoW()}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findWtoW()}</div></td>;
                   })
                 : ""}
                 {player
@@ -707,7 +712,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"ewma"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
                   })
                 : ""}
                 {player
@@ -716,7 +721,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{"strain"}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -725,7 +730,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findSleep(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findSleep(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -734,7 +739,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findMood(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
                   })
                 : ""}
                 {player
@@ -743,7 +748,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2">{findFatigue(val)}</td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findFatigue(val)}</div></td>;
                   })
                 : ""}
             </tr>

@@ -16,6 +16,7 @@ router.get('/user/get', getById);
 router.put('/user/update', update);
 router.delete('/user/delete', _delete);
 router.post('/user/username',getByUsername)
+
 // workout routes
 router.post('/form/checkforform',checkForFormFilling)
 router.post('/form/post', postForm);
@@ -112,7 +113,7 @@ function getById(req, res, next) {
 }
 
 function update(req, res, next) {
-    userService.update(req.body._id, req.body.tests)
+    userService.update(req.body._id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

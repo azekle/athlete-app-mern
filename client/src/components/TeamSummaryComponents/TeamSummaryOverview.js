@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import "./TeamSummaryCss/TeamSummaryOverview.css";
+import arrow from "../../assets/arrow left-right.svg"
 const TeamSummaryOverview = (props) => {
   const players = []
   props.players.map((value)=>{
@@ -60,7 +61,6 @@ const TeamSummaryOverview = (props) => {
     var trainingSession = {};
     var day = currentShownWeek;
     day = moment(day).add(nrDays,"day");
-    console.log(day.format("DD/MM/YY"))
     value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
     return(trainingSession.duration1*trainingSession.rpe1 + trainingSession.duration2 * trainingSession.rpe2||"none")
   }
@@ -68,53 +68,60 @@ const TeamSummaryOverview = (props) => {
     var trainingSession = {};
     var day = currentShownWeek;
     day = moment(day).add(nrDays,"day");
-    console.log(day.format("DD/MM/YY"))
     value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
     return(trainingSession.wellness1/2+trainingSession.wellness1/2||"none")
+  }
+  const verToday = (days)=>{
+    if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1
   }
   return (
     <div className="overview">
       <div className="prev-next-buttons">
-        <button className="prev-next-button" onClick={previousWeek}><AiOutlineArrowLeft/></button>
-        <button className="prev-next-button" onClick={nextWeek}><AiOutlineArrowRight/></button>
-      </div>
+          {moment(currentShownWeek).startOf("week").format("DD/MM/YYYY")} - {moment(currentShownWeek).startOf("week").add(6,"d").format("DD/MM/YYYY")}
+          <button onClick={previousWeek} className="prev-next">
+            <img className="left-arrow" src={arrow}></img>
+          </button>
+          <button onClick={nextWeek} className="prev-next">
+          <img className="right-arrow" src={arrow}></img>
+          </button>
+        </div>
       <label style={{fontWeight:"500",fontSize:"1.5em",margin:"20px"}}>Squad Dashboard</label>
       <table className="overview-table">
         <thead>
           <tr>
             <th rowSpan="2" colSpan="3" className="table-header-cell athlete">Athlete</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 0)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {verToday(0)?"Today ":`${showDate(currentShownWeek, 0)}.0${
                 showMonth(currentShownWeek, 0) + 1
               } `}</label>
                Sun</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 1)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {verToday(1)?"Today ":`${showDate(currentShownWeek, 1)}.0${
                 showMonth(currentShownWeek, 1) + 1
               } `}</label>
                Mon</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 2)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}> {verToday(2)?"Today ":`${showDate(currentShownWeek, 2)}.0${
                 showMonth(currentShownWeek, 2) + 1
               } `}</label>
                Tue</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 3)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{verToday(3)?"Today ":`${showDate(currentShownWeek, 3)}.0${
                 showMonth(currentShownWeek, 3) + 1
               } `}</label>
                Wed</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 4)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{verToday(4)?"Today ":`${showDate(currentShownWeek, 4)}.0${
                 showMonth(currentShownWeek, 4) + 1
               } `}</label>
                Thu</th>
             <th colSpan="3" className="table-header-cell">
-            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{`${showDate(currentShownWeek, 5)}.0${
+            <label style={{fontWeight:"500",fontSize:"1.3em"}}>{verToday(5)?"Today ":`${showDate(currentShownWeek, 5)}.0${
                 showMonth(currentShownWeek, 5) + 1
               } `}</label>
                Friday</th>
             <th colSpan="3" className="table-header-cell">
-             <label style={{fontWeight:"500",fontSize:"1.3em"}}> {`${showDate(currentShownWeek, 6)}.0${
+             <label style={{fontWeight:"500",fontSize:"1.3em"}}> {verToday(6)?"Today ":`${showDate(currentShownWeek, 6)}.0${
                 showMonth(currentShownWeek, 6) + 1
               } `}</label>
                Sat

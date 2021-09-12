@@ -23,7 +23,6 @@ async function authenticate({ username, password }) {
         };
     }
 }
-
 async function getAll() {
     return await User.find();
 }
@@ -66,7 +65,8 @@ async function update(id, userParam) {
     }
     
     // copy userParam properties to user
-    Object.assign(user.tests, userParam);
+    Object.assign(user.tests, userParam.tests);
+    Object.assign(user.measurements,userParam.measurements)
     
     
     await user.save();

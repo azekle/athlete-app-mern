@@ -43,7 +43,7 @@ function Dashboard({ userData }) {
         {userData.is_coach ? <Switch>
           {/*sideBarOnOff = {showSideBar ?  : 100%}  is used in order for the right panel to adjust it's dimensions according to the disappeareance of the sidebar*/}
           <Route path="/dashboard/dashboard-panel" exact>
-            <DashboardPanel players = {players} sideBarOnOff={showSideBar ? "" : "100%"} />
+            <DashboardPanel user={userData} players = {players} sideBarOnOff={showSideBar ? "" : "100%"} />
           </Route>
           <Route path="/dashboard/team-summary">
             <TeamSummary players={players} user={userData} sideBarOnOff={showSideBar ? "" : "98%"} />

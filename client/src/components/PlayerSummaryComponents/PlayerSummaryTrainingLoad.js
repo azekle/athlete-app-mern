@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
+import arrow from "../../assets/arrow left-right.svg"
 import "../TeamSummaryComponents/TeamSummaryCss/TeamSummaryTrainingLoad.css";
 const PlayerSummaryTrainingLoad = (props) => {
   const [player,setPlayer] = useState()
@@ -89,6 +90,9 @@ const PlayerSummaryTrainingLoad = (props) => {
     }))
     return(loadForCurrenWeek)
   }
+  const verToday = (days)=>{
+    if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1
+  }
   useEffect(() => {
       setPlayer(props.player);
       
@@ -97,45 +101,51 @@ const PlayerSummaryTrainingLoad = (props) => {
   return (
     <div className="overview">
       <div className="prev-next-buttons">
-        <button className="prev-next-button" onClick={previousWeek}><AiOutlineArrowLeft/></button>
-        <button className="prev-next-button" onClick={nextWeek}><AiOutlineArrowRight/></button>
-      </div>
+          {moment(currentShownWeek).startOf("week").format("DD/MM/YYYY")} - {moment(currentShownWeek).startOf("week").add(6,"d").format("DD/MM/YYYY")}
+          <button onClick={previousWeek} className="prev-next">
+            <img className="left-arrow" src={arrow}></img>
+          </button>
+          <button onClick={nextWeek} className="prev-next">
+          <img className="right-arrow" src={arrow}></img>
+          </button>
+        </div>
+     
       <table className="overview-table">
         <thead>
           <tr>
             <th className="table-header-cell athlete">Name</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 0)}.0${
+              {verToday(0)?"Today":`${showDate(currentShownWeek, 0)}.0${
                 showMonth(currentShownWeek, 0) + 1
               }`}
               <br></br>Sunday</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 1)}.0${
+              {verToday(1)?"Today":`${showDate(currentShownWeek, 1)}.0${
                 showMonth(currentShownWeek, 1) + 1
               }`}
               <br></br>Monday</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 2)}.0${
+              {verToday(2)?"Today":`${showDate(currentShownWeek, 2)}.0${
                 showMonth(currentShownWeek, 2) + 1
               }`}
               <br></br>Tuesday</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 3)}.0${
+              {verToday(3)?"Today":`${showDate(currentShownWeek, 3)}.0${
                 showMonth(currentShownWeek, 3) + 1
               }`}
               <br></br>Wednesday</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 4)}.0${
+              {verToday(4)?"Today":`${showDate(currentShownWeek, 4)}.0${
                 showMonth(currentShownWeek, 4) + 1
               }`}
               <br></br>Thursday</th>
             <th  className="table-header-cell">
-              {`${showDate(currentShownWeek, 5)}.0${
+              {verToday(5)?"Today":`${showDate(currentShownWeek, 5)}.0${
                 showMonth(currentShownWeek, 5) + 1
               }`}
               <br></br>Friday</th>
             <th  className="table-header-cell">
-            {`${showDate(currentShownWeek, 6)}.0${
+            {verToday(6)?"Today":`${showDate(currentShownWeek, 6)}.0${
                 showMonth(currentShownWeek, 6) + 1
               }`}
               <br></br>Saturday

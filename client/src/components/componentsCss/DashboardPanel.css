@@ -26,6 +26,9 @@
     align-self: flex-start;
     margin-top:4%;
     margin-bottom: 2%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
 }
 .readiness{
     background: white;
@@ -78,7 +81,7 @@
     margin-bottom: 1%;
     font-size: 1.5em;
     font-weight: 500;
-    margin-top: 2%;
+    margin-top: 4%;
 }
 .team-select{
     background: none;
@@ -94,6 +97,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     row-gap: 20px;
     column-gap: 20px;
+    padding-bottom:5%;
     
 }
 .selected-player-desktop{
@@ -124,6 +128,62 @@
     font-size: .85em;
     color:#8E8E8E;
     margin-top: 10px;
+}
+.user-options{
+    align-self: flex-end;
+    justify-self: flex-end;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.can-log{
+    background: #1195FF;
+    color:white;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border:1px solid #707070;
+    border-radius: 5px;
+}
+.can-log:hover{
+    cursor: pointer;
+}
+.logout-panel{
+    position: absolute;
+    border:1px solid #707070;
+    background: white;
+    border-radius: 5px;
+    height: 140px;
+    width: 140px;
+    top: 15%;
+    right: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.separator2{
+    width: 100%;
+    margin-top: 10%;
+    border-top:1px solid #707070
+}
+.options-name{
+    font-size: .4em;
+    margin-top: 10px;
+}
+.logout-button{
+    background: white;
+    border:1px solid #707070;
+    padding:5px 10px;
+    color:#414141;
+    transition-duration: .3s;
+    border-radius: 3px;
+}
+.logout-button:hover{
+    cursor: pointer;
+    background: rgb(202, 201, 201);
+    border-radius: 5px;;
+    color:black
 }
 @media  (max-width:600px) {
 

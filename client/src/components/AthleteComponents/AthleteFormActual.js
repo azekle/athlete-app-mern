@@ -288,6 +288,9 @@ const AthleteFormActual = (props) => {
                   <label style={{textAlign:"end"}} className="slider-index2">Excellent</label>
                 </div>
             </div>
+            <div className="form-part">
+              sss
+            </div>
         </div>
         <button onClick={submitForm} type="submit" className="submit-athlete-form">Submit</button>
       </form>

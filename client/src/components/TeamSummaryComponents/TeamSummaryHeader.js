@@ -3,9 +3,15 @@ import{Link} from 'react-router-dom';
 import { BsCircleFill } from "react-icons/bs";
 import "./TeamSummaryCss/TeamSummaryHeader.css";
 const TeamSummaryHeader = (props) => {
-    const[activeTab,setActiveTab] = useState('overview');
+    const [activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
-    const[user,setUser] = useState(props.user)
+    const [user,setUser] = useState(props.user)
+    const totalPlayers = props.players;
+    const players = [];
+    totalPlayers.map((value)=>{
+      if (!value.is_coach) players.push(value)
+    })
+
      useEffect(() => {
          allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/team-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
@@ -18,8 +24,8 @@ const TeamSummaryHeader = (props) => {
     <div className="team-summary-header">
       <div className="team-summary-title">Team Summary</div>
       <div className="player-coach">
-        <div className="player-number">$</div>
-        <div className="player-namee"> player-name</div>
+        <div className="player-number">{players.length}</div>
+        <div className="player-namee"> players</div>
         <div className="coach-name">
           <BsCircleFill style={{ fontSize: ".5em", color: "#8E8E8E" }} /> {`${user.firstName} ${user.lastName}`}
         </div>

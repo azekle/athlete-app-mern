@@ -29,6 +29,7 @@
     align-self: center;
     color:rgb(175, 3, 3);
     transition-duration: .3s;   
+    background: white;
 }
 .lock-locked:hover{
     color: #1195FF;
@@ -45,11 +46,36 @@
     align-self: center;
     color:#1195FF;
     transition-duration: .3s;   
+    background: white;
 }
 .lock-unlocked:hover{
     color: rgb(175, 3, 3);
     cursor: pointer;
     border-color: rgb(175, 3, 3);
+}
+.filter{
+    width: 8%;
+    padding:5px;
+    align-self: flex-end;
+    margin-right: 2%;
+    border:1px solid #8E8E8E;
+    border-radius: 5px;
+    margin:5px;
+    margin-bottom: 15px;
+}
+.test-measurements-button{
+    font-size: 1.4em;
+    border:none;
+    outline: none;
+    background: none;
+    margin:5px;
+    color:#989898;
+    margin-right: 30px;
+    margin-left: 30px;
+    font-weight: 500;
+}
+.test-measurements-button:hover{
+    cursor: pointer;
 }
 @media  (max-width:600px){
     .team-summary-test-cell{

@@ -4,8 +4,10 @@ import imag from "../assets/ball.png";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
 import { useEffect } from "react";
+import { requests } from "../utils/axios";
 const DashboardPanel = (props) => {
   const today = moment();
+  let user = props.user;
   let totalDays = [];
   let indexOfToday = [];
   let initialWeightToday = [];
@@ -13,6 +15,7 @@ const DashboardPanel = (props) => {
   var totalPlayers = [];
   var currentWeekDates=[]
   props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
+  const [canLogOut,setCanLogOut] = useState(false)
   const [activeTab, setActiveTab] = useState(true);
   const [injuriesProgress, setInjuriesProgress] = useState([
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -102,7 +105,10 @@ const DashboardPanel = (props) => {
     </svg>`;
     return svg;
 }
-
+const logOutUser = ()=>{
+  localStorage.clear();
+  window.location.reload();
+}
 
 const initChart =  () =>{
   let charts =  document.getElementsByClassName('mkCharts');
@@ -149,7 +155,7 @@ const initChart =  () =>{
         data: load,
         maintainAspectRatio: false,
         maxBarThickness: 15,
-        borderRadius: 10,
+        borderRadius: 0,
       },
     ],
   };
@@ -188,35 +194,45 @@ const initChart =  () =>{
         <select className="team-select">
           <option>Team A</option>
         </select>
+        <div className="user-options">
+          <div className="can-log" onClick={()=>setCanLogOut(true)}>{user.firstName[0]}</div>
+          {canLogOut?
+          <div className="logout-panel">
+             <div style={{marginTop:"10px"}} className="can-log">{user.firstName[0]}</div>
+             <label className="options-name">{user.firstName} {user.lastName}</label>
+             <div className="separator2"></div>
+            <div><button type="submit" onClick={logOutUser} className="logout-button">Log Out</button></div>
+          </div>:""}
+        </div>
       </div>
       <div className="match-overview">
         <div className="chart"><Bar height="500" options={options} data={chartData}></Bar></div>
         <div className="readiness">
         <div className="monitor-wellness">
                          <div onClick={()=> {if(injuryLabel<20)setInjuriesProgress([...injuriesProgress,1]);initChart();if(injuryLabel<20)setInjuryLabel(injuriesProgress.length+1);else setInjuryLabel("21+")}} className="readiness-circle">
-                         <div className="mkCharts" data-percent={donutPercent} data-stroke="3" data-color="#89E894"></div>
+                         <div className="mkCharts" data-percent={donutPercent} data-stroke="3" data-color="#1195FF"></div>
                          </div>
                          <div className="wellness-stats">
                              <label className="stats-label">Injuries</label>
-                             <div className="wellness-progress-bar">
+                             <div style={{border:"none"}} className="wellness-progress-bar">
                                  {injuriesProgress.map((value,index)=>{return(<div key={index} className="injury-bean"></div>)})}
                             
                              </div>
                              <label className="stats-nr">{injuryLabel}</label>
                              <label className="stats-label">Fatigue</label>
-                             <div className="wellness-progress-bar">
+                             <div style={{border:"none"}} className="wellness-progress-bar">
                                  <div style={{width:`${fatigueProgress*20}%`}} className="wellness-progress-bar-fill"></div>
                               
                              </div>
                              <label className="stats-nr">{fatigueProgress}/5</label>
-                             <label className="stats-label">Enjoyment</label>
-                             <div className="wellness-progress-bar">
+                             <label style={{border:"none"}} className="stats-label">Enjoyment</label>
+                             <div style={{border:"none"}} className="wellness-progress-bar">
                                  <div style={{width:`${enjoymentProgress*20}%`}} className="wellness-progress-bar-fill"></div>
                                  
                              </div>
                              <label className="stats-nr">{enjoymentProgress}/5</label>
                              <label className="stats-label">Sleeping T</label>
-                             <div className="wellness-progress-bar">
+                             <div style={{border:"none"}} className="wellness-progress-bar">
                                  <div style={{width:`${sleepingProgress*8.333}%`}} className="wellness-progress-bar-fill"></div>
                                  
                              </div>

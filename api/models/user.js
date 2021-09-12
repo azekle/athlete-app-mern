@@ -13,6 +13,11 @@ const training = new mongoose.Schema({
      rpe2:{type:String},
      wellness2: {type:String},
      });
+     const measurements = new mongoose.Schema({
+        weight:{type:String},
+        height:{type:String},
+        fat:{type:String},
+    })
 const tests = new mongoose.Schema({
     date:{type:String},
     test1:{type:String},
@@ -30,6 +35,7 @@ const schema = new mongoose.Schema({
     team: {type: String, required: true},
     training:[training],
     tests:tests,
+    measurements:measurements,
     createdDate: {type: Date, default: Date.now},
 })
 

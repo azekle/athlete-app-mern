@@ -1,11 +1,14 @@
 .performance{
-    width: 90%;
+    width: 98%;
     height: 50vh;
     padding: 10px;
     display: flex;
     flex-direction: column;
     font-size: 1.4em;
     padding-bottom: 20vh;
+    background: white;
+    margin-top: 30px;
+    border-radius: 5px;
 }
 
 @media  (max-width:600px){

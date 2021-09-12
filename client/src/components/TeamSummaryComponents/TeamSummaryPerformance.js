@@ -3,6 +3,7 @@ import moment from "moment";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./TeamSummaryCss/TeamSummaryPerformance.css";
 import { Bar } from "react-chartjs-2";
+import arrow from "../../assets/arrow left-right.svg"
 const TeamSummaryPerformance = (props) => {
   var startOfWeek = moment().startOf("week").toDate();
   const [today, setToday] = useState(moment());
@@ -152,14 +153,15 @@ const TeamSummaryPerformance = (props) => {
   }, [currentShownWeek]);
   return (
     <div style={{ width: props.sideBarOnOff }} className="performance">
-      <div className="prev-next-buttons">
-        <button className="prev-next-button" onClick={previousWeek}>
-          <AiOutlineArrowLeft />
-        </button>
-        <button className="prev-next-button" onClick={nextWeek}>
-          <AiOutlineArrowRight />
-        </button>
-      </div>
+      <div style={{fontSize:".8em"}} className="prev-next-buttons">
+          {moment(currentShownWeek).startOf("week").format("DD/MM/YYYY")} - {moment(currentShownWeek).startOf("week").add(6,"d").format("DD/MM/YYYY")}
+          <button onClick={previousWeek} className="prev-next">
+            <img className="left-arrow" src={arrow}></img>
+          </button>
+          <button onClick={nextWeek} className="prev-next">
+          <img className="right-arrow" src={arrow}></img>
+          </button>
+        </div>
       Performance
       <Bar options={options} data={chartData}></Bar>
     </div>

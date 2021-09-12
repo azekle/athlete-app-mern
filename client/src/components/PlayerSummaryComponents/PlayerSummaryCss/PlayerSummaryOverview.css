@@ -15,3 +15,10 @@
     font-size: 1.25em;
     padding:5px
 }
+.inside-overview{
+    background: rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 5px 0;
+    width: 50%;
+    margin-left: 25%;
+}
