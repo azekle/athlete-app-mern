@@ -22,3 +22,20 @@
     width: 50%;
     margin-left: 25%;
 }
+.inside-blue{
+    background: #95DFFF;
+    color:#0386be
+}
+.inside-green{
+    background: #91f051;
+    color:#327e00;
+}
+.inside-red
+{
+    background: rgb(240, 81, 81);
+    color: rgb(155, 19, 19);
+}
+.inside-yellow{
+    background: rgb(235, 235, 73);
+    color:rgb(177, 177, 21)
+}

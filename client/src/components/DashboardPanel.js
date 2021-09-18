@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "./componentsCss/DashboardPanel.css";
 import imag from "../assets/ball.png";
 import { Bar } from "react-chartjs-2";
+import {AiOutlineQuestionCircle} from "react-icons/ai"
+import {BiEnvelope} from 'react-icons/bi'
 import moment from "moment";
 import { useEffect } from "react";
 import { requests } from "../utils/axios";
+import defaultImag from "../assets/sportsman.svg"
 const DashboardPanel = (props) => {
   const today = moment();
   let user = props.user;
@@ -16,6 +19,7 @@ const DashboardPanel = (props) => {
   var currentWeekDates=[]
   props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
   const [canLogOut,setCanLogOut] = useState(false)
+  const [canQuestion,setCanQuestion] = useState(false)
   const [activeTab, setActiveTab] = useState(true);
   const [injuriesProgress, setInjuriesProgress] = useState([
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -195,6 +199,12 @@ const initChart =  () =>{
           <option>Team A</option>
         </select>
         <div className="user-options">
+        < AiOutlineQuestionCircle onClick={()=>setCanQuestion(true)} className="question-mark"/>
+          {canQuestion?
+          <div className="send-email">
+            <BiEnvelope/>
+            <button className="send-email-label">Send an Email!</button>
+          </div>:""}
           <div className="can-log" onClick={()=>setCanLogOut(true)}>{user.firstName[0]}</div>
           {canLogOut?
           <div className="logout-panel">
@@ -245,7 +255,7 @@ const initChart =  () =>{
       <div className="selected-tab-desktop">
                 {totalPlayers.map((value,index)=>
                 <div key={value} className="selected-player-desktop">
-                  <img className="selected-player-img"></img>
+                  <img src={defaultImag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
                       <label className="injury-desktop">{value.injury}</label>

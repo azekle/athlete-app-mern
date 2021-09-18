@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { BsPerson } from 'react-icons/bs'
 import { MdShowChart } from 'react-icons/md'
 import { BsCalendar } from 'react-icons/bs'
+import logo from "../assets/logo.svg"
 const SideMenu = (props) => {
    
     const[activeTab,setActiveTab] = useState('dashboard');
@@ -16,7 +17,7 @@ const SideMenu = (props) => {
 
     return (
         <div style={{display:props.hidn}}   className="menu-container">
-            <div className="logo">LOGO</div>
+            <div className="logo"><img style={{width:"200px",height:"200px"}} src={logo}/></div>
            <div className="side-menu">
                 <Link onClick={()=>setActiveTab("dashboard")} className="list-menu-anchor" to={"/dashboard/dashboard-panel"}><div id="dashboard"   className="list-menu-item"><AiFillPieChart /> Dashboard</div></Link> {/*---Dashboard---*/}
                 <Link onClick={()=>setActiveTab("team_summary")} className="list-menu-anchor" to={"/dashboard/team-summary/overview"}><div  id="team_summary" className="list-menu-item" ><AiOutlineTeam/> Team Summary</ div></Link>

@@ -2,11 +2,10 @@ import React, { useState,useEffect } from "react";
 import{Link} from 'react-router-dom';
 import "./PlayerSummaryCss/PlayerSummaryHeader.css"
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import imag from "../../assets/ball.png";
+import imag from "../../assets/sportsman.svg";
 const PlayerSummaryHeader = (props) => {
     var players = props.players;
     var totalPlayers = [];
-    const[indexOfActivePlayer,setIndexOfActivePlayer] = useState(0)
     
     const[activeTab,setActiveTab] = useState('overview');
     const allTabs = ["overview","training_load","health","test"];
@@ -16,16 +15,18 @@ const PlayerSummaryHeader = (props) => {
     const changePlayer = (e) =>{
       setActivePlayer(totalPlayers[e.target.value])
     }
+    useEffect(() => {
+      if(totalPlayers) setActivePlayer(totalPlayers[0]);
+    }, [props.players])
      useEffect(() => {
-      
-       if(!props.player)setActivePlayer(totalPlayers[indexOfActivePlayer]);
-       props.activePlayer(players[indexOfActivePlayer]);
+      // console.log(activePlayer)
+       props.activePlayer(activePlayer);
        allTabs.map((el)=> {document.getElementById(el).style.background = ""})
         if(window.location.pathname==="/dashboard/player-summary/overview") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/training-load") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/health") {document.getElementById(activeTab).style.background="#1195FF"}
        else if(window.location.pathname==="/dashboard/player-summary/test") {document.getElementById(activeTab).style.background="#1195FF"}
-    }, [activeTab,players])
+    }, [activeTab,activePlayer])
     
   return (
     <div className="team-summary-header">

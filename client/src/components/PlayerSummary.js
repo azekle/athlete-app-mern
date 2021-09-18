@@ -13,32 +13,24 @@ import PlayerSummaryTrainingLoad from "./PlayerSummaryComponents/PlayerSummaryTr
 const PlayerSummary = (props) => {
   const [direction, setDirection] = useState();
   var refToday = moment();
-  const [indexOfActivePlayer,setIndexOfActivePlayer] = useState(0)
   var totalPlayers = [];
   var players = props.players;
   players.map((value) => {
     if (!value.is_coach) totalPlayers.push(value);
   });
   const [activePlayer,setActivePlayer] = useState(totalPlayers[0])
-  
+  //console.log(totalPlayers[0])
   const determineDataFor4Weeks = () => {
     const startDay = refToday.startOf("week").subtract(21,"d");
     //continue from here↑↑↑↑↑↑↑↑
   };
-  const changePlayer = () =>{
-    if(direction==="forward-player") {setIndexOfActivePlayer(indexOfActivePlayer+1)}
-    if(direction==="back-player"){setIndexOfActivePlayer(indexOfActivePlayer-1)}
-    setDirection("");
-  }
+  
   useEffect(() => {
-      changePlayer();
-    
-  }, [direction])
-
-  useEffect(() => {
+    //console.log(activePlayer)
     determineDataFor4Weeks()
-      setActivePlayer(totalPlayers[indexOfActivePlayer]);
-  }, [totalPlayers,indexOfActivePlayer])
+    
+      
+  }, [totalPlayers,activePlayer])
   return (
     <div className="team-summary" style={{ width: props.sideBarOnOff }}>
       <BrowserRouter>

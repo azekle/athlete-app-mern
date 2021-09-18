@@ -8,7 +8,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 1.2em;
-    width: 20%;
+    width: 17%;
     padding-top: 10px;
     padding-left: 15px; 
     height: auto;
@@ -18,11 +18,13 @@
     align-items: flex-start;
 }
 .side-menu{
-    margin-top: 5%;
+    margin-top: 35%;
 }
 .logo{
-    font-size: 2.5em;
-    margin-top: 20px;
+    position: absolute;
+    display: flex;
+    top:-10%;
+    align-content: flex-start;
     margin-bottom: 20px;
     color:white;
     align-self: center;

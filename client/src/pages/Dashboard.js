@@ -12,6 +12,7 @@ import AthleteForm from '../components/AthleteComponents/AthleteForm'
 import { useEffect } from "react";
 import CoachMobile from '../components/CoachComponents/CoachMobile'
 import { requests } from "../utils/axios";
+import {GiHamburgerMenu} from 'react-icons/gi'
 function Dashboard({ userData }) {
   const [showSideBar, setShowSideBar] = useState(false);
   const [mobile,setMobile]= useState(window.innerWidth);
@@ -36,9 +37,7 @@ function Dashboard({ userData }) {
       <BrowserRouter>
       {userData.is_coach ?<Sidebar player={userData.is_coach} hidn={showSideBar ? "" : "none"} />:""}
       {userData.is_coach ? <button className="hide-show" onClick={handleHideShow}>
-          <span className="spann"></span>
-          <span className="spann"></span>
-          <span className="spann"></span>
+          <GiHamburgerMenu style={{fontSize:"2em"}}/>
         </button>:""}
         {userData.is_coach ? <Switch>
           {/*sideBarOnOff = {showSideBar ?  : 100%}  is used in order for the right panel to adjust it's dimensions according to the disappeareance of the sidebar*/}
