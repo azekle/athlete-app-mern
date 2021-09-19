@@ -34,7 +34,7 @@ const PlayerSummary = (props) => {
   return (
     <div className="team-summary" style={{ width: props.sideBarOnOff }}>
       <BrowserRouter>
-        <PlayerSummaryHeader sideBarOnOff={props.sideBarOnOff} player = {activePlayer} activePlayer={setActivePlayer} direction={setDirection} players={players} />
+        <PlayerSummaryHeader sideBarOnOff={props.sideBarOnOff} playerFromDashoard={props.playerFromDashoard} activePlayer={setActivePlayer} direction={setDirection} players={players} />
         <Switch>
           <Route path="/dashboard/player-summary/overview" exact>
             <PlayerSummaryOverview player = {activePlayer} />

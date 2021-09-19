@@ -25,6 +25,7 @@ const TeamSummaryTest = (props) => {
   const [test2Name,setTest2Name] = useState()
   const [test3Name,setTest3Name] = useState()
   const [test4Name,setTest4Name] = useState()
+  const [nrOfCols,setNrOfCols] = useState(8)
   const [lock,setLock] = useState(true)
   var testNames
   if (players.length==0) totalPlayers.map((value,index)=>{
@@ -37,7 +38,11 @@ const TeamSummaryTest = (props) => {
    tests[0] = testNames.tests.test1;
    tests[1] = testNames.tests.test2;
    tests[2] = testNames.tests.test3;
-   setTheaders([...theaders,...tests]);}  
+   tests[3] = testNames.tests.test4;
+   setTheaders([...theaders,...tests]);
+   theaders.length = testNames.tests.nrOfCols;
+   setNrOfCols(testNames.tests.nrOfCols)
+  } theaders.length = nrOfCols 
    })
   const handleTestValue = (e)=>{
     playerId = e.target.name.split("/")[2]
@@ -84,7 +89,8 @@ const TeamSummaryTest = (props) => {
     if(test1Name)testNames.tests.test1 = test1Name
     if(test2Name)testNames.tests.test2 = test2Name
     if(test3Name)testNames.tests.test3 = test3Name
-
+    if(test4Name)testNames.tests.test4 = test4Name
+    
     await requests.put("/user/update",testNames)
    .then(res=>console.log(res))
   }
@@ -151,9 +157,45 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
+    if(testName==="test4") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.tests.test4)>parseInt(players[index+1].tests.test4)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
   
   setPlayers([...players]);  
   }
+  const reduceCols = async() =>{
+    if(nrOfCols>5){setNrOfCols(nrOfCols-1);theaders.length = nrOfCols-1;
+    
+    //the player with the username:tests was used in order to store the test names
+    await requests.post("/user/username",{username:"tests"})
+   .then(res=>testNames= res.data[0])
+    testNames.tests.nrOfCols = nrOfCols-1;
+    
+    await requests.put("/user/update",testNames)
+   .then(res=>console.log(res))
+    }
+  }
+  const addCols = async() =>{
+    if(nrOfCols<8) {setNrOfCols(nrOfCols+1);theaders.length  = nrOfCols+1;
+    //the player with the username:tests was used in order to store the test names
+    await requests.post("/user/username",{username:"tests"})
+   .then(res=>testNames= res.data[0])
+    testNames.tests.nrOfCols = nrOfCols+1;
+    await requests.put("/user/update",testNames)
+   .then(res=>console.log(res))
+
+   await requests.post("/user/username",{username:"tests"})
+   .then(res=>{testNames= res.data[0];
+  
+  })
+  window.location.reload()
+  }}
   useEffect(() => {
     
     setTotalPlayers(props.players);
@@ -161,6 +203,7 @@ const TeamSummaryTest = (props) => {
   if(measurementsTab) return(
     
     <div className="overview team-summary-test">
+      
     <button onClick={changeLockState} className={lock?"lock-locked":"lock-unlocked"}>{lock?<AiFillLock/>:<AiFillUnlock/>}</button>
     <div>
       <button onClick={()=>setMeasurementsTab(false)} className="test-measurements-button">Squad Test</button>
@@ -204,10 +247,14 @@ const TeamSummaryTest = (props) => {
   )
     return (
         <div className="overview team-summary-test">
+          
           <button onClick={changeLockState} className={lock?"lock-locked":"lock-unlocked"}>{lock?<AiFillLock/>:<AiFillUnlock/>}</button>
             <div>
+              
               <button style={!measurementsTab?{color:"black"}:{}} onClick={()=>setMeasurementsTab(false)} className="test-measurements-button">Squad Test</button>
               <button style={measurementsTab?{color:"black"}:{}}  onClick={()=>setMeasurementsTab(true)} className="test-measurements-button">Body Measurements</button>
+              <button className="add-reduce-tests" onClick={reduceCols}>-</button>
+              <button className="add-reduce-tests" onClick={addCols}>+</button>
           </div>
           <select onChange={filterTests} className="filter">
             <option>Filter by</option>
@@ -236,7 +283,8 @@ const TeamSummaryTest = (props) => {
                 value2 == "Team" ? value.team:
                 value2 == tests[0]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test1"} onChange={handleTestValue} placeholder={value.tests.test1}></input>:
                 value2 == tests[1]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test2"} onChange={handleTestValue} placeholder={value.tests.test2}></input>:
-                value2 == tests[2]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"} onChange={handleTestValue} placeholder={value.tests.test3}></input>:""
+                value2 == tests[2]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"} onChange={handleTestValue} placeholder={value.tests.test3}></input>:
+                value2 == tests[3]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test4"} onChange={handleTestValue} placeholder={value.tests.test4}></input>:""
                 }</td>
               })}
               </tr>)})}

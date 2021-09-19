@@ -1,3 +1,5 @@
+
+const { Int32 } = require("bson");
 const mongoose = require("mongoose");
 
 const training = new mongoose.Schema({
@@ -23,7 +25,8 @@ const tests = new mongoose.Schema({
     test1:{type:String},
     test2:{type:String},
     test3:{type:String},
-    test4:{type:String}
+    test4:{type:String},
+    nrOfCols:{type:Number}
 })
 const schema = new mongoose.Schema({
     national_id: {type: Number, unique: true, required: true},
