@@ -39,3 +39,9 @@
     background: rgb(235, 235, 73);
     color:rgb(177, 177, 21)
 }
+.inside-health{
+    background:rgb(221, 221, 221); 
+    width: 100%;
+    border-radius: 5px;
+    padding:5% 0
+}

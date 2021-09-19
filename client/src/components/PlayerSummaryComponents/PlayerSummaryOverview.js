@@ -127,17 +127,24 @@ const PlayerSummaryOverview = (props) => {
               <th colSpan="3" className="table-header-cell pso-header-cell">
                 wellness
               </th>
+              <th colSpan="3" style={{padding:"0 60px"}} className="table-header-cell pso-header-cell">
+                Health
+              </th>
             </tr>
             <tr className="overview-sub-table">
               <th className="pso-sub">ACWR</th>
               <th className="pso-sub">DL</th>
-              <th className="pso-sub">Mood</th>
+              <th className="pso-sub">Monotony</th>
               <th className="pso-sub">W-to-W</th>
               <th className="pso-sub">EWMA</th>
               <th className="pso-sub">Strain</th>
               <th className="pso-sub">Sleep</th>
               <th className="pso-sub">Mood</th>
               <th className="pso-sub">Fatigue</th>
+              <th style={{border:"none"}} className="pso-sub"></th>
+              <th style={{border:"none"}}  className="pso-sub"></th>
+              <th style={{border:"none"}}  className="pso-sub"></th>
+              
             </tr>
           </thead>
           <tbody>
@@ -198,7 +205,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -225,7 +232,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -285,7 +301,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,1) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -312,10 +328,18 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
                   })
                 : ""}
-              
+              {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                  })
+                : ""}
             </tr>
             <tr>
               <td className="pso-sub2" colSpan="3">{verToday(2)?"Today": `${showDate(
@@ -373,7 +397,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,2) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -400,7 +424,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -460,7 +493,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,3) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -487,7 +520,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -547,7 +589,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,4) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -574,7 +616,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -634,7 +685,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,5) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -661,7 +712,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -721,7 +781,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,6) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
                   })
                 : ""}
                 {player
@@ -748,7 +808,16 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                  })
+                : ""}
+                {player
+                ? player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
                   })
                 : ""}
             </tr>

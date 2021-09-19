@@ -19,6 +19,7 @@
 }
 .side-menu{
     margin-top: 35%;
+    z-index: 2;
 }
 .logo{
     position: absolute;
@@ -28,6 +29,7 @@
     margin-bottom: 20px;
     color:white;
     align-self: center;
+    z-index: 1;
 }
 .list-menu-anchor{
     display: flex;

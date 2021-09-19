@@ -8,6 +8,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { requests } from "../utils/axios";
 import defaultImag from "../assets/sportsman.svg"
+import { Link } from "react-router-dom";
 const DashboardPanel = (props) => {
   const today = moment();
   let user = props.user;
@@ -35,21 +36,6 @@ const DashboardPanel = (props) => {
   const [donutPercent, setDonutPercent] = useState(77); //0-100
   const [selectedActive, setSelectedActive] = useState(true);
   const [alertActive, setAlertActive] = useState(false);
-  const [selectedPlayers, setSelectedPlayers] = useState([
-    { name: "John Doe", injury: "Knee Injury" },
-    { name: "Doe John", injury: "" },
-    { name: "John Doe", injury: "Knee Injury" },
-    { name: "Doe John", injury: "Hand Injury" },
-    { name: "John Doe", injury: "Knee Injury" },
-    { name: "Doe John", injury: "Hand Injury" },
-    { name: "John Doe", injury: "Knee Injury" },
-    { name: "Doe John", injury: "Hand Injury" },
-    { name: "John Doe", injury: "" },
-    { name: "Doe John", injury: "Hand Injury" },
-    { name: "John Doe", injury: "Knee Injury" },
-    
-  ]);
-  const [alertPlayers,setAlertPlayers] = useState(totalPlayers);
   useEffect(()=>{
     initChart()
   },[])
@@ -254,14 +240,14 @@ const initChart =  () =>{
       <label className="players-label">Players</label>
       <div className="selected-tab-desktop">
                 {totalPlayers.map((value,index)=>
-                <div key={value} className="selected-player-desktop">
+                <Link style={{textDecoration:"none",color:"black"}} to={"/dashboard/player-summary/overview"}><div key={value} className="selected-player-desktop">
                   <img src={defaultImag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
                       <label className="injury-desktop">{value.injury}</label>
                     </div>
                   <div className={value.injury ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>
-                </div>)}
+                </div></Link>)}
             </div>
     </div>
   );

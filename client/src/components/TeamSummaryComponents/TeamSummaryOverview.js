@@ -62,14 +62,14 @@ const TeamSummaryOverview = (props) => {
     var day = currentShownWeek;
     day = moment(day).add(nrDays,"day");
     value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
-    return(trainingSession.duration1*trainingSession.rpe1 + trainingSession.duration2 * trainingSession.rpe2||"none")
+    return(trainingSession.duration1*trainingSession.rpe1 + trainingSession.duration2 * trainingSession.rpe2||"0")
   }
   const findMood = (value,nrDays) =>{
     var trainingSession = {};
     var day = currentShownWeek;
     day = moment(day).add(nrDays,"day");
     value.training.map((value2)=>{if(value2.date===day.format("DD/MM/YY")) trainingSession = value2})
-    return(trainingSession.wellness1/2+trainingSession.wellness1/2||"none")
+    return(trainingSession.wellness1/2+trainingSession.wellness1/2||"0")
   }
   const verToday = (days)=>{
     if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1
@@ -155,27 +155,27 @@ const TeamSummaryOverview = (props) => {
           {players.map((value)=>{return(
           <tr>
             <td colSpan="3">{value.firstName} {value.lastName}</td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-yellow">{findDailyLoad(value,0)}</div></td>
-            <td><div className="attr-team-overview-blue">{findMood(value,0)}</div></td>
-            <td><div className="attr-team-overview-green">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,1)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,1)}</div></td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,2)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,2)}</div></td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,3)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,3)}</div></td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,4)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,4)}</div></td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,5)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,5)}</div></td>
-            <td><div className="attr-team-overview-red">{findACWR(value)}</div></td>
-            <td><div className="attr-team-overview-red">{findDailyLoad(value,6)}</div></td>
-            <td><div className="attr-team-overview-red">{findMood(value,6)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,0)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,0)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,1)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,1)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,2)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,2)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,3)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,3)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,4)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,4)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,5)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,5)}</div></td>
+            <td><div className={(findACWR(value)<.8?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)}</div></td>
+            <td><div className="attr-team-overview">{findDailyLoad(value,6)}</div></td>
+            <td><div className="attr-team-overview">{findMood(value,6)}</div></td>
           </tr>)})}
         </tbody>
       </table>
