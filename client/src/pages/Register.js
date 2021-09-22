@@ -28,14 +28,15 @@ const Register = () => {
                 team:team,
                 firstName:firstname,
                 lastName:lastname,
-                national_id:123,
+                national_id:username,
                 tests:{
-                    test1:'',
-                    test2:'',
-                    test3:'',
-                    test4:''},
+                    test1:"0",
+                    test2:"0",
+                    test3:"0",
+                    test4:"0",
+                    date:"0"},
                 measurements:{
-                    wight:"0",
+                    weight:"0",
                     height:"0",
                     fat:"0",
                 }

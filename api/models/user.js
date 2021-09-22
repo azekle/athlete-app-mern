@@ -29,7 +29,7 @@ const tests = new mongoose.Schema({
     nrOfCols:{type:Number}
 })
 const schema = new mongoose.Schema({
-    national_id: {type: Number, unique: false, required: true},
+    national_id: {type: String, unique: false, required: true},
     is_coach: {type: Boolean, required: true},
     username: {type: String, unique: true, required: true},
     hash: {type: String, required: true},
