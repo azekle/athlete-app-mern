@@ -29,6 +29,16 @@ const Register = () => {
                 firstName:firstname,
                 lastName:lastname,
                 national_id:123,
+                tests:{
+                    test1:'',
+                    test2:'',
+                    test3:'',
+                    test4:''},
+                measurements:{
+                    wight:"0",
+                    height:"0",
+                    fat:"0",
+                }
             }
         )
     }

@@ -169,6 +169,50 @@ const TeamSummaryTest = (props) => {
   
   setPlayers([...players]);  
   }
+  const filterMeasurements = (e) =>{
+    var measurementName = e.target.value;
+    
+   
+    
+   var aux
+    if(measurementName==="Height") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.measurements.height)>parseInt(players[index+1].measurements.height)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(measurementName==="Weight") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.measurements.weight)>parseInt(players[index+1].measurements.weight)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(measurementName==="Fat") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.measurements.fat)>parseInt(players[index+1].measurements.fat)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(measurementName==="BMI") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.measurements.bmi)>parseInt(players[index+1].measurements.bmi)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+  setPlayers([...players]);  
+  }
   const reduceCols = async() =>{
     if(nrOfCols>5){setNrOfCols(nrOfCols-1);theaders.length = nrOfCols-1;
     
@@ -210,9 +254,9 @@ const TeamSummaryTest = (props) => {
       <button style={measurementsTab?{color:"black"}:""} className="test-measurements-button">Body Measurements</button>
      
     </div>
-    <select onChange={filterTests} className="filter">
+    <select onChange={filterMeasurements} className="filter">
       <option>Filter by</option>
-      {tests.map((value,index)=>{
+      {measurements.map((value,index)=>{
         return<option id={"test"+index}>{value}</option>
       })
       }

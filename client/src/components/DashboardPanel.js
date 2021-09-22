@@ -185,14 +185,14 @@ const initChart =  () =>{
           <option>Team A</option>
         </select>
         <div className="user-options">
-        < AiOutlineQuestionCircle onClick={()=>setCanQuestion(true)} className="question-mark"/>
+        < AiOutlineQuestionCircle onClick={()=>setCanQuestion(!canQuestion)} className="question-mark"/>
           {canQuestion?
           <div className="send-email">
             
             <button className="send-email-label">send us an email</button>
             <BiEnvelope style={{fontSize:".9em"}}/>
           </div>:""}
-          <div className="can-log" onClick={()=>setCanLogOut(true)}>{user.firstName[0]}</div>
+          <div className="can-log" onClick={()=>setCanLogOut(!canLogOut)}>{user.firstName[0]}</div>
           {canLogOut?
           <div className="logout-panel">
              <div style={{marginTop:"10px"}} className="can-log">{user.firstName[0]}</div>
