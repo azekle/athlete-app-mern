@@ -188,8 +188,9 @@ const initChart =  () =>{
         < AiOutlineQuestionCircle onClick={()=>setCanQuestion(true)} className="question-mark"/>
           {canQuestion?
           <div className="send-email">
-            <BiEnvelope/>
-            <button className="send-email-label">Send an Email!</button>
+            
+            <button className="send-email-label">send us an email</button>
+            <BiEnvelope style={{fontSize:".9em"}}/>
           </div>:""}
           <div className="can-log" onClick={()=>setCanLogOut(true)}>{user.firstName[0]}</div>
           {canLogOut?

@@ -10,7 +10,14 @@ const SideMenu = (props) => {
    
     const[activeTab,setActiveTab] = useState('dashboard');
     const allTabs = ["dashboard","team_summary","player_summary","player_drilldown","calendar","tests"];
+    const currentPath = window.location.pathname
+    const currentPathArray = currentPath.split("/")
+    
      useEffect(() => {
+         if(currentPathArray[2]=="dashboard-panel") setActiveTab("dashboard")
+         if(currentPathArray[2]=="team-summary") setActiveTab("team_summary")
+         if(currentPathArray[2]=="player-summary") setActiveTab("player_summary")
+         if(currentPathArray[2]=="calendar") setActiveTab("calendar")
           allTabs.map((el)=> {if(document.getElementById(el))document.getElementById(el).style.color = ""})
           if(document.getElementById(activeTab)) document.getElementById(activeTab).style.color="white"
     }, [activeTab])

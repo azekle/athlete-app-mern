@@ -1,4 +1,144 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+.register-container1{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.register-container2{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    height: 90%;
+    -webkit-box-shadow: 0px 0px 20px 5px rgba(20,119,206,0.5); 
+    box-shadow: 0px 0px 20px 5px rgba(20,119,206,0.5);
+}
+.left-register{
+    width: 45%;
+    height: 100%;
+    background:url('../assets/left-register.png');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+ }
+ .welcome{
+     font-size: 2.2em;
+     margin-bottom: 10px;
+ }
+ .here-you{
+     font-size: 1.2em;
+     margin:0;
+     font-weight: 500;
+     
+ }
+ .fill-every{
+     font-size: 1.1em;
+     font-weight: 300;
+     text-align: center;
+     margin-top: 10px;
+     margin-bottom: 30%;
+ }
+.register-form-wrapper{
+    width: 51%;
+    background: white;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+ }
 .register-form{
     display: flex;
     flex-direction: column;
+    width: 80%; 
+    justify-content: center;
+    align-items: center;
+}
+.register-form-title{
+    color:#065A95;
+    font-size: 2.1em;
+    font-weight: 700;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+.register-input{
+    height: 30px;
+    width: 90%;
+    margin-top: 10px;
+    background:#EFEFEF;
+    border:none;
+    text-indent: 7%;
+    border-radius: 5px;
+    padding:3px
+}
+.first-last-fields{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+.register-row-field{
+    margin-left: 10px;
+    
+}
+.admin-password{
+    background: #6A6A6A;
+    color:#FFFFFF
+}
+.admin-password::placeholder{
+    color:rgb(199, 199, 199)
+}
+.register-submit{
+    background: #0065C9;
+    color:White;
+    border:none;
+    margin-top: 7%;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .9em;
+    font-weight: 600;
+    transition-duration: .4s;
+}
+.register-submit:hover{
+    cursor: pointer;
+    padding: 12px 35px;
+    background: #229cf3
+}
+.form-icons-username{
+    background: url('../assets/user.svg') #EFEFEF no-repeat 4px 11px;
+    background-size: 5%;
+    
+}
+.form-icons-email{
+    background: url('../assets/mail.svg') #EFEFEF no-repeat 4px 11px;
+    background-size: 5%; 
+}
+.form-icons-password{
+    background: url('../assets/unlock.svg') #EFEFEF no-repeat 4px 11px;
+    background-size: 5%; 
+}
+.form-icons-admin-password{
+    background: url('../assets/door-key.svg') #6A6A6A no-repeat 4px 11px;
+    background-size: 5%; 
+}
+.is_coach{
+    margin-top:5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.is_coach input:hover{
+  cursor: pointer;
+   
 }
