@@ -66,6 +66,8 @@ const Register = () => {
                             <select className="register-input register-row-field" placeholder="Team" onChange={e=> setTeam(e.target.value)} required type="text">
                                 <option>Team</option>
                                 <option>Team A</option>
+                                <option>Team B</option>
+                                <option>Team C</option>
                             </select>
                         </div>
                         <input className="register-input form-icons-password" placeholder="Password" required type="password" onChange={e=> setPassword(e.target.value)}></input>
