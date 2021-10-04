@@ -24,7 +24,7 @@
 .dashboard-panel-title{
     font-size: 2em;
     align-self: flex-start;
-    margin-top:4%;
+    margin-top:18px;
     margin-bottom: 2%;
     width: 100%;
     display: flex;
@@ -154,11 +154,12 @@
     justify-self: flex-end;
     font-size: .8em;
     line-height: 44px;
+    margin: 0px;
 }
 .question-mark{
     font-size: .8em;;
     align-self: center;
-    margin-right: 10px;
+    margin-right: 20px;
     color:grey;
     transition-duration: .3s;
 }
