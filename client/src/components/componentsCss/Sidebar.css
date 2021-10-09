@@ -3,7 +3,7 @@
 
 .menu-container{
    
-    background-color: #043354;
+    background-color:#065A95;
     color:#8E8E8E;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -24,7 +24,7 @@
 .logo{
     position: absolute;
     display: flex;
-    top:-10%;
+    top:-8%;
     align-content: flex-start;
     margin-bottom: 20px;
     color:white;
@@ -37,13 +37,13 @@
     margin-top: 15px;
     padding-top: 15px;
     padding-bottom: 5px;
-    color:#747474;
+    color:#BEB9B9;
     transition-duration: .3s;
     text-decoration: none;
     white-space: nowrap
 }
 .list-menu-anchor:hover{
-    color:#e8e8e8;
+    color:#BEB9B9;
 }
 .menu-item-icon{
     width: 30px;
