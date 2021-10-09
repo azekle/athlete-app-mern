@@ -27,6 +27,7 @@ const Register = () => {
                 is_coach:isCoach,
                 team:team,
                 firstName:firstname,
+                training:[{date:email}],
                 lastName:lastname,
                 national_id:username,
                 tests:{
@@ -34,7 +35,13 @@ const Register = () => {
                     test2:"0",
                     test3:"0",
                     test4:"0",
-                    date:"0"},
+                    test5:"0",
+                    test6:"0",
+                    test7:"0",
+                    test8:"0",
+                    date:"0",
+                    nrOfCols:12,
+                },
                 measurements:{
                     weight:"0",
                     height:"0",

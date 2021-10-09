@@ -9,10 +9,15 @@ const TeamSummaryTest = (props) => {
   const [test1Value,setTest1Value] = useState("") 
   const [test2Value,setTest2Value] = useState("") 
   const [test3Value,setTest3Value] = useState("") 
+  const [test4Value,setTest4Value] = useState("") 
+  const [test5Value,setTest5Value] = useState("") 
+  const [test6Value,setTest6Value] = useState("") 
+  const [test7Value,setTest7Value] = useState("") 
+  const [test8Value,setTest8Value] = useState("") 
   const [height,setHeight] = useState("") 
   const [weight,setWeight] = useState("") 
   const [fat,setFat] = useState("") 
-  const [test4Value,setTest4Value] = useState("") 
+  
   const [playerName,setPlayerName] =useState("")
   const [measurementsTab,setMeasurementsTab] = useState(true)
   var playerId = "";
@@ -25,7 +30,11 @@ const TeamSummaryTest = (props) => {
   const [test2Name,setTest2Name] = useState()
   const [test3Name,setTest3Name] = useState()
   const [test4Name,setTest4Name] = useState()
-  const [nrOfCols,setNrOfCols] = useState(8)
+  const [test5Name,setTest5Name] = useState()
+  const [test6Name,setTest6Name] = useState()
+  const [test7Name,setTest7Name] = useState()
+  const [test8Name,setTest8Name] = useState()
+  const [nrOfCols,setNrOfCols] = useState(12)
   const [lock,setLock] = useState(true)
   var testNames
   if (players.length==0) totalPlayers.map((value,index)=>{
@@ -39,19 +48,55 @@ const TeamSummaryTest = (props) => {
    tests[1] = testNames.tests.test2;
    tests[2] = testNames.tests.test3;
    tests[3] = testNames.tests.test4;
+   tests[4] = testNames.tests.test5;
+   tests[5] = testNames.tests.test6;
+   tests[6] = testNames.tests.test7;
+   tests[7] = testNames.tests.test8;
    setTheaders([...theaders,...tests]);
    theaders.length = testNames.tests.nrOfCols;
    setNrOfCols(testNames.tests.nrOfCols)
   } theaders.length = nrOfCols 
    })
-  const handleTestValue = (e)=>{
+  const handleTestValue = async (e)=>{
+    var test1TUV="";
+    var test2TUV="";
+    var test3TUV="";
+    var test4TUV="";
+    var test5TUV="";
+    var test6TUV="";
+    var test7TUV="";
+    var test8TUV="";
+    var playerTU="";
     playerId = e.target.name.split("/")[2]
-    players.map((value)=>{if(value._id==playerId) setPlayerToUpdate(value)})
-    if(e.target.name.split("/")[3] == "Test1") setTest1Value(e.target.value)
-    if(e.target.name.split("/")[3] == "Test2") setTest2Value(e.target.value)
-    if(e.target.name.split("/")[3] == "Test3") setTest3Value(e.target.value)
-    if(e.target.name.split("/")[3] == "Test4") setTest4Value(e.target.value)
+    players.map((value)=>{if(value._id==playerId) {setPlayerToUpdate(value);playerTU = value}})
+    if(e.target.name.split("/")[3] == "Test1") {setTest1Value(e.target.value);test1TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test2") {setTest2Value(e.target.value);test2TUV = e.target.value }
+    if(e.target.name.split("/")[3] == "Test3") {setTest3Value(e.target.value);test3TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test4") {setTest4Value(e.target.value);test4TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test5") {setTest5Value(e.target.value);test5TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test6") {setTest6Value(e.target.value);test6TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test7") {setTest7Value(e.target.value);test7TUV = e.target.value}
+    if(e.target.name.split("/")[3] == "Test8") {setTest8Value(e.target.value);test8TUV = e.target.value}
     setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
+
+///////////////////////////////////////////////////
+    
+   
+      if(playerTU){// requests.get("/user/get").then(res => console.log(res));
+      if(test1TUV!="") playerTU.tests.test1 = test1TUV;
+      if(test2TUV!="") playerTU.tests.test2 = test2TUV;
+      if(test3TUV!="") playerTU.tests.test3 = test3TUV;
+      if(test4TUV!="") playerTU.tests.test4 = test4TUV;
+      if(test5TUV!="") playerTU.tests.test5 = test5TUV;
+      if(test6TUV!="") playerTU.tests.test6 = test6TUV;
+      if(test7TUV!="") playerTU.tests.test7 = test7TUV;
+      if(test8TUV!="") playerTU.tests.test8 = test8TUV;
+      playerTU.tests.date = moment().format("DD/MM/YY")
+     await requests.put("/user/update",playerTU)
+      .then(res=>console.log(res))
+     }
+////////////////////////////////////////////////////
+
   }
   const handleMeasurementsValue = (e)=>{
   
@@ -62,17 +107,7 @@ const TeamSummaryTest = (props) => {
     if(e.target.name.split("/")[3] == "fat") setFat(e.target.value)
     setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
   }
-  const updateTestTable = async() =>{
-   
-   if(playerToUpdate){// requests.get("/user/get").then(res => console.log(res));
-   if(test1Value!="")playerToUpdate.tests.test1 = test1Value;
-   if(test2Value!="")playerToUpdate.tests.test2 = test2Value;
-   if(test3Value!="")playerToUpdate.tests.test3 = test3Value;
-   if(test4Value!="")playerToUpdate.tests.test4 = test4Value;
-   playerToUpdate.tests.date = moment().format("DD/MM/YY")
-  await requests.put("/user/update",playerToUpdate)
-   .then(res=>console.log(res))
-  }}
+
   const updateMeasurementsTable = async() =>{
    
     if(playerToUpdate){// requests.get("/user/get").then(res => console.log(res));
@@ -90,6 +125,10 @@ const TeamSummaryTest = (props) => {
     if(test2Name)testNames.tests.test2 = test2Name
     if(test3Name)testNames.tests.test3 = test3Name
     if(test4Name)testNames.tests.test4 = test4Name
+    if(test5Name)testNames.tests.test5 = test5Name
+    if(test6Name)testNames.tests.test6 = test6Name
+    if(test7Name)testNames.tests.test7 = test7Name
+    if(test8Name)testNames.tests.test8 = test8Name
     
     await requests.put("/user/update",testNames)
    .then(res=>console.log(res))
@@ -99,6 +138,10 @@ const TeamSummaryTest = (props) => {
     if(e.target.name==="test2") {tests[1]=e.target.value;setTest2Name(e.target.value)}
     if(e.target.name==="test3") {tests[2]=e.target.value;setTest3Name(e.target.value)}
     if(e.target.name==="test4") {tests[3]=e.target.value;setTest4Name(e.target.value)}
+    if(e.target.name==="test5") {tests[4]=e.target.value;setTest5Name(e.target.value)}
+    if(e.target.name==="test6") {tests[5]=e.target.value;setTest6Name(e.target.value)}
+    if(e.target.name==="test7") {tests[6]=e.target.value;setTest7Name(e.target.value)}
+    if(e.target.name==="test8") {tests[7]=e.target.value;setTest8Name(e.target.value)}
   }
   const styleLockOffHeader = {
     background:"none",
@@ -166,6 +209,43 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
+    if(testName==="test5") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.tests.test5)>parseInt(players[index+1].tests.test5)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(testName==="test6") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.tests.test6)>parseInt(players[index+1].tests.test6)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(testName==="test7") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.tests.test7)>parseInt(players[index+1].tests.test7)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+    if(testName==="test8") players.map(()=>{
+      players.map((value,index)=>{
+        if(players[index+1])if(parseInt(value.tests.test8)>parseInt(players[index+1].tests.test8)){
+          aux = players[index]
+          players[index] = players[index+1]
+          players[index+1] = aux ;
+        }
+      })
+    })
+  
   
   setPlayers([...players]);  
   }
@@ -226,7 +306,7 @@ const TeamSummaryTest = (props) => {
     }
   }
   const addCols = async() =>{
-    if(nrOfCols<8) {setNrOfCols(nrOfCols+1);theaders.length  = nrOfCols+1;
+    if(nrOfCols<12) {setNrOfCols(nrOfCols+1);theaders.length  = nrOfCols+1;
     //the player with the username:tests was used in order to store the test names
     await requests.post("/user/username",{username:"tests"})
    .then(res=>testNames= res.data[0])
@@ -328,15 +408,19 @@ const TeamSummaryTest = (props) => {
                 value2 == tests[0]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test1"} onChange={handleTestValue} placeholder={value.tests.test1}></input>:
                 value2 == tests[1]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test2"} onChange={handleTestValue} placeholder={value.tests.test2}></input>:
                 value2 == tests[2]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"} onChange={handleTestValue} placeholder={value.tests.test3}></input>:
-                value2 == tests[3]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test4"} onChange={handleTestValue} placeholder={value.tests.test4}></input>:""
+                value2 == tests[3]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test4"} onChange={handleTestValue} placeholder={value.tests.test4}></input>:
+                value2 == tests[4]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test5"} onChange={handleTestValue} placeholder={value.tests.test5}></input>:
+                value2 == tests[5]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test6"} onChange={handleTestValue} placeholder={value.tests.test6}></input>:
+                value2 == tests[6]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test7"} onChange={handleTestValue} placeholder={value.tests.test7}></input>:
+                value2 == tests[7]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test8"} onChange={handleTestValue} placeholder={value.tests.test8}></input>:""
                 }</td>
               })}
               </tr>)})}
               
           </tbody>
         </table>
-        {!lock?<button style={playerName? {alignSelf:"center"}:{background:"grey",alignSelf:"center"}} onClick={updateTestTable} className="submit-button">{`Update ${playerName}`}</button>:""}
-        {!lock?<button style={test1Name||test2Name||test3Name||test4Name? {alignSelf:"center"}:{background:"grey",alignSelf:"center"}} onClick={updateTestNames} className="submit-button">Update Tests</button>:""}
+        
+        {!lock?<button style={test1Name||test2Name||test3Name||test4Name||test5Name||test6Name||test7Name||test8Name? {alignSelf:"center"}:{background:"grey",alignSelf:"center"}} onClick={updateTestNames} className="submit-button">Update Tests</button>:""}
       </div>
     )
 }

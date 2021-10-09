@@ -3,7 +3,7 @@ const { Int32 } = require("bson");
 const mongoose = require("mongoose");
 
 const training = new mongoose.Schema({
-     date: {type:String,unique:true},
+     date: {type:String,},
      sleep:{type:String},
      fatigue:{type:String},
      session1: {type:String},
@@ -26,6 +26,10 @@ const tests = new mongoose.Schema({
     test2:{type:String},
     test3:{type:String},
     test4:{type:String},
+    test5:{type:String},
+    test6:{type:String},
+    test7:{type:String},
+    test8:{type:String},
     nrOfCols:{type:Number}
 })
 const schema = new mongoose.Schema({
