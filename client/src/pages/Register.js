@@ -40,12 +40,15 @@ const Register = () => {
                     test7:"0",
                     test8:"0",
                     date:"0",
+                    season:"0",
                     nrOfCols:12,
                 },
                 measurements:{
                     weight:"0",
                     height:"0",
                     fat:"0",
+                    date:"0",
+                    season2:"0",
                 }
             }
         )

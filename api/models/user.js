@@ -19,6 +19,8 @@ const training = new mongoose.Schema({
         weight:{type:String},
         height:{type:String},
         fat:{type:String},
+        season:{type:String},
+        date:{type:String}
     })
 const tests = new mongoose.Schema({
     date:{type:String},
@@ -30,6 +32,7 @@ const tests = new mongoose.Schema({
     test6:{type:String},
     test7:{type:String},
     test8:{type:String},
+    season:{type:String},
     nrOfCols:{type:Number}
 })
 const schema = new mongoose.Schema({
@@ -41,8 +44,8 @@ const schema = new mongoose.Schema({
     lastName: {type: String, required: true},
     team: {type: String, required: true},
     training:[training],
-    tests:tests,
-    measurements:measurements,
+    tests:[tests],
+    measurements:[measurements],
     createdDate: {type: Date, default: Date.now},
 })
 

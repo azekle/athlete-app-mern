@@ -8,3 +8,12 @@
     font-family: 'Montserrat', sans-serif;
     height: fit-content;
 }
+.field-over:hover{
+    background-color: #62b5f8;
+    cursor: pointer;
+    transform: translateY(-5px);
+    transition-duration: .3s;
+}
+.input-row{
+    cursor: pointer;
+}

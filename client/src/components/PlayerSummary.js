@@ -10,6 +10,7 @@ import TeamSummaryHealth from "./TeamSummaryComponents/TeamSummaryHealth";
 import TeamSummaryPerformance from "./TeamSummaryComponents/TeamSummaryPerformance";
 import TeamSummaryTest from "./TeamSummaryComponents/TeamSummaryTest";
 import PlayerSummaryTrainingLoad from "./PlayerSummaryComponents/PlayerSummaryTrainingLoad";
+import PlayerSummaryTest from "./PlayerSummaryComponents/PlayerSummaryTest";
 const PlayerSummary = (props) => {
   const [direction, setDirection] = useState();
   var refToday = moment();
@@ -43,7 +44,7 @@ const PlayerSummary = (props) => {
             <PlayerSummaryTrainingLoad player = {activePlayer}/>
           </Route>
           <Route path="/dashboard/player-summary/test" exact>
-            <TeamSummaryTest players={players} />
+            <PlayerSummaryTest player={activePlayer} players={players} />
           </Route>
           <Route path="/dashboard/player-summary/health" exact>
             <TeamSummaryHealth />

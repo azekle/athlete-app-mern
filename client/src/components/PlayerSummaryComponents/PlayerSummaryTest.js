@@ -1,16 +1,15 @@
 import React,{useState,useEffect} from 'react'
-import "./TeamSummaryCss/TeamSummaryTest.css"
+import "../TeamSummaryComponents/TeamSummaryCss/TeamSummaryTest.css"
 import {requests} from '../../utils/axios'
 import {AiFillLock,AiFillUnlock} from 'react-icons/ai'
 import moment from 'moment'
-const TeamSummaryTest = (props) => {
+const PlayerSummaryTest = (props) => {
+  const playerToBeDisplayed = [props.player]
   const [totalPlayers, setTotalPlayers] = useState(props.players)
   const [players,setPlayers] = useState([])
   var height
   var weight
   var fat
-  
-  const [playerName,setPlayerName] =useState("")
   const [measurementsTab,setMeasurementsTab] = useState(true)
   var playerId = "";
   const [playerToUpdate,setPlayerToUpdate] = useState("")
@@ -29,10 +28,7 @@ const TeamSummaryTest = (props) => {
   const [nrOfCols,setNrOfCols] = useState(12)
   const [lock,setLock] = useState(true)
   var testNames
-  if (players.length==0) totalPlayers.map((value,index)=>{
-   if(!value.is_coach) players.push(value)
   
-  })
   requests.post("/user/username",{username:"tests"})
   .then(res=>{testNames= res.data[0];
    if(theaders.length<5){
@@ -63,7 +59,7 @@ const TeamSummaryTest = (props) => {
     var date = "";
     var season = ""
     playerId = e.target.name.split("/")[2]
-    players.map((value)=>{if(value._id==playerId) {setPlayerToUpdate(value);playerTU = value}})
+    playerToBeDisplayed.map((value)=>{if(value._id==playerId) {setPlayerToUpdate(value);playerTU = value}})
     
     if(e.target.name.split("/")[3] == "Test1") {test1TUV = e.target.value}
     if(e.target.name.split("/")[3] == "Test2") {test2TUV = e.target.value}
@@ -75,7 +71,7 @@ const TeamSummaryTest = (props) => {
     if(e.target.name.split("/")[3] == "Test8") {test8TUV = e.target.value}
     if(e.target.name.split("/")[3] == "date") {date = e.target.value}
     if(e.target.name.split("/")[3] == "season") {season = e.target.value}
-    setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
+    
 
 ///////////////////////////////////////////////////
     
@@ -102,11 +98,11 @@ const TeamSummaryTest = (props) => {
 
   const updateMeasurementsTable = async(e) =>{
     playerId = e.target.name.split("/")[2]
-    players.map((value)=>{if(value._id==playerId) setPlayerToUpdate(value)})
+    playerToBeDisplayed.map((value)=>{if(value._id==playerId) setPlayerToUpdate(value)})
     if(e.target.name.split("/")[3] == "height") height = e.target.value
     if(e.target.name.split("/")[3] == "weight") weight = e.target.value
     if(e.target.name.split("/")[3] == "fat") fat = e.target.value
-    setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
+    
     if(playerToUpdate){// requests.get("/user/get").then(res => console.log(res));
     if(height!="")playerToUpdate.measurements.height = height;
     if(weight!="")playerToUpdate.measurements.weight = weight;
@@ -122,14 +118,14 @@ const TeamSummaryTest = (props) => {
     var date = "";
     var season = ""
     playerId = e.target.name.split("/")[2]
-    players.map((value)=>{if(value._id==playerId) {setPlayerToUpdate(value);playerTU = value}})
+    playerToBeDisplayed.map((value)=>{if(value._id==playerId) {setPlayerToUpdate(value);playerTU = value}})
     
     if(e.target.name.split("/")[3] == "weight") {weight = e.target.value}
     if(e.target.name.split("/")[3] == "height") {height = e.target.value}
     if(e.target.name.split("/")[3] == "fat") {fat = e.target.value}
     if(e.target.name.split("/")[3] == "date") {date = e.target.value}
     if(e.target.name.split("/")[3] == "season") {season = e.target.value}
-    setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
+    
 
 ///////////////////////////////////////////////////
     
@@ -207,7 +203,7 @@ const TeamSummaryTest = (props) => {
     
     var aux
     if(testName==="test1") players.map(()=>{
-      players.map((value,index)=>{  
+      playerToBeDisplayed.map((value,index)=>{  
         if(players[index+1])if(parseInt(value.tests[0].test1)>parseInt(players[index+1].tests[0].test1)){
           aux = players[index]
           players[index] = players[index+1]
@@ -215,8 +211,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test2") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test2") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test2)>parseInt(players[index+1].tests[0].test2)){
           aux = players[index]
           players[index] = players[index+1]
@@ -224,8 +220,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test3") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test3") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test3)>parseInt(players[index+1].tests[0].test3)){
           aux = players[index]
           players[index] = players[index+1]
@@ -233,8 +229,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test4") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test4") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test4)>parseInt(players[index+1].tests[0].test4)){
           aux = players[index]
           players[index] = players[index+1]
@@ -242,8 +238,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test5") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test5") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test5)>parseInt(players[index+1].tests[0].test5)){
           aux = players[index]
           players[index] = players[index+1]
@@ -251,8 +247,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test6") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test6") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test6)>parseInt(players[index+1].tests[0].test6)){
           aux = players[index]
           players[index] = players[index+1]
@@ -260,8 +256,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test7") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test7") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test7)>parseInt(players[index+1].tests[0].test7)){
           aux = players[index]
           players[index] = players[index+1]
@@ -269,8 +265,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(testName==="test8") players.map(()=>{
-      players.map((value,index)=>{
+    if(testName==="test8") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.tests[0].test8)>parseInt(players[index+1].tests[0].test8)){
           aux = players[index]
           players[index] = players[index+1]
@@ -326,8 +322,8 @@ const TeamSummaryTest = (props) => {
    
     
    var aux
-    if(measurementName==="Height") players.map(()=>{
-      players.map((value,index)=>{
+    if(measurementName==="Height") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.measurements.height)>parseInt(players[index+1].measurements.height)){
           aux = players[index]
           players[index] = players[index+1]
@@ -335,8 +331,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(measurementName==="Weight") players.map(()=>{
-      players.map((value,index)=>{
+    if(measurementName==="Weight") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.measurements.weight)>parseInt(players[index+1].measurements.weight)){
           aux = players[index]
           players[index] = players[index+1]
@@ -344,8 +340,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(measurementName==="Fat") players.map(()=>{
-      players.map((value,index)=>{
+    if(measurementName==="Fat") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.measurements.fat)>parseInt(players[index+1].measurements.fat)){
           aux = players[index]
           players[index] = players[index+1]
@@ -353,8 +349,8 @@ const TeamSummaryTest = (props) => {
         }
       })
     })
-    if(measurementName==="BMI") players.map(()=>{
-      players.map((value,index)=>{
+    if(measurementName==="BMI") playerToBeDisplayed.map(()=>{
+      playerToBeDisplayed.map((value,index)=>{
         if(players[index+1])if(parseInt(value.measurements.bmi)>parseInt(players[index+1].measurements.bmi)){
           aux = players[index]
           players[index] = players[index+1]
@@ -423,7 +419,7 @@ const TeamSummaryTest = (props) => {
     </thead>
     <tbody className="tbody-load team-summary-test-tbody">
     
-       {players.map((value,index2)=>{return(value.measurements.map((theMeasurement,index3)=>{ return(
+       {playerToBeDisplayed.map((value,index2)=>{return(value.measurements.map((theMeasurement,index3)=>{ return(
        <tr className={index3+1==value.measurements.length&&lock?"field-over":""} >
             {theaders2.map((value2,index)=>{
           return <td style={{width:"12%"}} id = {value.username} onClick={lock&&index3+1==value.measurements.length? addRowMeasurements:console.log("")} className="table-left-atr-test pso-sub2">{
@@ -473,7 +469,7 @@ const TeamSummaryTest = (props) => {
           </thead>
           <tbody className="tbody-load team-summary-test-tbody">
           
-             {players.map((value,index2)=>{return(
+             {playerToBeDisplayed.map((value,index2)=>{return(
                value.tests.map((theTest,index3)=>{
                  //jump2 ↑↑↑↑↑ return statement needed to be made-> continue from here
                return( <tr className={index3+1==value.tests.length&&lock?"field-over":""}>
@@ -505,4 +501,4 @@ const TeamSummaryTest = (props) => {
     )
 }
 
-export default TeamSummaryTest
+export default PlayerSummaryTest
