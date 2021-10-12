@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {requests} from '../utils/axios';
-import {BsFillPersonFill} from 'react-icons/bs'
+
 async function registerUser(credentials) {
     console.log(credentials);
     return requests.post("/user/register", credentials)
