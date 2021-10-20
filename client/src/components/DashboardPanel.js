@@ -16,9 +16,11 @@ const DashboardPanel = (props) => {
   let indexOfToday = [];
   let initialWeightToday = [];
   let initialColorToday = [];
-  var totalPlayers = [];
+  var totalPlayerss = []
+  
   var currentWeekDates=[]
-  props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
+  props.players.map((value)=>{if(!value.is_coach) totalPlayerss.push(value)})
+  var [totalPlayers,setTotalPlayers] = useState(totalPlayerss);
   const [canLogOut,setCanLogOut] = useState(false)
   const [canQuestion,setCanQuestion] = useState(false)
   const [activeTab, setActiveTab] = useState(true);
@@ -36,9 +38,11 @@ const DashboardPanel = (props) => {
   const [donutPercent, setDonutPercent] = useState(77); //0-100
   const [selectedActive, setSelectedActive] = useState(true);
   const [alertActive, setAlertActive] = useState(false);
+  const [firstEffect,setFirstEffect] = useState(true)
   useEffect(()=>{
-    initChart()
-  },[])
+    initChart();
+    if(totalPlayers.length==0&&firstEffect) {setTotalPlayers(totalPlayerss);}
+  },[totalPlayerss])
   const findWeek = () => {
     for (let i = 0; i < 7; i++) {
       const theDay = today.startOf("week").add(i, "d").toDate().getDate();
@@ -60,7 +64,7 @@ const DashboardPanel = (props) => {
   var universalCounter=0;
     let load = [0,0,0,0,0,0,0]
     const determineAverageForEverything = () =>{
-      console.log(currentWeekDates)
+     
       totalPlayers.map((value)=>{value.training.map((value2)=>{;if(currentWeekDates.includes(value2.date)) {
         
         value2.fatigue=parseInt(value2.fatigue);
@@ -80,7 +84,7 @@ const DashboardPanel = (props) => {
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
       currentWeekDates.map((value,index)=>{totalPlayers.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
-      console.log(load)
+     
     }
   function createCircleChart(percent, color, size, stroke) {
     let svg = `<svg class="mkc_circle-chart" viewbox="0 0 36 36" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
@@ -177,12 +181,24 @@ const initChart =  () =>{
       },
     },
   };
+  const changePlayers = (e)=>{
+    const changedPlayers = []
+    setFirstEffect(false)
+    totalPlayerss.forEach(value=>{
+      if(value.team==e.target.value) {changedPlayers.push(value);console.log("gasit")}
+    })
+    //console.log(changedPlayers)
+    setTotalPlayers(changedPlayers)
+    
+  }
   return (
     <div style={{ width: props.sideBarOnOff }} className="dashboard-panel">
       <div className="dashboard-panel-title">
         <label >Dashboard panel</label>
-        <select className="team-select">
+        <select onClick={changePlayers} className="team-select">
           <option>Team A</option>
+          <option>Team B</option>
+          <option>Team C</option>
         </select>
         <div className="user-options">
         < AiOutlineQuestionCircle onClick={()=>setCanQuestion(!canQuestion)} className="question-mark"/>
