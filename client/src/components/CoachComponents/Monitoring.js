@@ -7,6 +7,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 const Monitoring = (props) => {
   var totalPlayers = [];
   props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
+  
     //State START
     var currentWeekDates=[]
     const [activeTab,setActiveTab] = useState(true);
@@ -22,8 +23,9 @@ const Monitoring = (props) => {
     const [donutPercent,setDonutPercent] = useState(77)//0-100
     const [selectedActive,setSelectedActive] = useState(true);
     const [alertActive,setAlertActive] = useState(false);
-    const [selectedPlayers,setSelectedPlayers] = useState([{name:"Matei Sorin",injury:"Knee Injury"},{name:"Sorin Matei",injury:"Hand Injury"}]);
+    const [selectedPlayers,setSelectedPlayers] = useState(totalPlayers);
     const [alertPlayers,setAlertPlayers] = useState(totalPlayers);
+    const [playersToDisplay,setPlayersToDisplay] = useState([])
     let initialWeightToday=[];
     let initialColorToday=[]
     let totalDays = [];
@@ -56,7 +58,7 @@ const Monitoring = (props) => {
       sleepingProgress=sleepingProgress/universalCounter;
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
-      currentWeekDates.map((value,index)=>{totalPlayers.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
+      currentWeekDates.map((value,index)=>{playersToDisplay.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
       
     }
     
@@ -101,12 +103,26 @@ const Monitoring = (props) => {
       let stroke = ('stroke' in chart.dataset) ? chart.dataset.stroke : "1";
       charts[i].innerHTML = createCircleChart(percent, color, size, stroke);
   }}
-  
+  const changedTeam = () =>{
+    var playersToDisplayAux = []
+    totalPlayers.map(value=>{
+      if(value.team==props.team) playersToDisplayAux.push(value)
+    })
+    setPlayersToDisplay(playersToDisplayAux)
+    console.log(playersToDisplayAux)
+
+  }
+ useEffect(() => {
+   if(props.team) changedTeam()
+   
+ }, [props.team])
     //Functions END
     useEffect(() => {
       if(injuriesProgress.length>14) {setInjuriesProgress([1,1,1,1,1,1,1,1,1,1,1,1,1,1]);}
       initChart()
-    }, [activeTab,injuriesProgress,])
+      setSelectedPlayers(totalPlayers)
+      setPlayersToDisplay(totalPlayers)
+    }, [activeTab,injuriesProgress,props.players])
 
     const changeMonitoringTab = () =>{
         setActiveTab(!activeTab);
@@ -237,14 +253,14 @@ const Monitoring = (props) => {
             </div>
             <div className="monitoring-tabs">
               <div onClick={()=>{setSelectedActive(true);setAlertActive(false)}} style={selectedActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">Selected</div>
-              <div onClick={()=>{setSelectedActive(false);setAlertActive(true)}} style={alertActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">Alert</div>
+              <div onClick={()=>{setSelectedActive(false);setAlertActive(true)}} style={alertActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">All</div>
             </div>
             {selectedActive?<div className="selected-tab">
-                {selectedPlayers.map((value)=>
+                {playersToDisplay.map((value)=>
                 <div className="selected-player">
                   <img className="selected-player-img"></img>
                   <div className="injured-player-info">
-                      <label className="selected-player-name">{value.name}</label>
+                      <label className="selected-player-name">{value.firstName} {value.lastName}</label>
                       <label className="injury">{value.injury}</label>
                     </div>
                   <div className={value.injury ? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>

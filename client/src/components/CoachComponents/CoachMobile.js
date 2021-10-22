@@ -7,6 +7,10 @@ import { useState } from 'react'
 const CoachMobile = (props) => {
     const[monitoringActive,setMonitoringActive] = useState(true)
     const[calendarActive,setCalendarActive] = useState(false)
+    const[team,setTeam] = useState("")
+    const changeTeam = (e)=>{
+        setTeam(e.target.value)
+    }
     return (
         <div className="coach-mobile">
             <BrowserRouter>
@@ -14,8 +18,10 @@ const CoachMobile = (props) => {
                 <div className="logo-team">
                     <div className="coach-logo">Y</div>
                     <div className="select-div">
-                    <select className="coach-team">
-                        <option>Junior</option>
+                    <select onChange={changeTeam} className="coach-team">
+                        <option style={{color:"black"}}>Team A</option>
+                        <option style={{color:"black"}}>Team B</option>
+                        <option style={{color:"black"}}>Team C</option>
                     </select>
                     </div>
                 </div>
@@ -28,7 +34,7 @@ const CoachMobile = (props) => {
             
                 <Switch>
                     <Route path="/dashboard/dashboard-panel/monitoring" >
-                        <Monitoring players={props.players}/>
+                        <Monitoring team={team} players={props.players}/>
                     </Route>
                     <Route path="/dashboard/dashboard-panel/calendar" >
                         <CoachCalendar/>

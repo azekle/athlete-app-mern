@@ -6,7 +6,12 @@
     justify-content: center;
     align-items: center;
 }
-
+.st2{
+    fill:#1195FF
+}
+.st3{
+    fill:#ffffff
+}
 .fill-form-player-name{
     font-size: 2em;
     width: 100%;
