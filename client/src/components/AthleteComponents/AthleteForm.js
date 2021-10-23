@@ -150,6 +150,7 @@ const fillFormColor=(e)=>{
         <button style={{marginTop:"0"}} onClick={logOutUser} className="logout-button">Log Out</button>
         <div className="athlete-form-player-info">
           <img className="athlete-form-player-photo" src={imag}></img>
+          <button>add picture</button>
           <label className="athlete-form-player-name">{`${user.firstName} ${user.lastName}`}</label>
           <label className="athlete-form-player-team">{`${user.team}`}</label>
         </div>
