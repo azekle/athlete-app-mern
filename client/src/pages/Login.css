@@ -33,7 +33,7 @@
       margin:10px;
     }
     .ball{
-      background: url('../assets/ball.png');
+      background: url('../assets/logo.svg');
       width: 50vw;
       height: 100vh;
       background-size: cover;

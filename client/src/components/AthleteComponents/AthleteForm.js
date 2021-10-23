@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./AthleteForm.css";
-import imag from "../../assets/ball.png";
+import imag from "../../assets/sportsman.svg";
 import moment from "moment";
 import {requests} from '../../utils/axios';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-
+import logo from '../../assets/logo.svg'
 import hideArrow from "../../assets/hide-arrow.svg";
 import AthleteFormActual from './AthleteFormActual'
 const AthleteForm = (props) => {
   var intermediate = [];
   const [today, setToday] = useState(new Date());
-  const [fillFormColorState,setFillFormColorState] = useState()
-  const [theDayForForm,setTheDayForForm] = useState(moment().format('DD/MM/YY'));
+  const [fillFormColorState,setFillFormColorState] = useState({background:"grey"})
+  const [theDayForForm,setTheDayForForm] = useState();
   const makeCalendar = () => {
     const startDate = moment(today).startOf("month").startOf("week");
     const endDate = moment(today).endOf("month").endOf("week");
@@ -30,7 +30,7 @@ const AthleteForm = (props) => {
   const  user =  props.user;
   const [fillForm,setFillForm] = useState(false);
   const [numberOfExercises, setNumberOfExercises] = useState([1, 1, 1, 1]);
-  const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+  const daysOfWeek = ["Su", "Mu", "Tu", "We", "Th", "Fr", "Sa"];
   const formNotFilled = {position:"absolute",background:"#C41F1F",width:"4px",height:"4px",borderRadius:"10px"}
   const formFilled = {background:"transparent",width:"4px",height:"4px",borderRadius:"10px"};
   let styleForDot={};
@@ -88,19 +88,22 @@ const AthleteForm = (props) => {
   const prevMonth = () => {
     setToday(moment(today).subtract(1, "month").toDate());
   };
-  const goToFillForm = (info)=>{
+  const goToFillForm = (id)=>{
     
-    info = {
+    const info = {
       date:theDayForForm,
       username:user.username
     }
+    info.date = id;
+    console.log(info)
     const todayArray = moment().format("DD/MM/YY").split("/")
-    const theDayForFormArray = theDayForForm.split("/");
+    const theDayForFormArray = info.date.split("/");
   
     if((parseInt(todayArray[0])<parseInt(theDayForFormArray[0])&&parseInt(todayArray[1])===parseInt(theDayForFormArray[1]))||(parseInt(todayArray[1])<parseInt(theDayForFormArray[1])&&todayArray[2]===theDayForFormArray[2])) {return}
     requests.post("/form/checkforform",info)
     .then(res => {if (res.data)alert(res.data);else setFillForm(!fillForm)})
   }
+ 
   useEffect(() => {
     determineToday(today);
     makeCalendar();
@@ -116,27 +119,44 @@ const determineTrainingDays = () =>{
   }}
 const fillFormColor=(e)=>{
   if(trainingDates.includes(e.target.id)) setFillFormColorState({background:"grey"});
+  
   else setFillFormColorState({})
 }
   determineTrainingDays()
   const checkAfterToday = (day) =>{
    return( moment(day).isAfter(moment()))
   }
+  const logOutUser = ()=>{
+    localStorage.clear();
+    window.location.reload();
+  }
+  const selectValue = () =>{
+    alert("You need to choose a date first!")
+  }
+  const findBMI = () =>{
+    if(user.measurements){
+      const weight = user.measurements[user.measurements.length-1].weight;
+      const height = user.measurements[user.measurements.length-1].height;
+      if(height>0) return(weight/(height*height))
+    }
+    return("Can't determine")
+  }
   return (
     <div className="athlete-form">
      {!fillForm? <div className="athlete-form-header">
         <div className="athlete-form-logo">
-          <div>LOGO</div>
+          <img style={{width:"100%"}} src = {logo}></img>
         </div>
+        <button style={{marginTop:"0"}} onClick={logOutUser} className="logout-button">Log Out</button>
         <div className="athlete-form-player-info">
           <img className="athlete-form-player-photo" src={imag}></img>
           <label className="athlete-form-player-name">{`${user.firstName} ${user.lastName}`}</label>
-          <label className="athlete-form-player-team">{`Team:${user.team}`}</label>
+          <label className="athlete-form-player-team">{`${user.team}`}</label>
         </div>
         <div className="month-form">
           <label className="display-month">{getMonthName(today)}</label>
           <div className="fill-form-field">
-            <button onClick={goToFillForm} style={fillFormColorState} className="fill-form-button">Fill Form</button>
+            <button onClick={theDayForForm? goToFillForm:selectValue} style={fillFormColorState} className="fill-form-button">Fill Form</button>
           </div>
         </div>
         <div className="athlete-form-weeks">
@@ -156,7 +176,7 @@ const fillFormColor=(e)=>{
             {datess.map((day,index) => {
              {if(trainingDates.includes(moment(day).format("DD/MM/YY"))) {styleForDot={formFilled};}else styleForDot=formNotFilled;if(checkAfterToday(day)) styleForDot=formFilled}
               return (
-                <div id={moment(day).format("DD/MM/YY")} onClick={(e)=>{setTheDayForForm(e.target.id); fillFormColor(e)}}   key={index} style={determineToday(day)} className="date-day">
+                <div id={moment(day).format("DD/MM/YY")} onClick={(e)=>{setTheDayForForm(e.target.id); fillFormColor(e);goToFillForm(e.target.id)}}   key={index} style={determineToday(day)} className="date-day">
                   <div style={styleForDot}></div>
                   {day.getDate()}
                 </div>
@@ -213,31 +233,31 @@ const fillFormColor=(e)=>{
                     Weight
                   </label>
                   <label className="athlete-body-measurements-label">
-                    Fat %
+                    Fat
                   </label>
-                  <label className="athlete-body-measurements-label">BMI</label>
+                  <label className="athlete-body-measurements-label"> BMI </label>
                 </div>
                 <div className="athlete-body-measurements-values">
                   <label
                     placeholder="Meters"
                     className="athlete-body-measurements-value"
                   >
-                    value
+                    {user.measurements? user.measurements[user.measurements.length-1].height:""} m
                   </label>
                   <label
                     placeholder="Kg"
                     className="athlete-body-measurements-value"
                   >
-                    value
+                   {user.measurements? user.measurements[user.measurements.length-1].weight:""} kg
                   </label>
                   <label
                     placeholder="%"
                     className="athlete-body-measurements-value"
                   >
-                    value
+                   {user.measurements?user.measurements[user.measurements.length-1].fat:""} %
                   </label>
                   <label className="athlete-body-measurements-value">
-                    value
+                  {findBMI()}
                   </label>
                 </div>
               </div>
