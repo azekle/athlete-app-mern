@@ -4,6 +4,7 @@ import imag from "../../assets/sportsman.svg";
 import moment from "moment";
 import {requests} from '../../utils/axios';
 import { IoIosArrowForward, IoIosArrowBack, } from "react-icons/io";
+import {BiEnvelope} from "react-icons/bi"
 import {FiCamera} from "react-icons/fi"
 import logo from '../../assets/logo.svg'
 import hideArrow from "../../assets/hide-arrow.svg";
@@ -14,6 +15,7 @@ const AthleteForm = (props) => {
   const [today, setToday] = useState(new Date());
   const [fillFormColorState,setFillFormColorState] = useState({background:"grey"})
   const [theDayForForm,setTheDayForForm] = useState();
+  const [canLogOut,setCanLogOut] = useState(false)
   const makeCalendar = () => {
     const startDate = moment(today).startOf("month").startOf("week");
     const endDate = moment(today).endOf("month").endOf("week");
@@ -153,15 +155,30 @@ const fillFormColor=(e)=>{
     console.log(item)
     
     await requests.put("/user/update",user).then(res=>console.log(res))
-    
+  }
+  const goLogOut = () =>{
+    setCanLogOut(!canLogOut)
   }
   return (
     <div className="athlete-form">
      {!fillForm? <div className="athlete-form-header">
         <div className="athlete-form-logo">
-          <img style={{width:"100%"}} src = {logo}></img>
+        <div onClick={goLogOut} style={{marginTop:"0px",transform:"scale(1.3)",marginLeft:"4vw",background:"white",color:"black",textTransform:"capitalize"}} className="can-log">{user.firstName?user.firstName[0]:""}</div>
+          <img  style={{width:"45%",justifySelf:"flex-end",marginLeft:"25vw"}} src = {logo}></img>
         </div>
-        <button style={{marginTop:"0"}} onClick={logOutUser} className="logout-button">Log Out</button>
+        <div style={{marginTop:"0",height:"1.5px",background:"rgb(17,149,255)"}} className="separator"></div>
+        {canLogOut?
+        <div  className="logout-panel2">
+          <label onClick={goLogOut} className="options-name2">{user.firstName?user.firstName:""} {user.lastName?user.lastName:""}</label>
+          <div className="separator3"></div>
+          <div className="send-email2">
+            <button className="send-email-label2">send us an email</button>
+            <BiEnvelope style={{fontSize:"1.2em"}}/>
+          </div>
+          <div className="separator3"></div>
+          <button style={{margin:"0"}}  onClick={logOutUser} className="logout-button">Log Out</button>
+        </div>:
+        ""}
         <img className="athlete-form-player-photo" src={item.image!=" "?item.image:imag}></img>
         <div className="athlete-form-player-info">
           

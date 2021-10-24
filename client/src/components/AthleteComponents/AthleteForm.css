@@ -9,7 +9,7 @@
 .athlete-form-logo{
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     color:white;
     font-size: 2em;
@@ -235,6 +235,38 @@ input[type="file" i]{
       border-radius: 10px;
       padding-bottom: 15px;
       margin-bottom: 20px;
+    }
+    .options-name2{
+      font-size:1.4em;
+      margin: 25px 0
+    }
+    .separator3{
+      width: 100%;
+      height: 1px;
+      background-color: grey;
+    }
+    .send-email2{
+      font-size: 1.4em;
+      display: flex;
+    }
+    .send-email-label2{
+      font-size: auto;
+      background:none;
+      border:none;
+      font-size:.8em;
+    }
+    .logout-panel2{
+      width: 60vw;
+      height: 200px;
+      padding-bottom: 20px;
+      position: absolute;
+      left: 0px;
+      top:0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      background-color: white;
     }
     .athlete-body-measurements-attributes{
       width: 100%;
