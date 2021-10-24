@@ -3,10 +3,12 @@ import "./AthleteForm.css";
 import imag from "../../assets/sportsman.svg";
 import moment from "moment";
 import {requests} from '../../utils/axios';
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack, } from "react-icons/io";
+import {FiCamera} from "react-icons/fi"
 import logo from '../../assets/logo.svg'
 import hideArrow from "../../assets/hide-arrow.svg";
 import AthleteFormActual from './AthleteFormActual'
+import FileBase64 from 'react-file-base64';
 const AthleteForm = (props) => {
   var intermediate = [];
   const [today, setToday] = useState(new Date());
@@ -25,6 +27,8 @@ const AthleteForm = (props) => {
     }
     setDatess(intermediate);
   };
+  const [item, setItem] = useState({ title: '', image:"" });
+  const [items, setItems] = useState([])
   const [datess, setDatess] = useState([]);
   const [canNext,setCanNext] = useState();
   const  user =  props.user;
@@ -107,8 +111,12 @@ const AthleteForm = (props) => {
   useEffect(() => {
     determineToday(today);
     makeCalendar();
-    checkArrow()
+    checkArrow();
+    
   }, [today]);
+  useEffect(()=>{
+    setItem({image:user.image})
+  },[user.image])
 var trainingDates=[]
 const determineTrainingDays = () =>{
   if(user.username){
@@ -141,6 +149,12 @@ const fillFormColor=(e)=>{
     }
     return("Can't determine")
   }
+  const submitImg = async () =>{
+    console.log(item)
+    
+    await requests.put("/user/update",user).then(res=>console.log(res))
+    
+  }
   return (
     <div className="athlete-form">
      {!fillForm? <div className="athlete-form-header">
@@ -148,9 +162,15 @@ const fillFormColor=(e)=>{
           <img style={{width:"100%"}} src = {logo}></img>
         </div>
         <button style={{marginTop:"0"}} onClick={logOutUser} className="logout-button">Log Out</button>
+        <img className="athlete-form-player-photo" src={item.image!=" "?item.image:imag}></img>
         <div className="athlete-form-player-info">
-          <img className="athlete-form-player-photo" src={imag}></img>
-          <button>add picture</button>
+          
+          <FileBase64
+          type="file"
+          multiple={false}
+          onDone={({ base64 }) => {setItem({ ...item, image: base64 });user.image = base64;submitImg()}}
+        />
+        <div className="camera"><FiCamera className=""/></div>
           <label className="athlete-form-player-name">{`${user.firstName} ${user.lastName}`}</label>
           <label className="athlete-form-player-team">{`${user.team}`}</label>
         </div>

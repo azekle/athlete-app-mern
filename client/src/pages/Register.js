@@ -30,6 +30,7 @@ const Register = () => {
                 training:[{date:email}],
                 lastName:lastname,
                 national_id:username,
+                image:" ",
                 tests:{
                     test1:"0",
                     test2:"0",

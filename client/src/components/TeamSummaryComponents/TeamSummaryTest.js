@@ -160,7 +160,7 @@ const TeamSummaryTest = (props) => {
     if(test6Name)testNames.tests[0].test6 = test6Name
     if(test7Name)testNames.tests[0].test7 = test7Name
     if(test8Name)testNames.tests[0].test8 = test8Name
-    
+    testNames.image = ' '
     await requests.put("/user/update",testNames)
    .then(res=>console.log(res))
   }
