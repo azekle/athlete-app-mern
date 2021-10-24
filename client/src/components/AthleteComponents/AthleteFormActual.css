@@ -206,5 +206,27 @@
     background: linear-gradient(90deg, rgba(17,149,255,1) 0%, rgba(90,181,255,1) 100%);
     color:white;
     border-radius: 200px;
-
+}
+.top-back{
+    background: #eaebec;
+    width: 100vw;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.back-arrow{
+    color:black;
+    font-size:2.2em;
+    margin-left: 5px;
+    justify-self: flex-start;
+    color: rgb(52, 52, 52);
+}
+.back-arrow2{opacity: 0;}
+.top-back-label{
+    font-size: 1.8em;
+    color:#44464c;
+    justify-self: center;
 }

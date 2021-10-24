@@ -5,6 +5,7 @@ import {Redirect } from "react-router-dom";
 import './AthleteFormActual.css'
 import human from '../../assets/human-body.svg'
 import logo from'../../assets/logo.svg'
+import {HiOutlineArrowCircleLeft} from 'react-icons/hi'
 const AthleteFormActual = (props) => {
   const user = props.user;
   const [formSubmitted,setFormSubmitted] = useState(false);
@@ -115,12 +116,18 @@ const AthleteFormActual = (props) => {
       }
       
     }
+    const goBack = () =>{
+      props.fillForm(false)
+    }
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>props.fillForm(false)}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
-      <div className="athlete-form-logo">
-          <img style={{width:"100%"}} src = {logo}></img>
-        </div>
+          <div className="top-back">
+            <HiOutlineArrowCircleLeft onClick={goBack} className="back-arrow"/>
+            <label className="top-back-label">Forms</label>
+            <HiOutlineArrowCircleLeft className="back-arrow2 back-arrow"/>
+            
+          </div>
       <label className="fill-form-player-name">{`${user.lastName} ${user.firstName}`}</label>
       <form method="post" onSubmit={submitForm} className="athlete-fill-form">
         <select className="fill-form-team">
