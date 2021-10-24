@@ -30,7 +30,7 @@ function Dashboard({ userData }) {
   }, [])
   
   if(mobile<600 && userData.is_coach) return(
-    <CoachMobile players = {players}/>
+    <CoachMobile user = {userData} players = {players}/>
   )
   return (
     <div className="dash">
