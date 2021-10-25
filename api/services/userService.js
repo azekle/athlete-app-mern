@@ -65,6 +65,7 @@ async function update(id, userParam) {
     
     // copy userParam properties to user
     Object.assign(user.tests, userParam.tests);
+    Object.assign(user.training,userParam.training);
     Object.assign(user.measurements,userParam.measurements)
     user.image = userParam.image
     await user.save();

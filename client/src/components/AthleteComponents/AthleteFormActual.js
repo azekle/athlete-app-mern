@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import moment from "moment";
 import {requests} from '../../utils/axios';
 import {Redirect } from "react-router-dom";
@@ -7,6 +7,7 @@ import human from '../../assets/human-body.svg'
 import logo from'../../assets/logo.svg'
 import {HiOutlineArrowCircleLeft} from 'react-icons/hi'
 const AthleteFormActual = (props) => {
+  const isSecondSession = props.isSecondSession
   const user = props.user;
   const [formSubmitted,setFormSubmitted] = useState(false);
   const [today, setToday] = useState(moment(props.today));
@@ -27,6 +28,9 @@ const AthleteFormActual = (props) => {
   const [wellness3ForForm,setWellness3ForForm] = useState()
   const [hasTraining, setHasTraining] = useState(false)
   
+  useEffect(() => {
+    if(isSecondSession) setSession2ForForm("basketball")
+  }, [])
 {// UPDATE FUNCTIONS ---START---
 }
   const updateSleep = (e)=>{
@@ -119,6 +123,22 @@ const AthleteFormActual = (props) => {
     const goBack = () =>{
       props.fillForm(false)
     }
+    const submitSecondSession = async(e) =>{
+      e.preventDefault()
+      var indexOfSecondTraining = 0
+      user.training.map((value,index)=>{if(value.date==dateForForm) indexOfSecondTraining=index})
+      console.log("session2",session2ForForm)
+      console.log("duration2",duration2ForForm)
+      console.log("rpe2",rpe2ForForm)
+      console.log("wellness2",wellness2ForForm)
+      user.training[indexOfSecondTraining].session2 = session2ForForm;
+      user.training[indexOfSecondTraining].duration2 = duration2ForForm;
+      user.training[indexOfSecondTraining].rpe2 = rpe2ForForm;
+      user.training[indexOfSecondTraining].wellness2 = wellness2ForForm;
+      await requests.put("/user/update",user)
+      .then(res => console.log(res))
+      .then(()=>setFormSubmitted(true))
+    }
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>props.fillForm(false)}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
@@ -126,7 +146,6 @@ const AthleteFormActual = (props) => {
             <HiOutlineArrowCircleLeft onClick={goBack} className="back-arrow"/>
             <label className="top-back-label">Forms</label>
             <HiOutlineArrowCircleLeft className="back-arrow2 back-arrow"/>
-            
           </div>
       <label className="fill-form-player-name">{`${user.lastName} ${user.firstName}`}</label>
       <form method="post" onSubmit={submitForm} className="athlete-fill-form">
@@ -140,7 +159,7 @@ const AthleteFormActual = (props) => {
                 <div className="fill-form-date">{dateForForm}</div>
             </div>
             <div className="separator"></div>
-            <div className="form-part">
+           {!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Wellness</label>
                 <label className="form-part-subtitle">Sleep Time</label>
                 <select onChange={updateSleep} className="form-part-select">
@@ -169,11 +188,11 @@ const AthleteFormActual = (props) => {
                   <label className="slider-index fresh">Fresh</label>
                   <label className="slider-index">Very Fresh</label>
                 </div>
-            </div>
-            <div className="separator"></div>
-            <label className="did-label">Did you have training on {dateForForm}?</label>
+            </div>:""}
+            {!isSecondSession?<div className="separator"></div>:""}
+            {isSecondSession?<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>:<label className="did-label">Did you have training on {dateForForm}?</label>}
             <div><input className="training-yes" onChange={playerHasTraining} checked={hasTraining} type="checkbox"></input><label className="did-label">Yes </label></div>
-            {hasTraining?<div className="form-part">
+            {hasTraining&&!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Session1</label>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Session type</label>
@@ -235,29 +254,44 @@ const AthleteFormActual = (props) => {
                   <label style={{textAlign:"end"}} className="slider-index2">Excellent</label>
                 </div>
             </div>:""}
-            {hasTraining?<div className="separator"></div>:""}
-             {false?<div className="form-part">
+            {hasTraining&&isSecondSession?<div className="separator"></div>:""}
+             {hasTraining&&isSecondSession?<div className="form-part">
                 <label className="form-part-title">Session2</label>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Session type</label>
                     <label className="form-part-subsubtitle">Type of Training</label>
                 </div>
-                <select onChange={updateSession2} className="form-part-select session-type">
+                <select onChange={updateSession2} value={session2ForForm} className="form-part-select session-type">
                     <option value="basketball">Basketball</option>
                     <option value="gym">Gym</option>
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
-                    <select onChange={updateDuration2} className="form-part-select">
+                    <select onChange={updateDuration2} value={duration2ForForm} className="form-part-select">
+                    <option value="0">0</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+					          <option value="40">40</option>
+                    <option value="50">50</option>
                     <option value="60">60</option>
                     <option value="70">70</option>
-                    <option value="80">80</option>
+					          <option value="80">80</option>
                     <option value="90">90</option>
+                    <option value="100">100</option>
+                    <option value="110">110</option>
+					          <option value="120">120</option>
+					          <option value="130">130</option>
+					          <option value="140">140</option>
+					          <option value="150">150</option>
+					          <option value="160">160</option>
+					          <option value="170">170</option>
+					          <option value="180">180</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
                 </div>
-                <input onChange={updateRpe2} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
+                <input onChange={updateRpe2} value={rpe2ForForm} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
                 <div className="slider-indexes">
                   <label className="slider-index">1</label>
                   <label className="slider-index">2</label>
@@ -274,7 +308,7 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subtitle">Wellness</label>
                     <label className="form-part-subsubtitle">How was training?</label>
                 </div>
-                <input onChange={updateWellness2} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
+                <input onChange={updateWellness2} value={wellness2ForForm} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
                 <div className="slider-indexes2">
                   <label style={{textAlign:"start"}} className="slider-index2">Poor</label>
                   <label style={{textAlign:"start"}} className="slider-index2">Fair</label>
@@ -335,7 +369,7 @@ const AthleteFormActual = (props) => {
             </div>
         </div>
         
-        <button onClick={submitForm} type="submit" className="submit-athlete-form"><label>Submit</label></button>
+        {(isSecondSession&&hasTraining)||!isSecondSession?<button onClick={!isSecondSession?submitForm:submitSecondSession} type="submit" className="submit-athlete-form"><label>Submit</label></button>:""}
       </form>
     </div>
   );

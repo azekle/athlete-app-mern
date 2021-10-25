@@ -38,7 +38,8 @@ const AthleteForm = (props) => {
   const [numberOfExercises, setNumberOfExercises] = useState([1, 1, 1, 1]);
   const daysOfWeek = ["Su", "Mu", "Tu", "We", "Th", "Fr", "Sa"];
   const formNotFilled = {position:"absolute",background:"#C41F1F",width:"4px",height:"4px",borderRadius:"10px"}
-  const formFilled = {background:"transparent",width:"4px",height:"4px",borderRadius:"10px"};
+  const formFilled = {position:"absolute",background:"transparent",width:"4px",height:"4px",borderRadius:"10px"};
+  const formFilledPartially = {position:"absolute",background:"#00d4a9",width:"5px",height:"5px",borderRadius:"10px"};
   let styleForDot={};
   const [rotateArrowTraining, setRotateArrowTraining] = useState("");
   const [rotateArrowBody, setRotateArrowBody] = useState("");
@@ -46,6 +47,7 @@ const AthleteForm = (props) => {
   const [fitnessHidden, setFitnessHidden] = useState(true);
   const [bodyHidden, setBodyHidden] = useState(true);
   const [trainingHidden, setTrainingHidden] = useState(true);
+  const [isSecondSession,setIsSecondSession] = useState(false);
   const checkArrow = () =>{
     setCanNext({color:"black"})
     if(moment().toDate().getMonth()===moment(today).toDate().getMonth()) setCanNext({color:"grey"})
@@ -95,7 +97,7 @@ const AthleteForm = (props) => {
     setToday(moment(today).subtract(1, "month").toDate());
   };
   const goToFillForm = (id)=>{
-    
+    setIsSecondSession(false)
     const info = {
       date:theDayForForm,
       username:user.username
@@ -152,12 +154,14 @@ const fillFormColor=(e)=>{
     return("Can't determine")
   }
   const submitImg = async () =>{
-    console.log(item)
-    
     await requests.put("/user/update",user).then(res=>console.log(res))
   }
   const goLogOut = () =>{
     setCanLogOut(!canLogOut)
+  }
+  const fillSecondSession = () =>{
+    setFillForm(true);
+    setIsSecondSession(true)
   }
   return (
     <div className="athlete-form">
@@ -194,7 +198,6 @@ const fillFormColor=(e)=>{
         <div className="month-form">
           <label className="display-month">{getMonthName(today)}</label>
           <div className="fill-form-field">
-            <button onClick={theDayForForm? goToFillForm:selectValue} style={fillFormColorState} className="fill-form-button">Fill Form</button>
           </div>
         </div>
         <div className="athlete-form-weeks">
@@ -211,10 +214,15 @@ const fillFormColor=(e)=>{
         <div className="calendar-wrapper">
           <button onClick={prevMonth} className="change-month-btn prev-month-btn"><IoIosArrowBack/></button>
           <div className="athlete-form-calendar">
-            {datess.map((day,index) => {
-             {if(trainingDates.includes(moment(day).format("DD/MM/YY"))) {styleForDot={formFilled};}else styleForDot=formNotFilled;if(checkAfterToday(day)) styleForDot=formFilled}
+            {datess.map((day,index) => {var conditioner = true
+             {if(trainingDates.includes(moment(day).format("DD/MM/YY"))) 
+             {styleForDot=formFilled;}
+             else styleForDot=formNotFilled;
+             if(checkAfterToday(day)) styleForDot=formFilled;
+             if(user.training)user.training.map(value=>{if(value.date==moment(day).format("DD/MM/YY")&&value.session2===" "){styleForDot=formFilledPartially;conditioner = false}})
+            }
               return (
-                <div id={moment(day).format("DD/MM/YY")} onClick={(e)=>{setTheDayForForm(e.target.id); fillFormColor(e);goToFillForm(e.target.id)}}   key={index} style={determineToday(day)} className="date-day">
+                <div id={moment(day).format("DD/MM/YY")} onClick={(e)=>{setTheDayForForm(e.target.id); fillFormColor(e);conditioner?goToFillForm(e.target.id):fillSecondSession()}}   key={index} style={determineToday(day)} className="date-day">
                   <div style={styleForDot}></div>
                   {day.getDate()}
                 </div>
@@ -370,7 +378,7 @@ const fillFormColor=(e)=>{
         </div>
       </div>:""}
       {fillForm?
-        <AthleteFormActual fillForm={setFillForm} user={user} theDayForForm = {theDayForForm}/>
+        <AthleteFormActual isSecondSession={isSecondSession} fillForm={setFillForm} user={user} theDayForForm = {theDayForForm}/>
         :""}
     </div>
   );
