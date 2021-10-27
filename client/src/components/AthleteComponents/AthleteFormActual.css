@@ -231,3 +231,13 @@
     color:#44464c;
     justify-self: center;
 }
+.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#ABABAB;}
+
+.body-img{
+    transform: scale(.58);
+    margin-top:0
+}
+.st2{
+    fill:red;
+    transition-duration: .2s;
+}
