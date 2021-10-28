@@ -31,6 +31,7 @@ const Register = () => {
                 lastName:lastname,
                 national_id:username,
                 image:" ",
+                injury:" ",
                 tests:{
                     test1:"0",
                     test2:"0",

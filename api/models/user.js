@@ -47,7 +47,8 @@ const schema = new mongoose.Schema({
     tests:[tests],
     measurements:[measurements],
     createdDate: {type: Date, default: Date.now},
-    image:{type:String,unique: false,required:true}
+    image:{type:String,unique: false,required:true},
+    injury:{type:String,required:false,unique:false}
 })
 
 module.exports = mongoose.model("User", schema)

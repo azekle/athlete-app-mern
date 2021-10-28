@@ -27,11 +27,16 @@ const AthleteFormActual = (props) => {
   const [rpe3ForForm,setRpe3ForForm] = useState()
   const [wellness3ForForm,setWellness3ForForm] = useState()
   const [hasTraining, setHasTraining] = useState(false)
-  const [injuryName,setInjuryName] = useState("Left Anterior Shoulder")
+  const [injuryName,setInjuryName] = useState(user.injury)
+  const [injuryExist,setInjuryExist] =useState(false)
   
   useEffect(() => {
     if(isSecondSession) setSession2ForForm("basketball")
+	if(user.injury!=" ") setInjuryExist(true)
   }, [])
+  useEffect(() => {
+	if(!injuryExist) setInjuryName(" ")
+  }, [injuryExist])
 {// UPDATE FUNCTIONS ---START---
 }
   const updateSleep = (e)=>{
@@ -79,9 +84,10 @@ const AthleteFormActual = (props) => {
   {// UPDATE FUNCTIONS ---END---
 }
 
-    const submitForm = (e,reque) =>{
-     
-      e.preventDefault()
+    const submitForm = async (e,reque) =>{
+	  e.preventDefault()
+	  user.injury = injuryName;
+	  await requests.put("/user/update",user).then(res=>console.log(res))
       
       reque={username:user.username,
       details:{
@@ -126,6 +132,7 @@ const AthleteFormActual = (props) => {
     }
     const submitSecondSession = async(e) =>{
       e.preventDefault()
+	  user.injury = injuryName;
       var indexOfSecondTraining = 0
       user.training.map((value,index)=>{if(value.date==dateForForm) indexOfSecondTraining=index})
       console.log("session2",session2ForForm)
@@ -373,11 +380,12 @@ const AthleteFormActual = (props) => {
 
 
 
-
-        <svg version="1.1" id="Layer_1" x="0px" y="0px"
+		<label className="did-label">Are you currently injured?</label>
+		<div><input className="training-yes" onChange={()=>{setInjuryExist(!injuryExist)}} checked={injuryExist} type="checkbox"></input><label className="did-label">Yes </label></div>
+        {injuryExist?<svg version="1.1" id="Layer_1" x="0px" y="0px"
 	 viewBox="0 0 693 666" >
 <g>
-	<path class="st0" d="M167.2,122.7c7.4-8.1,6.3-15.1,5.1-22.3c-0.7-4.2-1.4-8.5-0.4-13.1c-1.7,0.6-3.2,0.9-4.5,0.9h-0.5
+	<path  onClick={()=> setInjuryName(" ")} class="st0" d="M167.2,122.7c7.4-8.1,6.3-15.1,5.1-22.3c-0.7-4.2-1.4-8.5-0.4-13.1c-1.7,0.6-3.2,0.9-4.5,0.9h-0.5
 		c-1.2,0-2.7-0.3-4.5-0.9c0.9,4.6,0.3,8.9-0.4,13.1C161,107.5,159.8,114.6,167.2,122.7z"/>
 	<path class="st0" d="M159.2,85.8c0,0.8-0.1,1.9-0.1,3.1c-0.1,3.8-0.1,9-0.8,13.1c0.5,2,0.9,4,1.4,5.8c0.1-2.6,0.5-5.1,0.9-7.6
 		c0.7-4.4,1.4-8.8,0.2-13.5C160.3,86.4,159.7,86.1,159.2,85.8z"/>
@@ -1267,7 +1275,7 @@ const AthleteFormActual = (props) => {
 		C140.4,60.2,141.4,61.7,142.4,62.7z"/>
 	<path class="st0" d="M497.6,621h0.4H497.6z"/>
 </g>
-</svg>
+</svg>:""}
 
 
 
