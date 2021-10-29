@@ -1,6 +1,3 @@
-*{
-    
-}
 .athlete-fill-form-wrapper{
 
     width: 100%;
@@ -9,6 +6,7 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 35%;
+    overflow-x: hidden;
 }
 .st2{
     fill:#1195FF
@@ -245,8 +243,8 @@
     fill:red;
     transition-duration: .2s;
 }
-.front-back-field{
-    background-color: #AAB2BD;
+.front-back-fields{
+    margin-top: 10px;
     padding:2px;
 }
 .but-select{
