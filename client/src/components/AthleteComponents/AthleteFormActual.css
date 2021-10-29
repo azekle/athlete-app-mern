@@ -1,3 +1,6 @@
+*{
+    
+}
 .athlete-fill-form-wrapper{
 
     width: 100%;
@@ -5,6 +8,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 35%;
 }
 .st2{
     fill:#1195FF
@@ -240,4 +244,77 @@
 .st2{
     fill:red;
     transition-duration: .2s;
+}
+.front-back-field{
+    background-color: #AAB2BD;
+    padding:2px;
+}
+.but-select{
+    font-size: 1em;
+    font-weight: 500;
+    border:none;
+    background-color: #B9B9B9;
+    padding:5px 10px;
+    color:white;
+    border:2px solid #909090
+}
+.ok-button{
+    margin-top: 15px;
+}
+.ok-button:hover{
+    margin-top: 15px;
+}
+.front-but{
+    border-radius: 10px 0 0 10px;
+}
+.back-but{
+    border-radius: 0px 10px 10px 0px;
+}
+
+.hide{
+    opacity: 0;
+    transition-duration: .2s;
+}
+.svg-front{
+    display: flex;
+    margin-top: 30%;
+    transform: translateX(-41%) scale(1.6);
+    flex-direction: column;
+    transition-duration: 1s;
+    
+}
+.svg-back{
+    display: flex;
+    margin-top: 30%;
+    transform: translateX(41%) scale(1.6);
+    flex-direction: column;
+    transition-duration: 1s;
+}
+.severity-container{
+    background-color: rgba(29, 29, 29,.6) ;
+    width: 100vw;
+    height: 190vh;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    color: black;
+
+    
+}
+.how-much{
+    margin-bottom: 50vh;
+    background-color: white;
+    padding: 10px 20px 0px 20px;
+    border-radius: 10px;
+    width: 80vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.severity-range-container{
+    width: 100%;
 }

@@ -32,6 +32,7 @@ const Register = () => {
                 national_id:username,
                 image:" ",
                 injury:" ",
+                severity:"0",
                 tests:{
                     test1:"0",
                     test2:"0",
