@@ -35,6 +35,10 @@ const tests = new mongoose.Schema({
     season:{type:String},
     nrOfCols:{type:Number}
 })
+const injury = new mongoose.Schema({
+    name:{type:String,required:false,unique:false},
+    severity:{type:String,required:false,unique:false}
+})
 const schema = new mongoose.Schema({
     national_id: {type: String, unique: false, required: true},
     is_coach: {type: Boolean, required: true},
@@ -48,7 +52,7 @@ const schema = new mongoose.Schema({
     measurements:[measurements],
     createdDate: {type: Date, default: Date.now},
     image:{type:String,unique: false,required:true},
-    injury:{type:String,required:false,unique:false},
+    injuries:[injury],
     severity:{type:String,required:false,unique:false}
 })
 
