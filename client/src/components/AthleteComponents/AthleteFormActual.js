@@ -189,10 +189,13 @@ const AthleteFormActual = (props) => {
 		if(injuryArray.some(e=>e.name==injury)) setShowSeverity(true)
 
 	}
-	const show = () =>{
-		console.log(injuryNames)
+	
+	const removeInjury = (e) =>{
+		const injuryArray = injuryNames
+		injuryArray.splice(e.target.id,1)
+		setInjuryNames(injuryArray)
+		setCounter(counter+1)
 	}
-
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>{props.fillForm(false);reloadPage()}}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
@@ -429,13 +432,13 @@ const AthleteFormActual = (props) => {
 		<label onClick={()=>setFront(!front)} className="did-label">Are you currently injured?</label>
 		<div><input className="training-yes" onChange={()=>{setInjuryExist(!injuryExist);setInjuryName(" ");setSeverity(" ")}} checked={injuryExist} type="checkbox"></input><label className="did-label">Yes </label></div>
         {injuryExist?<div className="front-back-fields">
-			<button onClick={changeSide} style={front?{background:"#565656"}:{}} id="front" className="but-select front-but">Front</button>
-			<button onClick={changeSide} style={!front?{background:"#565656"}:{}} id="back" className="but-select back-but">Back</button>
+			<button onClick={changeSide} style={front?{background:"#676767",color:"white"}:{}} id="front" className="but-select front-but">Front</button>
+			<button onClick={changeSide} style={!front?{background:"#676767",color:"white"}:{}} id="back" className="but-select back-but">Back</button>
 		</div>:""}
 		{injuryExist?<svg version="1.1" id="Layer_1" x="0px" y="0px"
 	 viewBox="0 0 693 666" className={!front?"svg-front":"svg-back"} >
 <g className={front?"show":"hide"}>
-	<path  onClick={()=> show()} class="st0" d="M167.2,122.7c7.4-8.1,6.3-15.1,5.1-22.3c-0.7-4.2-1.4-8.5-0.4-13.1c-1.7,0.6-3.2,0.9-4.5,0.9h-0.5
+	<path  class="st0" d="M167.2,122.7c7.4-8.1,6.3-15.1,5.1-22.3c-0.7-4.2-1.4-8.5-0.4-13.1c-1.7,0.6-3.2,0.9-4.5,0.9h-0.5
 		c-1.2,0-2.7-0.3-4.5-0.9c0.9,4.6,0.3,8.9-0.4,13.1C161,107.5,159.8,114.6,167.2,122.7z"/>
 	<path class="st0" d="M159.2,85.8c0,0.8-0.1,1.9-0.1,3.1c-0.1,3.8-0.1,9-0.8,13.1c0.5,2,0.9,4,1.4,5.8c0.1-2.6,0.5-5.1,0.9-7.6
 		c0.7-4.4,1.4-8.8,0.2-13.5C160.3,86.4,159.7,86.1,159.2,85.8z"/>
@@ -1352,10 +1355,15 @@ const AthleteFormActual = (props) => {
 		
 	</div>:""}
 
-
-
-
-        {(isSecondSession&&hasTraining)||!isSecondSession||injuryExist?<button style={injuryExist?{marginTop:"28%"}:{}} onClick={!isSecondSession?submitForm:submitSecondSession} type="submit" className="submit-athlete-form"><label>Submit</label></button>:""}
+		<div className="injuries-list">{injuryNames.map((value,index)=>{
+			return(
+			<div className="injury-in-list">
+				<div>{value.name}</div>
+				<div id={index} onClick={removeInjury} className="remove-injury">X</div>
+			</div>)
+		})}
+		</div>
+        {(isSecondSession&&hasTraining)||!isSecondSession||injuryExist?<button style={injuryExist?{marginTop:"10%"}:{}} onClick={!isSecondSession?submitForm:submitSecondSession} type="submit" className="submit-athlete-form"><label>Submit</label></button>:""}
       </form>
     </div>
   );

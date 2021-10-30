@@ -171,8 +171,8 @@
     align-items: center;
 }
 .training-yes{
-    transform: scale(3);
-    margin:5vw
+    transform: scale(2);
+    margin:3vw
 }
 .did-label{
     font-size: 1.3em;
@@ -251,9 +251,9 @@
     font-size: 1em;
     font-weight: 500;
     border:none;
-    background-color: #B9B9B9;
+    background-color: transparent;
     padding:5px 10px;
-    color:white;
+    color:black;
     border:2px solid #909090
 }
 .ok-button{
@@ -263,10 +263,10 @@
     margin-top: 15px;
 }
 .front-but{
-    border-radius: 10px 0 0 10px;
+    border-radius: 5px 0 0 5px;
 }
 .back-but{
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 5px 5px 0px;
 }
 
 .hide{
@@ -315,4 +315,33 @@
 }
 .severity-range-container{
     width: 100%;
+}
+.injuries-list{
+    margin-top: 30%;
+    width: 90%;
+}
+.injury-in-list{
+    height: 30px;
+    background-color: #dfe1e0;
+    border:2px solid #9d9d9d;
+    border-radius: 5px;
+    margin-top: 3px;
+    padding:7px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+.remove-injury{
+    color:#262827;
+    font-size: 1.5em;
+    font-weight: 600;
+    transform: translateX(-5px);
+    transition-duration: .2s;
+}
+.remove-injury:hover{
+    transform: translateY(-3px) translateX(-5px);
+    color:black
 }
