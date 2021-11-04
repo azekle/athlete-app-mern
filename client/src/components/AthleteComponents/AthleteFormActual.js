@@ -4,8 +4,9 @@ import {requests} from '../../utils/axios';
 import {Redirect } from "react-router-dom";
 import './AthleteFormActual.css'
 import human from '../../assets/human-body.svg'
-import logo from'../../assets/logo.svg'
+import logo2 from'../../assets/logo2.svg'
 import {HiOutlineArrowCircleLeft} from 'react-icons/hi'
+import {GoCalendar} from 'react-icons/go'
 const AthleteFormActual = (props) => {
   const isSecondSession = props.isSecondSession
   const user = props.user;
@@ -196,13 +197,44 @@ const AthleteFormActual = (props) => {
 		setInjuryNames(injuryArray)
 		setCounter(counter+1)
 	}
+	const showDayofWeek = () =>{
+		var date = dateForForm;
+		if(date===moment().format("DD/MM/YY")) return("Today")
+		const dateArray = date.split("/")
+		const intermediate = dateArray[0]
+		dateArray[0] = dateArray[1]
+		dateArray[1] = intermediate;
+		var date = dateArray.join("/")
+		date = new Date(date)
+		date = moment(date).day()
+		
+		switch (date) {
+			case 0:
+				return("Sunday")
+			case 1:
+				return("Monday")
+			case 2:
+				return("Tuesday")
+			case 3:
+				return("Wednesday")
+			case 4:
+				return("Thursday")
+			case 5:
+				return("Friday")
+			case 6:
+				return("Saturday")
+			default:
+				break;
+		}
+		
+	}
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>{props.fillForm(false);reloadPage()}}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
           <div className="top-back">
             <HiOutlineArrowCircleLeft onClick={goBack} className="back-arrow"/>
-            <label className="top-back-label">Forms</label>
-            <HiOutlineArrowCircleLeft className="back-arrow2 back-arrow"/>
+            
+            <img className="actual-form-logo" src={logo2}></img>
           </div>
       <label className="fill-form-player-name">{`${user.lastName} ${user.firstName}`}</label>
       <form method="post" onSubmit={submitForm} className="athlete-fill-form">
@@ -210,12 +242,11 @@ const AthleteFormActual = (props) => {
           <option value="Junior">{user.team}</option>
         </select>
         <div className="fill-form-details">
-            <label className="training-date-label">Training Date</label>
             <div className="fill-form-training-date">
-                <div className="fill-form-today">Today</div>
-                <div className="fill-form-date">{dateForForm}</div>
+				<label className="training-date-label">Training Date</label>
+                <div className="fill-form-today">{showDayofWeek()}</div>
+                <div className="fill-form-date">{dateForForm}<GoCalendar className="calendar-icon" onClick={goBack}/></div>
             </div>
-            <div className="separator"></div>
            {!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Wellness</label>
                 <label className="form-part-subtitle">Sleep Time</label>

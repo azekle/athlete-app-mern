@@ -7,6 +7,7 @@
     align-items: center;
     padding-bottom: 35%;
     overflow-x: hidden;
+    background-color: white;
 }
 .st2{
     fill:#1195FF
@@ -16,23 +17,28 @@
 }
 .fill-form-player-name{
     font-size: 2em;
-    width: 100%;
-    text-align: center;
+    width: 90%;
+    text-align: start;
     margin-top:20px;
-    color:#1195FF
+    color:#1195FF;
+    align-self: center
 }
 .fill-form-team{
     padding:2px;
     background: none;
     border:none;
+    align-self: flex-start;
     outline: none;
+    width: auto;
+    margin-left: 5%;
+    text-align: start;
     font-size: 1.1em;
 }
 .training-date-label{
-    align-self: flex-start;
+    align-self: center;
     font-size: 1.25em;
-    color:#272930;
-    margin-top:20px
+    font-weight: 400;
+    color:#272930;  
 }
 .fill-form-details{
     width: 85%;
@@ -41,10 +47,9 @@
     align-items: center;
 }
 .fill-form-training-date{
-    border:1px solid #AAB2BD;
     border-radius: 10px;
     height: 55px;
-    width: 100%;
+    width: 105%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -53,19 +58,19 @@
 }
 
 .fill-form-today{
-    margin-left: 20px;
-    width: 50%;
     font-weight: 500;
-    font-size: 1.5em;
+    font-size: 1em;
+    margin-left: 10%;
     color: #AAB2BD;
-    border-right: 1px solid #AAB2BD;
 }
 .fill-form-date{
     margin-right: 20px;
-    width: 50%;
     font-size: 1.3em;
     color:#AAB2BD;
     text-align: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .separator{
     width: 100vw;
@@ -73,6 +78,10 @@
     margin-top:40px;
     margin-bottom: 40px;
     background-color:#B9B9B9
+}
+.calendar-icon{
+    color:black;
+    margin-left: 10px;
 }
 .form-part{
     display: flex;
@@ -85,6 +94,8 @@
     margin-bottom: 20px;
     font-weight: 500;
     color: #272930;
+    text-align: center;
+    align-self: center;
 }
 .form-part-subtitle{
     font-size:1.4em;
@@ -211,7 +222,7 @@
     border-radius: 200px;
 }
 .top-back{
-    background: #eaebec;
+    background: #065A95;
     width: 100vw;
     margin: 0;
     height: 50px;
@@ -219,13 +230,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 10px 0;
 }
 .back-arrow{
-    color:black;
     font-size:2.2em;
     margin-left: 5px;
     justify-self: flex-start;
-    color: rgb(52, 52, 52);
+    color: white;
+}
+.actual-form-logo{
+    width: 40%;
 }
 .back-arrow2{opacity: 0;}
 .top-back-label{
