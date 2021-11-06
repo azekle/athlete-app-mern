@@ -6,13 +6,19 @@ import { BsPerson } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai';
 import "./Login.css";
 import {requests} from '../utils/axios'
-async function loginUser(credentials) {
-    console.log(credentials);
-    return requests.post("/user/authenticate", credentials)
-    .then(res => res.data.token);
-}
+
 
 export default function Login( {setToken}) {
+    async function loginUser(credentials) {
+        console.log(credentials);
+        setIsLoading(true)
+        return requests.post("/user/authenticate", credentials)
+        .then(res => res.data.token)
+        .catch(res=>{alert("Password or Username wrong!");setIsLoading(false)})
+        
+    }
+
+    const [isLoading,setIsLoading] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [tokenState,setTokenState] = useState(false);
@@ -29,8 +35,8 @@ export default function Login( {setToken}) {
                 password: password
             }
         );
-        setToken(token);
-        setTokenState(true)
+        if(token)setToken(token);
+        if(token)setTokenState(true)
       
         
     }
@@ -38,6 +44,7 @@ export default function Login( {setToken}) {
     return (
         <div className="Login">
             <div className="login-wrapper">
+                {isLoading?<div className="loading"><label>LOADING</label></div>:""}
             <Form className="actual-form" onSubmit={handleSubmit}>   
             <label className="login-label">Login</label>
             <label className="sub-login-label">Enter your credentials to login</label>

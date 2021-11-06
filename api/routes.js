@@ -82,7 +82,7 @@ function authenticate(req, res, next) {
         }
         else
         {
-            res.status(400).json({ message: 'Username or password is incorrect' })
+            res.status(400).send("Username or password is incorrect" )
         }
     })
     .catch(err => next(err));

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import {Bar} from 'react-chartjs-2'
+import imag from '../../assets/sportsman.svg'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 
@@ -258,23 +259,23 @@ const Monitoring = (props) => {
             {selectedActive?<div className="selected-tab">
                 {playersToDisplay.map((value)=>
                 <div className="selected-player">
-                  <img className="selected-player-img"></img>
+                  <img src={value.image.length>1?value.image:imag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name">{value.firstName} {value.lastName}</label>
-                      <label className="injury">{value.injury}</label>
+                      <label className="injury">{value.injuries?value.injuries[0].name:""}</label>
                     </div>
-                  <div className={value.injury ? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
+                  <div className={value.injuries[0]? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
                 </div>)}
             </div>:""}
             {alertActive?<div className="selected-tab">
                 {totalPlayers.map((value)=>
                 <div className="selected-player">
-                  <img className="selected-player-img"></img>
+                  <img src={value.image.length>1?value.image:imag} className="selected-player-img"></img>
                     <div className="injured-player-info">
                       <label className="selected-player-name">{`${value.firstName} ${value.lastName}`}</label>
-                      <label className="injury">{value.injury}</label>
+                      <label className="injury">{value.injuries?value.injuries[0].name:""}</label>
                     </div>
-                  <div className={value.injury ? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
+                    <div className={value.injuries[0]? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
                 </div>)}
             </div>:""}
         </div>

@@ -28,6 +28,7 @@ const AthleteFormActual = (props) => {
   const [rpe3ForForm,setRpe3ForForm] = useState()
   const [wellness3ForForm,setWellness3ForForm] = useState()
   const [hasTraining, setHasTraining] = useState(false)
+  const [hasTraining2,setHasTraining2] = useState(false)
   const [injuryName,setInjuryName] = useState("")
   const [counter,setCounter] = useState(0)
   const [injuryNames,setInjuryNames] = useState(user.injuries)
@@ -133,12 +134,30 @@ const AthleteFormActual = (props) => {
       }
       
     }
+	const playerHasTraining2 = () =>{
+		setHasTraining2(!hasTraining2);
+		console.log(hasTraining2,isSecondSession)
+		if(hasTraining2){
+		  setSession2ForForm(" ");
+		  setRpe2ForForm(0)
+		  setDuration2ForForm(0)
+		  setWellness2ForForm(0)
+		}
+		else{
+		  setSession2ForForm("basketball");
+		  setRpe2ForForm(1)
+		  setDuration2ForForm(0)
+		  setWellness2ForForm(1)
+		}
+		
+	  }
     const goBack = () =>{
       props.fillForm(false)
     }
     const submitSecondSession = async(e) =>{
       e.preventDefault()
 	  user.injuries = injuryNames;
+	  await requests.put("/user/update",user).then(res=>console.log(res))
       var indexOfSecondTraining = 0
       user.training.map((value,index)=>{if(value.date==dateForForm) indexOfSecondTraining=index})
       user.training[indexOfSecondTraining].session2 = session2ForForm;
@@ -228,6 +247,36 @@ const AthleteFormActual = (props) => {
 		}
 		
 	}
+	const SubmitBothSessions = async (e,reque) =>{
+		e.preventDefault()
+		user.injuries = injuryNames;
+		console.log("both sessions are going to be submitted")
+		await requests.put("/user/update",user).then(res=>console.log(res))
+		
+		
+		reque={username:user.username,
+		details:{
+				date:dateForForm,
+				sleep:sleepForForm,
+				fatigue:fatigueForForm,
+				session1: session1ForForm,
+				duration1:duration1ForForm,
+				rpe1:rpe1ForForm,
+				wellness1: wellness1ForForm,
+				session2: session2ForForm,
+				duration2:duration2ForForm,
+				rpe2:rpe2ForForm,
+				wellness2:wellness2ForForm,
+				}}
+				console.log(reque.details)
+			   
+	   return(requests.post("/form/post",reque)
+		.then(res => console.log(res)))
+		.then(()=>setFormSubmitted(true))
+		.then(()=>console.log("Both sessions have been submitted"))
+		
+  
+	}
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>{props.fillForm(false);reloadPage()}}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
@@ -277,9 +326,18 @@ const AthleteFormActual = (props) => {
                   <label className="slider-index">Very Fresh</label>
                 </div>
             </div>:""}
-            {!isSecondSession?<div className="separator"></div>:""}
-            {isSecondSession?<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>:<label className="did-label">Did you have training on {dateForForm}?</label>}
-            <div><input className="training-yes" onChange={playerHasTraining} checked={hasTraining} type="checkbox"></input><label className="did-label">Yes </label></div>
+           <div className="separator"></div>
+            
+			{!isSecondSession?<label className="did-label">Did you have training on {dateForForm}?</label>:""}
+            {!isSecondSession?<div>
+				<input className="training-yes" onChange={playerHasTraining} checked={hasTraining} type="checkbox"></input>
+				<label className="did-label">Yes </label>
+			</div>:""}
+			<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>
+			<div>
+				<input className="training-yes" onChange={playerHasTraining2} checked={hasTraining2} type="checkbox"></input>
+				<label className="did-label">Yes</label>
+			</div>
             {hasTraining&&!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Session1</label>
                 <div className="sub-subtitle-field">
@@ -296,21 +354,21 @@ const AthleteFormActual = (props) => {
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
-					          <option value="40">40</option>
+					<option value="40">40</option>
                     <option value="50">50</option>
                     <option value="60">60</option>
                     <option value="70">70</option>
-					          <option value="80">80</option>
+					<option value="80">80</option>
                     <option value="90">90</option>
                     <option value="100">100</option>
                     <option value="110">110</option>
-					          <option value="120">120</option>
-					          <option value="130">130</option>
-					          <option value="140">140</option>
-					          <option value="150">150</option>
-					          <option value="160">160</option>
-					          <option value="170">170</option>
-					          <option value="180">180</option>
+					<option value="120">120</option>
+					<option value="130">130</option>
+					<option value="140">140</option>
+					<option value="150">150</option>
+					<option value="160">160</option>
+					<option value="170">170</option>
+					<option value="180">180</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
@@ -342,8 +400,8 @@ const AthleteFormActual = (props) => {
                   <label style={{textAlign:"end"}} className="slider-index2">Excellent</label>
                 </div>
             </div>:""}
-            {hasTraining&&isSecondSession?<div className="separator"></div>:""}
-             {hasTraining&&isSecondSession?<div className="form-part">
+            {hasTraining2?<div className="separator"></div>:""}
+             {hasTraining2?<div className="form-part">
                 <label className="form-part-title">Session2</label>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Session type</label>
@@ -1394,7 +1452,7 @@ const AthleteFormActual = (props) => {
 			</div>)
 		})}
 		</div>
-        {(isSecondSession&&hasTraining)||!isSecondSession||injuryExist?<button style={injuryExist?{marginTop:"10%"}:{}} onClick={!isSecondSession?submitForm:submitSecondSession} type="submit" className="submit-athlete-form"><label>Submit</label></button>:""}
+        {(isSecondSession&&hasTraining)||!isSecondSession||injuryExist?<button style={injuryExist?{marginTop:"10%"}:{}} onClick={hasTraining&&hasTraining2?SubmitBothSessions:!isSecondSession?submitForm:submitSecondSession} type="submit" className="submit-athlete-form"><label>Submit</label></button>:""}
       </form>
     </div>
   );

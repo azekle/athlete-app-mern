@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import{Link} from 'react-router-dom';
 import "./PlayerSummaryCss/PlayerSummaryHeader.css"
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import imag from "../../assets/sportsman.svg";
+import defaultImag from "../../assets/sportsman.svg"
 const PlayerSummaryHeader = (props) => {
     var players = props.players;
     var totalPlayers = [];
@@ -43,7 +43,7 @@ const PlayerSummaryHeader = (props) => {
       <div style={props.sideBarOnOff?{width:"93%"}:{width:"91%"}} className="player-info-field">
          
         <div className="player-name-team"> 
-            <img className="player-photo" src={imag} ></img>
+            <img onClick={()=>console.log(activePlayer.image.length)} className="player-photo" src={activePlayer&&activePlayer.image!=" "?activePlayer.image:defaultImag} ></img>
             <div>
                 <select onChange={changePlayer} defaultValue={"Select"} className="player-name-team-atr-name" >
                 {totalPlayers.map((value,index)=>{
