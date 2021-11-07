@@ -32,6 +32,14 @@
     transition-duration: .3s;   
     background: white;
 }
+.removeRow{
+    transition-duration: .2s;
+}
+.removeRow:hover{
+    background-color: red;
+    color:white;
+    cursor: pointer;
+}
 .lock-locked:hover{
     color: #1195FF;
     cursor: pointer;
@@ -98,6 +106,24 @@
 }
 .input-test{
     width: 80px
+}
+.add-row-label{
+    transition-duration: .4s;
+    color: white;
+    background-color: #1195FF;
+    border-radius: 100px;
+    width: fit-content;
+    padding: 2px 7px;
+    border:1px solid #1195FF
+}
+.add-row-label-hidden{
+    display: none;
+    
+}
+.add-row-label:hover{
+    color:black;
+    cursor:pointer;
+    background-color: white;
 }
 @media  (max-width:600px){
     .team-summary-test-cell{

@@ -37,8 +37,8 @@
       width: 50vw;
       height: 100vh;
       background-size: cover;
-      
     }
+
     .form-gr{
       width: 100%;
       display: flex;
@@ -150,7 +150,10 @@
       }
       .ball{
         position: absolute;
-        top:0;
+        top:8%;
+        background:url("../assets/logo_mobile.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
         width: 100vw;
       }
       .login-label{
