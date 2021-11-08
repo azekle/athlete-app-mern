@@ -28,6 +28,7 @@ const TeamSummaryTest = (props) => {
   const [test8Name,setTest8Name] = useState()
   const [nrOfCols,setNrOfCols] = useState(12)
   const [lock,setLock] = useState(true)
+  const [testDate,setTestDate] = useState("")
   var testNames
   if (players.length==0) totalPlayers.map((value,index)=>{
    if(!value.is_coach) players.push(value)
@@ -73,7 +74,7 @@ const TeamSummaryTest = (props) => {
     if(e.target.name.split("/")[3] == "Test6") {test6TUV = e.target.value}
     if(e.target.name.split("/")[3] == "Test7") {test7TUV = e.target.value}
     if(e.target.name.split("/")[3] == "Test8") {test8TUV = e.target.value}
-    if(e.target.name.split("/")[3] == "date") {date = e.target.value}
+    if(e.target.name.split("/")[3] == "date") {setTestDate(e.target.value)}
     if(e.target.name.split("/")[3] == "season") {season = e.target.value}
     setPlayerName(e.target.name.split("/")[0]+" "+e.target.name.split("/")[1])
 
@@ -89,7 +90,7 @@ const TeamSummaryTest = (props) => {
       if(test6TUV!="") playerTU.tests[e.target.name.split("/")[4]].test6 = test6TUV;
       if(test7TUV!="") playerTU.tests[e.target.name.split("/")[4]].test7 = test7TUV;
       if(test8TUV!="") playerTU.tests[e.target.name.split("/")[4]].test8 = test8TUV;
-      if(date!="") playerTU.tests[e.target.name.split("/")[4]].date = date;
+      if(date!="") playerTU.tests[e.target.name.split("/")[4]].date = testDate;
       if(season!="") playerTU.tests[e.target.name.split("/")[4]].season = season;
       playerTU.tests.date = moment().format("DD/MM/YY")
      await requests.put("/user/update",playerTU)
@@ -140,7 +141,6 @@ const TeamSummaryTest = (props) => {
       if(fat!="") playerTU.measurements[e.target.name.split("/")[4]].fat = fat;
       if(date!="") playerTU.measurements[e.target.name.split("/")[4]].date = date;
       if(season!="") playerTU.measurements[e.target.name.split("/")[4]].season = season;
-      console.log(date)
      await requests.put("/user/update",playerTU)
       .then(res=>console.log(res))
      }
@@ -149,6 +149,7 @@ const TeamSummaryTest = (props) => {
   }
  
   const updateTestNames = async ()=>{
+    if(lock) return
     //the player with the username:tests was used in order to store the test names
     await requests.post("/user/username",{username:"tests"})
    .then(res=>testNames= res.data[0])
@@ -306,9 +307,8 @@ const TeamSummaryTest = (props) => {
  
   }
   const addRowMeasurements = async (e) =>{
-    console.log("okok")
     if(e.target.nodeName=="INPUT"||e.target.id.split("/").includes("athletename")) return
-    var playerOnNewRow; console.log("ok")
+    var playerOnNewRow
    await requests.post("/user/username",{username:e.target.id.split("/")[0]})
   .then(res=>{playerOnNewRow = res.data[0]})
   playerOnNewRow.measurements.push({
@@ -331,7 +331,6 @@ const TeamSummaryTest = (props) => {
     players.map((player,index)=>{if(player.measurements.length<2) return ;if(player.username==e.target.id.split("/")[0])  indexOfPlayer = index })
     players[indexOfPlayer].measurements.splice(rowToBeRemoved,1)
     const playerToBeUpdated = players[indexOfPlayer];
-    console.log(playerToBeUpdated)
     await requests.put("/user/update",playerToBeUpdated)
     .then(res=>console.log(res)) 
     window.location.reload()
@@ -344,7 +343,6 @@ const TeamSummaryTest = (props) => {
     players.map((player,index)=>{if(player.tests.length<2) return ;if(player.username==e.target.id.split("/")[0])  indexOfPlayer = index })
     players[indexOfPlayer].tests.splice(rowToBeRemoved,1)
     const playerToBeUpdated = players[indexOfPlayer];
-    console.log(playerToBeUpdated)
     await requests.put("/user/update",playerToBeUpdated)
     .then(res=>console.log(res)) 
     window.location.reload()
@@ -455,7 +453,7 @@ const TeamSummaryTest = (props) => {
        {players.map((value,index2)=>{return(value.measurements.map((theMeasurement,index3)=>{ return(
        <tr className={index3+1==value.measurements.length&&!lock?"":""} >
             {theaders2.map((value2,index)=>{
-          return <td style={{width:"12%"}} id = {value2=="Athlete"?value.username+"/"+index3+"/athletename":value.username+"/"+index3} onClick={!lock&&value.measurements.length>1&&index3+1!==value.measurements.length?removeRowMeasurements:console.log("")}  className={value2=="Athlete"&&index3+1!==value.measurements.length&&!lock?"removeRow table-left-atr-test pso-sub2 ":"table-left-atr-test pso-sub2"}>{
+          return <td style={{width:"12%"}} id = {value2=="Athlete"?value.username+"/"+index3+"/athletename":value.username+"/"+index3} onClick={!lock&&value.measurements.length>1&&index3+1!==value.measurements.length?removeRowMeasurements:""}  className={value2=="Athlete"&&index3+1!==value.measurements.length&&!lock?"removeRow table-left-atr-test pso-sub2 ":"table-left-atr-test pso-sub2"}>{
           value2 == "Athlete" ? value.firstName+" "+value.lastName :
           value2 == "Season"&&!lock ? <input disabled={lock?true:false} id={value.username}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"season"+"/"+index3} onChange={handleMeasurementsValue} placeholder={theMeasurement.season}></input>:
           value2 == "Season"&&lock ? theMeasurement.season:
@@ -465,7 +463,7 @@ const TeamSummaryTest = (props) => {
           value2 == measurements[1]&&value.measurements ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"weight"+"/"+index3} onChange={handleMeasurementsValue} placeholder={theMeasurement.weight}></input>:
           value2 == measurements[2]&&value.measurements ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"fat"+"/"+index3} onChange={handleMeasurementsValue} placeholder={theMeasurement.fat}></input>:""
           }
-         {index3+1==value.measurements.length&&value2=="Athlete"&&!lock?<div><div id = {value2=="Athlete"?value.username+"/"+index3:value.username+"/"+index3} onClick={!lock&&index3+1==value.measurements.length? addRowMeasurements:value2=="Athlete"&&!lock?removeRowMeasurements:console.log("")} className={"add-row-label"}>+</div><label className="add-row-label-hidden">add row below  </label></div>:""}
+         {index3+1==value.measurements.length&&value2=="Athlete"&&!lock?<div><div id = {value2=="Athlete"?value.username+"/"+index3:value.username+"/"+index3} onClick={!lock&&index3+1==value.measurements.length? addRowMeasurements:value2=="Athlete"&&!lock?removeRowMeasurements:""} className={"add-row-label"}>+</div><label className="add-row-label-hidden">add row below  </label></div>:""}
           </td>
         })} 
         </tr>)}))})}
@@ -478,7 +476,7 @@ const TeamSummaryTest = (props) => {
     return (
         <div className="overview team-summary-test">
           
-          <button onClick={changeLockState} className={lock?"lock-locked":"lock-unlocked"}>{lock?<AiFillLock/>:<AiFillUnlock/>}</button>
+          <button onClick={()=>{changeLockState();updateTestNames()}} className={lock?"lock-locked":"lock-unlocked"}>{lock?<AiFillLock/>:<AiFillUnlock/>}</button>
             <div>
               
               <button style={!measurementsTab?{color:"black"}:{}} onClick={()=>setMeasurementsTab(false)} className="test-measurements-button">Squad Test</button>
@@ -511,21 +509,21 @@ const TeamSummaryTest = (props) => {
                   {theaders.map((value2,index)=>{
                 return <td style={{width:"12%"}} id = {value2=="Athlete"?value.username+"/"+index3+"/athletename":value.username+"/"+index3} onClick={!lock&&value.tests.length>1&&index3+1!==value.tests.length?removeRowTests:console.log("")}  className={value2=="Athlete"&&index3+1!==value.tests.length&&!lock?"removeRow table-left-atr-test pso-sub2 ":"table-left-atr-test pso-sub2"}>{
                   value2 == "Athlete" ? value.firstName+" "+value.lastName :
-                  value2 == "Season"&&!lock ? <input disabled={lock?true:false} id={value.username}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"season"+"/"+index3} onChange={handleTestValue} placeholder={theTest.season}></input>:
+                  value2 == "Season"&&!lock ? <input disabled={lock?true:false} id={value.username} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"season"+"/"+index3} onChange={handleTestValue} placeholder={theTest.season}></input>:
                   value2 == "Season"&&lock ? theTest.season:
-                  value2 == "Date"&&!lock ? <input disabled={lock?true:false} id={value.username}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"date"+"/"+index3} onChange={handleTestValue} placeholder={theTest.date}></input>:
-                  value2 == "Date"&&lock ? theTest.date:
+                  value2 == "Date"&&!lock ? <input disabled={lock?true:false} id={value.username} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"date"+"/"+index3} onChange={handleTestValue} placeholder={theTest.date}></input>:
+                  value2 == "Date"&&lock ?testDate?testDate: theTest.date:
                   value2 == "Team" ? value.team:
-                  value2 == tests[0]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test1"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test1}></input>:
-                  value2 == tests[1]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test2"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test2}></input>:
-                  value2 == tests[2]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test3}></input>:
-                  value2 == tests[3]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test4"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test4}></input>:
-                  value2 == tests[4]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test5"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test5}></input>:
-                  value2 == tests[5]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test6"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test6}></input>:
-                  value2 == tests[6]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test7"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test7}></input>:
-                  value2 == tests[7]&&value.tests ? <input disabled={lock?true:false}  style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test8"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test8}></input>:""
+                  value2 == tests[0]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test1"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test1}></input>:
+                  value2 == tests[1]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test2"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test2}></input>:
+                  value2 == tests[2]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test3}></input>:
+                  value2 == tests[3]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test4"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test4}></input>:
+                  value2 == tests[4]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test5"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test5}></input>:
+                  value2 == tests[5]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test6"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test6}></input>:
+                  value2 == tests[6]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test7"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test7}></input>:
+                  value2 == tests[7]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test8"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test8}></input>:""
                   }
-                 {index3+1==value.tests.length&&value2=="Athlete"&&!lock?<div><div id = {value2=="Athlete"?value.username+"/"+index3:value.username+"/"+index3} onClick={!lock&&index3+1==value.tests.length? addRowTests:value2=="Athlete"&&!lock?removeRowTests:console.log("")} className={"add-row-label"}>+</div><label className="add-row-label-hidden">add row below  </label></div>:""}
+                 {index3+1==value.tests.length&&value2=="Athlete"&&!lock?<div><div id = {value2=="Athlete"?value.username+"/"+index3:value.username+"/"+index3} onClick={!lock&&index3+1==value.tests.length? addRowTests:value2=="Athlete"&&!lock?removeRowTests:""} className={"add-row-label"}>+</div><label className="add-row-label-hidden">add row below  </label></div>:""}
                   </td>
               })}
               </tr>)}))})}
@@ -533,7 +531,6 @@ const TeamSummaryTest = (props) => {
           </tbody>
         </table>
         
-        {!lock?<button style={test1Name||test2Name||test3Name||test4Name||test5Name||test6Name||test7Name||test8Name? {alignSelf:"center"}:{background:"grey",alignSelf:"center"}} onClick={updateTestNames} className="submit-button">Update Tests</button>:""}
       </div>
     )
 }

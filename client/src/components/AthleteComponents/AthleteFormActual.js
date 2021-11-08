@@ -1,9 +1,8 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import {requests} from '../../utils/axios';
 import {Redirect } from "react-router-dom";
 import './AthleteFormActual.css'
-import human from '../../assets/human-body.svg'
 import logo2 from'../../assets/logo2.svg'
 import {HiOutlineArrowCircleLeft} from 'react-icons/hi'
 import {GoCalendar} from 'react-icons/go'
@@ -27,25 +26,24 @@ const AthleteFormActual = (props) => {
   const [duration3ForForm,setDuration3ForForm] = useState()
   const [rpe3ForForm,setRpe3ForForm] = useState()
   const [wellness3ForForm,setWellness3ForForm] = useState()
-  const [hasTraining, setHasTraining] = useState(false)
+  const [hasTraining,setHasTraining] = useState(false)
   const [hasTraining2,setHasTraining2] = useState(false)
   const [injuryName,setInjuryName] = useState("")
   const [counter,setCounter] = useState(0)
   const [injuryNames,setInjuryNames] = useState(user.injuries)
-  const [injuryExist,setInjuryExist] =useState(false)
+  const [injuryExist,setInjuryExist] = useState(false)
   const [severity,setSeverity] = useState(user.severity)
   const [showSeverity,setShowSeverity] = useState(false)
   const [front,setFront] = useState(true)
-  
-  useEffect(() => {
-    if(isSecondSession) setSession2ForForm("basketball")
-	if(user.injury!=" ") setInjuryExist(true)
-  }, [])
-  useEffect(()=>{
-	setInjuryNames(injuryNames);
-  },[injuryNames,counter])
 {// UPDATE FUNCTIONS ---START---
 }
+useEffect(() => {
+  if(isSecondSession) setSession2ForForm("basketball")
+  if(user.injury!=" ") setInjuryExist(true)
+}, [])
+useEffect(()=>{
+	setInjuryNames(injuryNames);
+  },[injuryNames,counter])
   const updateSleep = (e)=>{
       setSleepForForm(e.target.value)
   }
@@ -92,10 +90,12 @@ const AthleteFormActual = (props) => {
 }
 
     const submitForm = async (e,reque) =>{
-	  e.preventDefault()
+     
+      e.preventDefault()
 	  user.injuries = injuryNames;
+	  user.injury = injuryName;
+	  user.severity = severity
 	  await requests.put("/user/update",user).then(res=>console.log(res))
-      
       reque={username:user.username,
       details:{
               date:dateForForm,
@@ -109,14 +109,10 @@ const AthleteFormActual = (props) => {
               duration2:duration2ForForm,
               rpe2:rpe2ForForm,
               wellness2:wellness2ForForm,
-              }}
-              console.log(reque.details)
-             
+              }}       
      return(requests.post("/form/post",reque)
       .then(res => console.log(res)))
       .then(()=>setFormSubmitted(true))
-      
-
     }
     const playerHasTraining = () =>{
       setHasTraining(!hasTraining);
@@ -158,8 +154,13 @@ const AthleteFormActual = (props) => {
       e.preventDefault()
 	  user.injuries = injuryNames;
 	  await requests.put("/user/update",user).then(res=>console.log(res))
+	  user.severity = severity
       var indexOfSecondTraining = 0
       user.training.map((value,index)=>{if(value.date==dateForForm) indexOfSecondTraining=index})
+      console.log("session2",session2ForForm)
+      console.log("duration2",duration2ForForm)
+      console.log("rpe2",rpe2ForForm)
+      console.log("wellness2",wellness2ForForm)
       user.training[indexOfSecondTraining].session2 = session2ForForm;
       user.training[indexOfSecondTraining].duration2 = duration2ForForm;
       user.training[indexOfSecondTraining].rpe2 = rpe2ForForm;
@@ -171,12 +172,11 @@ const AthleteFormActual = (props) => {
 	const displaySeverity = (e) =>{
 		e.preventDefault()
 		setShowSeverity(!showSeverity)
-
 	}
 	const changeSide = (e) =>{
 		e.preventDefault()
 		if(e.target.id=="front") {setFront(true);}
-		else {setFront(false);}
+		else setFront(false)
 	}
 	const reloadPage = () =>{
 		window.location.reload()
@@ -209,7 +209,6 @@ const AthleteFormActual = (props) => {
 		if(injuryArray.some(e=>e.name==injury)) setShowSeverity(true)
 
 	}
-	
 	const removeInjury = (e) =>{
 		const injuryArray = injuryNames
 		injuryArray.splice(e.target.id,1)
@@ -280,7 +279,7 @@ const AthleteFormActual = (props) => {
     if(formSubmitted) return(<div className="congratulation"><h1>Congratulation! <br/>You filled the form!</h1><button className="congratulation-button" onClick={()=>{props.fillForm(false);reloadPage()}}>Go back to main screen</button></div>)
   return (
     <div className="athlete-fill-form-wrapper">
-          <div className="top-back">
+      <div className="top-back">
             <HiOutlineArrowCircleLeft onClick={goBack} className="back-arrow"/>
             
             <img className="actual-form-logo" src={logo2}></img>
@@ -291,12 +290,13 @@ const AthleteFormActual = (props) => {
           <option value="Junior">{user.team}</option>
         </select>
         <div className="fill-form-details">
-            <div className="fill-form-training-date">
+			<div className="fill-form-training-date">
 				<label className="training-date-label">Training Date</label>
                 <div className="fill-form-today">{showDayofWeek()}</div>
                 <div className="fill-form-date">{dateForForm}<GoCalendar className="calendar-icon" onClick={goBack}/></div>
             </div>
-           {!isSecondSession?<div className="form-part">
+            <div className="separator"></div>
+            {!isSecondSession? <div className="form-part">
                 <label className="form-part-title">Wellness</label>
                 <label className="form-part-subtitle">Sleep Time</label>
                 <select onChange={updateSleep} className="form-part-select">
@@ -326,7 +326,7 @@ const AthleteFormActual = (props) => {
                   <label className="slider-index">Very Fresh</label>
                 </div>
             </div>:""}
-           <div className="separator"></div>
+            <div className="separator"></div>
             
 			{!isSecondSession?<label className="did-label">Did you have training on {dateForForm}?</label>:""}
             {!isSecondSession?<div>
@@ -344,37 +344,39 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subtitle">Session type</label>
                     <label className="form-part-subsubtitle">Type of Training</label>
                 </div>
-                <select value={session1ForForm} onChange={updateSession1} className="form-part-select session-type">
+                <select onChange={updateSession1} className="form-part-select session-type">
                     <option value="basketball">Basketball</option>
-                    <option value="gym">Gym</option>
+                    <option value="strength">Strength</option>
+					<option value="game">Game</option>
+					<option value="agility/speed">Agility/Speed</option>
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
-                    <select value={duration1ForForm} onChange={updateDuration1} className="form-part-select">
+                    <select onChange={updateDuration1} className="form-part-select">
                     <option value="0">0</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
-					<option value="40">40</option>
+					          <option value="40">40</option>
                     <option value="50">50</option>
                     <option value="60">60</option>
                     <option value="70">70</option>
-					<option value="80">80</option>
+					          <option value="80">80</option>
                     <option value="90">90</option>
                     <option value="100">100</option>
                     <option value="110">110</option>
-					<option value="120">120</option>
-					<option value="130">130</option>
-					<option value="140">140</option>
-					<option value="150">150</option>
-					<option value="160">160</option>
-					<option value="170">170</option>
-					<option value="180">180</option>
+					          <option value="120">120</option>
+					          <option value="130">130</option>
+					          <option value="140">140</option>
+					          <option value="150">150</option>
+					          <option value="160">160</option>
+					          <option value="170">170</option>
+					          <option value="180">180</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
                 </div>
-                <input value={rpe1ForForm} onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
+                <input onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
                 <div className="slider-indexes">
                   <label className="slider-index">1</label>
                   <label className="slider-index">2</label>
@@ -389,9 +391,9 @@ const AthleteFormActual = (props) => {
                 </div>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Wellness</label>
-                    <label className="form-part-subsubtitle">How was training?</label>
+                    <label className="form-part-subsubtitle">Energy level in practice</label>
                 </div>
-                <input value={wellness1ForForm} onChange={updateWellness1} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
+                <input onChange={updateWellness1} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
                 <div className="slider-indexes2">
                   <label style={{textAlign:"start"}} className="slider-index2">Poor</label>
                   <label style={{textAlign:"start"}} className="slider-index2">Fair</label>
@@ -400,7 +402,7 @@ const AthleteFormActual = (props) => {
                   <label style={{textAlign:"end"}} className="slider-index2">Excellent</label>
                 </div>
             </div>:""}
-            {hasTraining2?<div className="separator"></div>:""}
+			{hasTraining2?<div className="separator"></div>:""}
              {hasTraining2?<div className="form-part">
                 <label className="form-part-title">Session2</label>
                 <div className="sub-subtitle-field">
@@ -408,8 +410,10 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subsubtitle">Type of Training</label>
                 </div>
                 <select onChange={updateSession2} value={session2ForForm} className="form-part-select session-type">
-                    <option value="basketball">Basketball</option>
-                    <option value="gym">Gym</option>
+					<option value="basketball">Basketball</option>
+                    <option value="strength">Strength</option>
+					<option value="game">Game</option>
+					<option value="agility/speed">Agility/Speed</option>
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
                     <select onChange={updateDuration2} value={duration2ForForm} className="form-part-select">
@@ -452,7 +456,7 @@ const AthleteFormActual = (props) => {
                 </div>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Wellness</label>
-                    <label className="form-part-subsubtitle">How was training?</label>
+                    <label className="form-part-subsubtitle">Energy level in practice</label>
                 </div>
                 <input onChange={updateWellness2} value={wellness2ForForm} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
                 <div className="slider-indexes2">
@@ -471,15 +475,32 @@ const AthleteFormActual = (props) => {
                     <label className="form-part-subsubtitle">Type of Training</label>
                 </div>
                 <select onChange={updateSession3} className="form-part-select session-type">
-                    <option value="basketball">Basketball</option>
-                    <option value="gym">Gym</option>
+					<option value="basketball">Basketball</option>
+                    <option value="strength">Strength</option>
+					<option value="game">Game</option>
+					<option value="agility/speed">Agility/Speed</option>
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
                     <select onChange={updateDuration3} className="form-part-select">
+                    <option value="0">0</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+					          <option value="40">40</option>
+                    <option value="50">50</option>
                     <option value="60">60</option>
                     <option value="70">70</option>
-                    <option value="80">80</option>
+					          <option value="80">80</option>
                     <option value="90">90</option>
+                    <option value="100">100</option>
+                    <option value="110">110</option>
+					          <option value="120">120</option>
+					          <option value="130">130</option>
+					          <option value="140">140</option>
+					          <option value="150">150</option>
+					          <option value="160">160</option>
+					          <option value="170">170</option>
+					          <option value="180">180</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
@@ -500,7 +521,7 @@ const AthleteFormActual = (props) => {
                 </div>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Wellness</label>
-                    <label className="form-part-subsubtitle">How was training?</label>
+                    <label className="form-part-subsubtitle">Energy level in practice</label>
                 </div>
                 <input onChange={updateWellness3} className="slider" type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
                 <div className="slider-indexes2">
@@ -514,17 +535,14 @@ const AthleteFormActual = (props) => {
             <div className="form-part">
             </div>
         </div>
-        
-
-
 
 		<label onClick={()=>setFront(!front)} className="did-label">Are you currently injured?</label>
 		<div><input className="training-yes" onChange={()=>{setInjuryExist(!injuryExist);setInjuryName(" ");setSeverity(" ")}} checked={injuryExist} type="checkbox"></input><label className="did-label">Yes </label></div>
         {injuryExist?<div className="front-back-fields">
-			<button onClick={changeSide} style={front?{background:"#676767",color:"white"}:{}} id="front" className="but-select front-but">Front</button>
+		<button onClick={changeSide} style={front?{background:"#676767",color:"white"}:{}} id="front" className="but-select front-but">Front</button>
 			<button onClick={changeSide} style={!front?{background:"#676767",color:"white"}:{}} id="back" className="but-select back-but">Back</button>
 		</div>:""}
-		{injuryExist?<svg version="1.1" id="Layer_1" x="0px" y="0px"
+        {injuryExist?<svg version="1.1" id="Layer_1" x="0px" y="0px"
 	 viewBox="0 0 693 666" className={!front?"svg-front":"svg-back"} >
 <g className={front?"show":"hide"}>
 	<path  class="st0" d="M167.2,122.7c7.4-8.1,6.3-15.1,5.1-22.3c-0.7-4.2-1.4-8.5-0.4-13.1c-1.7,0.6-3.2,0.9-4.5,0.9h-0.5
@@ -1421,7 +1439,7 @@ const AthleteFormActual = (props) => {
 	<path class="st0" d="M497.6,621h0.4H497.6z"/>
 </g>
 </svg>:""}
-	{showSeverity? <div className="severity-container">
+{showSeverity? <div className="severity-container">
 		<div className="how-much">
 			<label className="did-label">Vas scale pain</label>
 			<div className="severity-range-container"><input value={severity} onChange={(e)=>setSeverity(e.target.value)} className="slider slider2" type="range" id="severity" name="severity" min="1" max="10"></input>
@@ -1444,7 +1462,8 @@ const AthleteFormActual = (props) => {
 		
 	</div>:""}
 
-		<div className="injuries-list">{injuryNames.map((value,index)=>{
+
+	<div className="injuries-list">{injuryNames.map((value,index)=>{
 			return(
 			<div className="injury-in-list">
 				<div>{value.name}</div>
