@@ -241,7 +241,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -337,7 +337,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -433,7 +433,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -529,7 +529,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -625,7 +625,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -721,7 +721,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
@@ -817,7 +817,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<td colSpan="3" key={val} className="pso-sub2"><div className="inside-health">{"Ankle"}</div></td>;
+                    return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
                   })
                 : ""}
             </tr>
