@@ -1,10 +1,9 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import {Bar} from 'react-chartjs-2'
-import imag from '../../assets/sportsman.svg'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-
-
+import {IoBandageOutline} from 'react-icons/io5'
+import defaultImage from '../../assets/sportsman.svg'
 const Monitoring = (props) => {
   var totalPlayers = [];
   props.players.map((value)=>{if(!value.is_coach) totalPlayers.push(value)})
@@ -110,7 +109,6 @@ const Monitoring = (props) => {
       if(value.team==props.team) playersToDisplayAux.push(value)
     })
     setPlayersToDisplay(playersToDisplayAux)
-    console.log(playersToDisplayAux)
 
   }
  useEffect(() => {
@@ -253,31 +251,21 @@ const Monitoring = (props) => {
                 <button onClick={changeMonitoringTab} style={{marginRight:"5px"}} className="change-month-btn next-month-btn"><IoIosArrowForward/></button>
             </div>
             <div className="monitoring-tabs">
-              <div onClick={()=>{setSelectedActive(true);setAlertActive(false)}} style={selectedActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">Selected</div>
-              <div onClick={()=>{setSelectedActive(false);setAlertActive(true)}} style={alertActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">All</div>
+              <div onClick={()=>{setSelectedActive(true);setAlertActive(false)}} style={selectedActive? {color:"#0E1333"}:{}} className="monitoring-tabs-label">Players</div>
             </div>
             {selectedActive?<div className="selected-tab">
                 {playersToDisplay.map((value)=>
                 <div className="selected-player">
-                  <img src={value.image.length>1?value.image:imag} className="selected-player-img"></img>
+                  <div className={value.injuries.length>0 ? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
+                  <img src={value.image.length>1?value.image:defaultImage} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name">{value.firstName} {value.lastName}</label>
-                      <label className="injury">{value.injuries?value.injuries[0].name:""}</label>
+                      <label className="injury">{value.injuries.length>0?<div><IoBandageOutline/><label>{value.injuries[0].name}</label></div>:""}</label>
                     </div>
-                  <div className={value.injuries[0]? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
+                  
                 </div>)}
             </div>:""}
-            {alertActive?<div className="selected-tab">
-                {totalPlayers.map((value)=>
-                <div className="selected-player">
-                  <img src={value.image.length>1?value.image:imag} className="selected-player-img"></img>
-                    <div className="injured-player-info">
-                      <label className="selected-player-name">{`${value.firstName} ${value.lastName}`}</label>
-                      <label className="injury">{value.injuries?value.injuries[0].name:""}</label>
-                    </div>
-                    <div className={value.injuries[0]? "not-ready selected-player-readiness" : "ready selected-player-readiness"}></div>
-                </div>)}
-            </div>:""}
+            
         </div>
     )
 }

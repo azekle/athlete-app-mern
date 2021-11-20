@@ -32,8 +32,6 @@
 .select-div{
     width: 45%;
     height: 80%;
-    
-    
 }
 
 .select-div:after {
@@ -51,6 +49,7 @@
     position: absolute;
     pointer-events: none;
   }
+  
 .coach-team{
     border:none;
     background: none;
@@ -61,18 +60,30 @@
     background-color: none;
     padding:5px;
 }
+.coach-team2{
+    border:none;
+    background: none;
+    color:white;
+    width: 70%;
+    font-size: 2em;
+    background-color: none;
+    padding:5px;
+}
+  
 .coach-mobile-tabs{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    background-color: white;
+    padding: 10px 0 0 0 ;
 }
 .coach-mobile-tab{
-    color:white;
+    color:#C1C1C1;
     text-decoration: none;
     padding:0px;
     padding-top: 0;;
-    font-size: 1.5em;
+    font-size: 1.7em;
     font-weight: 600;
 }
 .coach-mobile-tab-separator{
@@ -144,6 +155,10 @@
     background: linear-gradient(90deg, rgba(17,149,255,1) 0%, rgba(90,181,255,1) 100%);
     height: 100%;
     align-self: center;
+}
+.tab-active{
+    color: black;
+    transition-duration: .4s;
 }
 .injury-bean{
     align-self: center;
@@ -231,18 +246,17 @@
     justify-content: space-between;
     background: white;
     border-radius: 10px;
-    height: 100%;
+    height: 120%;
     margin-bottom: 10px;
     align-items: center;
-    padding:10px 0px;
     -webkit-box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.20); 
     box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.20);
 }
 .selected-player-img{
-    height: 64px;
-    width: 64px;
-    margin:10px;
-    margin-left: 20px;
+    height: 74px;
+    width: 74px;
+    
+    
 }
 .injured-player-info{
     display: flex;
@@ -260,13 +274,70 @@
 }
 .selected-player-readiness{
     height: 100%;
-    width: 20px;
-    margin-right: 20px;
-    border-radius: 20px;
+    width: 15px;
+    border-radius: 10px 0 0 10px ;
 }
 .ready{
     background: #5CDC26;
 }
 .not-ready{
     background: red;
+}
+.option-week-field{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.option-week{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.week-div{
+    width: 35%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.select-div2{
+    width: 55%;
+    height: 80%;
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+}
+.week-label{
+    width: 35%;
+    color:black;
+    white-space: nowrap;
+    font-size: 1.2em;
+}
+.readiness-field{
+    background-color: white;
+    width: 100%;
+    padding: 0 2.5%;
+    padding-top: 5%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+.measurements-injury-buttons{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.m-i-but{
+    width: 40%;
+    margin:0 10px;
+    margin-bottom: 5px;
+    border:none;
+    color:#8E8E8E;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 1.4em;
 }

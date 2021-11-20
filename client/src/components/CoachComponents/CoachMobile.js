@@ -3,13 +3,18 @@ import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import "./CoachMobile.css";
 import Monitoring from "./Monitoring.js";
 import CoachCalendar from "./CoachCalendar.js";
+import PlayerTab from "./PlayerTab";
 import { BiEnvelope } from "react-icons/bi";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import {IoMdCalendar} from 'react-icons/io'
+import {AiOutlineUser} from 'react-icons/ai'
+import {FaUsers} from 'react-icons/fa'
 const CoachMobile = (props) => {
-  const [monitoringActive, setMonitoringActive] = useState(true);
+  const [monitoringActive, setMonitoringActive] = useState(false);
   const [calendarActive, setCalendarActive] = useState(false);
   const [team, setTeam] = useState("");
   const [canLogOut, setCanLogOut] = useState(false);
+  const [PlayerTabActive,setPlayerTabActive] = useState(false)
   // const[user,setUser] = useState(props.user)
   const user = props.user;
   const changeTeam = (e) => {
@@ -22,6 +27,11 @@ const CoachMobile = (props) => {
     localStorage.clear();
     window.location.reload();
   };
+  useEffect(() => {
+    if(window.location.pathname.split("/")[window.location.pathname.split("/").length-1]=="monitoring") {setMonitoringActive(true);setPlayerTabActive(false);setCalendarActive(false)}
+    if(window.location.pathname.split("/")[window.location.pathname.split("/").length-1]=="playertab") {setMonitoringActive(false);setPlayerTabActive(true);setCalendarActive(false)}
+    if(window.location.pathname.split("/")[window.location.pathname.split("/").length-1]=="calendar") {setMonitoringActive(false);setPlayerTabActive(false);setCalendarActive(true)}
+  }, [window.location.pathname])
   return (
     <div className="coach-mobile">
       <BrowserRouter>
@@ -67,58 +77,36 @@ const CoachMobile = (props) => {
           <div className="coach-mobile-tabs">
             <Link
               onClick={() => {
-                setCalendarActive(false);
-                setMonitoringActive(true);
-              }}
-              to="/dashboard/dashboard-panel/monitoring"
-              className="coach-mobile-tab"
-            >
-              <label>Monitoring</label>
-              <div
-                style={
-                  monitoringActive
-                    ? {
-                        height: "4px",
-                        width: "100%",
-                        background: "white",
-                        marginBottom: "1px",
-                        transitionDuration: ".2s",
-                      }
-                    : {
-                        height: "4px",
-                        marginBottom: "1px",
-                        transitionDuration: ".2s",
-                      }
-                }
-              ></div>
-            </Link>
-            <div className="coach-mobile-tab-separator"></div>
-            <Link
-              onClick={() => {
                 setCalendarActive(true);
                 setMonitoringActive(false);
+                setPlayerTabActive(false)
               }}
               to="/dashboard/dashboard-panel/calendar"
               className="coach-mobile-tab"
             >
-              <label>Calendar</label>
-              <div
-                style={
-                  calendarActive
-                    ? {
-                        height: "4px",
-                        width: "100%",
-                        background: "white",
-                        marginBottom: "1px",
-                        transitionDuration: ".2s",
-                      }
-                    : {
-                        height: "4px",
-                        marginBottom: "1px",
-                        transitionDuration: ".2s",
-                      }
-                }
-              ></div>
+              <IoMdCalendar className={calendarActive? "tab-active":""}/>
+            </Link>
+            <Link
+              onClick={() => {
+                setCalendarActive(false);
+                setMonitoringActive(true);
+                setPlayerTabActive(false)
+              }}
+              to="/dashboard/dashboard-panel/monitoring"
+              className="coach-mobile-tab"
+            >
+              <FaUsers className={monitoringActive? "tab-active":""}/>
+            </Link>
+            <Link
+              onClick={() => {
+                setCalendarActive(false);
+                setMonitoringActive(false);
+                setPlayerTabActive(true)
+              }}
+              to="/dashboard/dashboard-panel/playertab"
+              className="coach-mobile-tab"
+            >
+              <AiOutlineUser className={PlayerTabActive? "tab-active":""}/>
             </Link>
           </div>
         </div>
@@ -129,6 +117,9 @@ const CoachMobile = (props) => {
           </Route>
           <Route path="/dashboard/dashboard-panel/calendar">
             <CoachCalendar />
+          </Route>
+          <Route path="/dashboard/dashboard-panel/playertab">
+            <PlayerTab players={props.players} />
           </Route>
         </Switch>
       </BrowserRouter>
