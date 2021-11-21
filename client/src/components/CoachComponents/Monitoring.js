@@ -30,6 +30,7 @@ const Monitoring = (props) => {
     let initialColorToday=[]
     let totalDays = [];
     let indexOfToday=[]
+    let averageBars = 0
     //State END
     const today = moment();
     //Functions START
@@ -59,7 +60,12 @@ const Monitoring = (props) => {
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
       currentWeekDates.map((value,index)=>{playersToDisplay.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
-      
+      const reducer = (accumulator, curr) => accumulator + curr;
+      let counter = 0
+      load.map(value=>{
+        if(value!=0) counter++
+      })
+      averageBars= load.reduce(reducer)/counter
     }
     
     const findWeek = () =>{
@@ -190,7 +196,7 @@ const Monitoring = (props) => {
         ticks: {
             beginAtZero: true,
             callback: function(value, index, values) {
-              return value == 300 ? "300" : null;
+              return value == averageBars ? averageBars : null;
             },
             
           }
