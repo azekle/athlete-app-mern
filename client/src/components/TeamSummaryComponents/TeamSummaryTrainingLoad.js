@@ -57,7 +57,37 @@ const TeamSummaryTrainingLoad = (props) => {
     })
     return(forReturn)
   }
-  
+  const defaultThickness = "1.3px solid black"
+  const contourBottom = {
+    borderBottom:defaultThickness
+  }
+  const contourBottomLeft = {
+    borderBottom:defaultThickness,
+    borderLeft:defaultThickness
+  }
+  const contourLeft={
+    borderLeft:defaultThickness
+  }
+  const contourLeftTop = {
+    borderLeft:defaultThickness,
+    borderTop:defaultThickness
+  }
+  const contourTop = {
+    borderTop:defaultThickness,
+    textTransform:"capitalize"
+  }
+  const contourTopRight = {
+    borderRight:defaultThickness,
+    borderTop:defaultThickness
+  }
+  const contourBottomRight = {
+    borderBottom:defaultThickness,
+    borderRight:defaultThickness
+  }
+  const contourRight = {
+    borderRight:defaultThickness,
+    textTransform:"capitalize"
+  }
   const determineSession2=(days)=>{
     var forReturn=""
     const theDay = moment(currentShownWeek).add(days,"day").format("DD/MM/YY")
@@ -153,7 +183,7 @@ const TeamSummaryTrainingLoad = (props) => {
           <img className="right-arrow" src={arrow}></img>
           </button>
         </div>
-      <table className="overview-table">
+      <table  className="overview-table">
         <thead>
           <tr>
             <th className="table-header-cell athlete">Name</th>
@@ -198,74 +228,74 @@ const TeamSummaryTrainingLoad = (props) => {
         </thead>
         <tbody className="tbody-load">
             <tr>
-                <td className="table-left-atr"> Session1</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(0)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(1)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(2)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(3)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(4)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(5)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession1(6)}</td>
+                <td style={contourLeftTop} className="table-left-atr"> Session1</td>
+                <td style={contourTop}>{determineSession1(0)}</td>
+                <td style={contourTop}>{determineSession1(1)}</td>
+                <td style={contourTop}>{determineSession1(2)}</td>
+                <td style={contourTop}>{determineSession1(3)}</td>
+                <td style={contourTop}>{determineSession1(4)}</td>
+                <td style={contourTop}>{determineSession1(5)}</td>
+                <td style={contourTopRight}>{determineSession1(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr">RPE</td>
+                <td style={contourLeft} className="table-left-atr">RPE</td>
                 <td>{determineRPE1(0)}</td>
                 <td>{determineRPE1(1)}</td>
                 <td>{determineRPE1(2)}</td>
                 <td>{determineRPE1(3)}</td>
                 <td>{determineRPE1(4)}</td>
                 <td>{determineRPE1(5)}</td>
-                <td>{determineRPE1(6)}</td>
+                <td style={contourRight}>{determineRPE1(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr">Duration</td>
-                <td>{determineDuration1(0)}</td>
-                <td>{determineDuration1(1)}</td>
-                <td>{determineDuration1(2)}</td>
-                <td>{determineDuration1(3)}</td>
-                <td>{determineDuration1(4)}</td>
-                <td>{determineDuration1(5)}</td>
-                <td>{determineDuration1(6)}</td>
+                <td style={contourBottomLeft} className="table-left-atr">Duration</td>
+                <td style={contourBottom}>{determineDuration1(0)}</td>
+                <td style={contourBottom}>{determineDuration1(1)}</td>
+                <td style={contourBottom}>{determineDuration1(2)}</td>
+                <td style={contourBottom}>{determineDuration1(3)}</td>
+                <td style={contourBottom}>{determineDuration1(4)}</td>
+                <td style={contourBottom}>{determineDuration1(5)}</td>
+                <td style={contourBottomRight}>{determineDuration1(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr">Session2</td>
+                <td style={contourLeftTop} className="table-left-atr">Session2</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(0)}</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(1)}</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(2)}</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(3)}</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(4)}</td>
                 <td style={{textTransform:"capitalize"}}>{determineSession2(5)}</td>
-                <td style={{textTransform:"capitalize"}}>{determineSession2(6)}</td>
+                <td style={contourRight}>{determineSession2(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr">RPE</td>
+                <td style={contourLeft} className="table-left-atr">RPE</td>
                 <td>{determineRPE2(0)}</td>
                 <td>{determineRPE2(1)}</td>
                 <td>{determineRPE2(2)}</td>
                 <td>{determineRPE2(3)}</td>
                 <td>{determineRPE2(4)}</td>
                 <td>{determineRPE2(5)}</td>
-                <td>{determineRPE2(6)}</td>
+                <td style={contourRight}>{determineRPE2(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr">Duration</td>
-                <td>{determineDuration2(0)}</td>
-                <td>{determineDuration2(1)}</td>
-                <td>{determineDuration2(2)}</td>
-                <td>{determineDuration2(3)}</td>
-                <td>{determineDuration2(4)}</td>
-                <td>{determineDuration2(5)}</td>
-                <td>{determineDuration2(6)}</td>
+                <td style={contourBottomLeft} className="table-left-atr">Duration</td>
+                <td style={contourBottom}>{determineDuration2(0)}</td>
+                <td style={contourBottom}>{determineDuration2(1)}</td>
+                <td style={contourBottom}>{determineDuration2(2)}</td>
+                <td style={contourBottom}>{determineDuration2(3)}</td>
+                <td style={contourBottom}>{determineDuration2(4)}</td>
+                <td style={contourBottom}>{determineDuration2(5)}</td>
+                <td style={contourBottomRight}>{determineDuration2(6)}</td>
             </tr>
             <tr>
-                <td className="table-left-atr-bottom">Total Load <br></br>{findLoadForCurrentWeek()}<br></br>W-TO-W<br></br>{findWtoW()}</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
+                <td style={contourBottomLeft} className="table-left-atr-bottom">Total Load <br></br>{findLoadForCurrentWeek()}<br></br>W-TO-W<br></br>{findWtoW()}</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottom}>Nr</td>
+                <td style={contourBottomRight}>Nr</td>
             </tr>
         </tbody>
       </table>

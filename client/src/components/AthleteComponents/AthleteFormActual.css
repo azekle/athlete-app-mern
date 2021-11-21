@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 35%;
     overflow-x: hidden;
     background-color: white;
 }
@@ -182,8 +181,9 @@
     align-items: center;
 }
 .training-yes{
-    transform: scale(2);
-    margin:3vw
+    transform: scale(3);
+    margin:3vw;
+    margin-top: 6vw;
 }
 .did-label{
     font-size: 1.3em;
@@ -305,13 +305,14 @@
 .severity-container{
     background-color: rgba(29, 29, 29,.6) ;
     width: 100vw;
-    height: 190vh;
+    height: 1780px;
     position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     color: black;
+    padding: 0;
 
     
 }

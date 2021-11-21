@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Bar } from "react-chartjs-2";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const PlayerTab = (props) => {
   const [activeTab, setActiveTab] = useState(false);
   const [activePlayer, setActivePlayer] = useState();
@@ -11,11 +12,13 @@ const PlayerTab = (props) => {
   var counter = 0;
   const startDay = moment().startOf("week").format("DD.MM");
   const endDay = moment().endOf("week").format("DD.MM");
-  const daysOfWeek = [];
+  var daysOfWeek = [];
   const daysOf4Weeks = [];
+  const [weeksBefore, setWeeksBefore] = useState(0);
   const determineDaysOfWeek = () => {
+    daysOfWeek = [];
     for (let i = 0; i < 7; i++) {
-      daysOfWeek.push(moment().startOf("week").add(i, "d").format("DD/MM/YY"));
+      daysOfWeek.push(moment().startOf("week").add(i, "d").subtract(weeksBefore*7,"d").format("DD/MM/YY"));
     }
     for (let i = 0; i < 28; i++) {
       daysOf4Weeks.push(
@@ -37,8 +40,8 @@ const PlayerTab = (props) => {
   const [fatigueAvg, setFatigueAvg] = useState();
   const [enjoymentAvg, setEnjoymentAvg] = useState();
   const [sleepingAvg, setSleepingAvg] = useState();
-  const [injuryActive,setInjuryActive] = useState();
-  const [measurementActive,setMeasurementActive] = useState(true);
+  const [injuryActive, setInjuryActive] = useState();
+  const [measurementActive, setMeasurementActive] = useState(true);
 
   props.players.map((value) => {
     if (!value.is_coach) totalPlayers.push(value);
@@ -61,21 +64,24 @@ const PlayerTab = (props) => {
   const changeMonitoringTab = () => {
     setActiveTab(!activeTab);
   };
-  const initLoad = () =>{
-    if(activePlayer){
-    daysOfWeek.map((date,index)=>{
-      for(let i = 0; i<activePlayer.training.length;i++){
-        if(activePlayer.training[i].date == date) {load.push(activePlayer.training[i].rpe1*activePlayer.training[i].duration1);break}
-      }
-      console.log(index,load.length)
-      if(index>=load.length) load.push(0)
-    })
-    
-  }console.log(load)
-  }
-  initLoad()
-  useEffect(() => {
-  }, [activePlayer])
+  const initLoad = () => {
+    if (activePlayer) {
+      daysOfWeek.map((date, index) => {
+        for (let i = 0; i < activePlayer.training.length; i++) {
+          if (activePlayer.training[i].date == date) {
+            load.push(
+              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1
+            );
+            break;
+          }
+        }
+        if (index >= load.length) load.push(0);
+      });
+    }
+   
+  };
+  initLoad();
+  useEffect(() => {}, [activePlayer]);
   let chartData = {
     labels: [
       `${/*determineDatePlus(0)*/ "Su"}`,
@@ -216,7 +222,7 @@ const PlayerTab = (props) => {
     if (!changedPlayer) {
       counter = 0;
       if (totalPlayers[0]) {
-        setActivePlayer(totalPlayers[0])
+        setActivePlayer(totalPlayers[0]);
         totalPlayers[0].training.map((train) => {
           if (daysOfWeek.includes(train.date)) {
             counter++;
@@ -272,6 +278,12 @@ const PlayerTab = (props) => {
       if (totalPlayers[0]) setInjuries(totalPlayers[0].injuries);
   }, [fatigue]);
   initChart();
+  const weekGoBack = () => {
+    setWeeksBefore(weeksBefore + 1);
+  };
+  const weekGoForward = () => {
+    if(weeksBefore>0)setWeeksBefore(weeksBefore -1);
+  };
   return (
     <div className="option-week-field">
       <div className="option-week">
@@ -286,8 +298,16 @@ const PlayerTab = (props) => {
             ))}
           </select>
         </div>
+        <div className="forward-backward-buts">
+          <button onClick={weekGoBack} className="forward-backward-but">
+            <MdKeyboardArrowLeft />
+          </button>
+          <button onClick={weekGoForward} className="forward-backward-but">
+            <MdKeyboardArrowRight />
+          </button>
+        </div>
         <div className="week-div">
-          <label className="week-label">
+          <label onClick={()=>console.log(daysOfWeek)} className="week-label">
             {startDay}-{endDay}
           </label>
         </div>
@@ -387,12 +407,31 @@ const PlayerTab = (props) => {
         </button>
       </div>
       <div className="measurements-injury-buttons">
-        <button onClick={()=>{setMeasurementActive(true);setInjuryActive(false)}} style={measurementActive?{color:"black"}:{}} className="m-i-but">Measurements</button>
-        <button onClick={()=>{setInjuryActive(true);setMeasurementActive(false)}}  style={injuryActive?{color:"black"}:{}} className="m-i-but">Injury</button>
+        <button
+          onClick={() => {
+            setMeasurementActive(true);
+            setInjuryActive(false);
+          }}
+          style={measurementActive ? { color: "black" } : {}}
+          className="m-i-but"
+        >
+          Measurements
+        </button>
+        <button
+          onClick={() => {
+            setInjuryActive(true);
+            setMeasurementActive(false);
+          }}
+          style={injuryActive ? { color: "black" } : {}}
+          className="m-i-but"
+        >
+          Injury
+        </button>
       </div>
-      {measurementActive?<div className="athlete-body-measurements">
-        <label className="athlete-training-title">Body measurements</label>
-        
+      {measurementActive ? (
+        <div className="athlete-body-measurements">
+          <label className="athlete-training-title">Body measurements</label>
+
           <div className="athlete-body-measurements-attributes">
             <div className="athlete-body-measurements-labels">
               <label className="athlete-body-measurements-label">Height</label>
@@ -406,7 +445,9 @@ const PlayerTab = (props) => {
                 className="athlete-body-measurements-value"
               >
                 {activePlayer
-                  ? activePlayer.measurements[activePlayer.measurements.length - 1].height
+                  ? activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].height
                   : ""}{" "}
                 m
               </label>
@@ -415,7 +456,9 @@ const PlayerTab = (props) => {
                 className="athlete-body-measurements-value"
               >
                 {activePlayer
-                  ? activePlayer.measurements[activePlayer.measurements.length - 1].weight
+                  ? activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].weight
                   : ""}{" "}
                 kg
               </label>
@@ -423,18 +466,32 @@ const PlayerTab = (props) => {
                 placeholder="%"
                 className="athlete-body-measurements-value"
               >
-                {activePlayer 
-                  ? activePlayer.measurements[activePlayer.measurements.length - 1].fat
+                {activePlayer
+                  ? activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].fat
                   : ""}{" "}
                 %
               </label>
               <label className="athlete-body-measurements-value">
-                {activePlayer? activePlayer.measurements[activePlayer.measurements.length-1].weight/activePlayer.measurements[activePlayer.measurements.length-1].height/activePlayer.measurements[activePlayer.measurements.length-1].height:""}
+                {activePlayer
+                  ? activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].weight /
+                    activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].height /
+                    activePlayer.measurements[
+                      activePlayer.measurements.length - 1
+                    ].height
+                  : ""}
               </label>
             </div>
           </div>
-        
-      </div>:""}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

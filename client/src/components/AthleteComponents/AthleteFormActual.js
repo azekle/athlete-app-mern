@@ -331,12 +331,12 @@ useEffect(()=>{
 			{!isSecondSession?<label className="did-label">Did you have training on {dateForForm}?</label>:""}
             {!isSecondSession?<div>
 				<input className="training-yes" onChange={playerHasTraining} checked={hasTraining} type="checkbox"></input>
-				<label className="did-label">Yes </label>
+				<label className="did-label"> </label>
 			</div>:""}
 			<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>
 			<div>
 				<input className="training-yes" onChange={playerHasTraining2} checked={hasTraining2} type="checkbox"></input>
-				<label className="did-label">Yes</label>
+				<label className="did-label"></label>
 			</div>
             {hasTraining&&!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Session1</label>
@@ -378,16 +378,16 @@ useEffect(()=>{
                 </div>
                 <input onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
                 <div className="slider-indexes">
-                  <label className="slider-index">1</label>
-                  <label className="slider-index">2</label>
-                  <label className="slider-index">3</label>
-                  <label className="slider-index">4</label>
-                  <label className="slider-index">5</label>
-                  <label className="slider-index">6</label>
-                  <label className="slider-index">7</label>
-                  <label className="slider-index">8</label>
-                  <label className="slider-index">9</label>
-                  <label className="slider-index">10</label>
+                  <label style={rpe1ForForm==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
+                  <label style={rpe1ForForm==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>
+                  <label style={rpe1ForForm==3?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">3</label>
+                  <label style={rpe1ForForm==4?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">4</label>
+                  <label style={rpe1ForForm==5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">5</label>
+                  <label style={rpe1ForForm==6?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">6</label>
+                  <label style={rpe1ForForm==7?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">7</label>
+                  <label style={rpe1ForForm==8?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">8</label>
+                  <label style={rpe1ForForm==9?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">9</label>
+                  <label style={rpe1ForForm==10?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">10</label>
                 </div>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Wellness</label>
@@ -536,8 +536,8 @@ useEffect(()=>{
             </div>
         </div>
 
-		<label onClick={()=>setFront(!front)} className="did-label">Are you currently injured?</label>
-		<div><input className="training-yes" onChange={()=>{setInjuryExist(!injuryExist);setInjuryName(" ");setSeverity(" ")}} checked={injuryExist} type="checkbox"></input><label className="did-label">Yes </label></div>
+		<label onClick={()=>setFront(!front)} className="did-label">Report an injury</label>
+		<div><input className="training-yes" onChange={()=>{setInjuryExist(!injuryExist);setInjuryName(" ");setSeverity(" ")}} checked={injuryExist} type="checkbox"></input><label className="did-label"> </label></div>
         {injuryExist?<div className="front-back-fields">
 		<button onClick={changeSide} style={front?{background:"#676767",color:"white"}:{}} id="front" className="but-select front-but">Front</button>
 			<button onClick={changeSide} style={!front?{background:"#676767",color:"white"}:{}} id="back" className="but-select back-but">Back</button>
@@ -1439,21 +1439,21 @@ useEffect(()=>{
 	<path class="st0" d="M497.6,621h0.4H497.6z"/>
 </g>
 </svg>:""}
-{showSeverity? <div className="severity-container">
+{showSeverity? <div  className="severity-container">
 		<div className="how-much">
-			<label className="did-label">Vas scale pain</label>
+			<label className="did-label">Pain scale</label>
 			<div className="severity-range-container"><input value={severity} onChange={(e)=>setSeverity(e.target.value)} className="slider slider2" type="range" id="severity" name="severity" min="1" max="10"></input>
 			<div className="slider-indexes">
-                  <label className="slider-index">1</label>
-                  <label className="slider-index">2</label>
-                  <label className="slider-index">3</label>
-                  <label className="slider-index">4</label>
-                  <label className="slider-index">5</label>
-                  <label className="slider-index">6</label>
-                  <label className="slider-index">7</label>
-                  <label className="slider-index">8</label>
-                  <label className="slider-index">9</label>
-                  <label className="slider-index">10</label>
+                  <label style={severity==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
+                  <label style={severity==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>
+                  <label style={severity==3?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">3</label>
+                  <label style={severity==4?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">4</label>
+                  <label style={severity==5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">5</label>
+                  <label style={severity==6?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">6</label>
+                  <label style={severity==7?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">7</label>
+                  <label style={severity==8?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">8</label>
+                  <label style={severity==9?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">9</label>
+                  <label style={severity==10?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">10</label>
                 </div>
 			</div>
 			<label className="did-label">{injuryName}</label>
