@@ -189,9 +189,9 @@
     font-size: .8em;
 }
 .progress-bar-average{
-    border-right: 2px dashed #434141;
+    border-right: 3px dotted #434141;
     background: transparent;
-    height: 20px;
+    height: 12px;
     position: absolute;
     width: 0%;
 }
