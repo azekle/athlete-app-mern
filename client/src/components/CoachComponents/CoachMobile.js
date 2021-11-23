@@ -119,7 +119,7 @@ const CoachMobile = (props) => {
             <CoachCalendar />
           </Route>
           <Route path="/dashboard/dashboard-panel/playertab">
-            <PlayerTab players={props.players} />
+            <PlayerTab team = {team} players={props.players} />
           </Route>
         </Switch>
       </BrowserRouter>

@@ -6,14 +6,16 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const PlayerTab = (props) => {
   const [activeTab, setActiveTab] = useState(false);
   const [activePlayer, setActivePlayer] = useState();
-
+  var team = props.team
   var totalPlayers = [];
   let load = [];
   var counter = 0;
+  var totalPlayers2 = []
   const startDay = moment().startOf("week").format("DD.MM");
   const endDay = moment().endOf("week").format("DD.MM");
   var daysOfWeek = [];
   const daysOf4Weeks = [];
+  const [totalPlayersState,setTotalPlayersState] = useState()
   const [weeksBefore, setWeeksBefore] = useState(0);
   const determineDaysOfWeek = () => {
     daysOfWeek = [];
@@ -30,6 +32,19 @@ const PlayerTab = (props) => {
       );
     }
   };
+  useEffect(() => {
+   team = props.team;
+   if(team){
+    totalPlayers = []
+    props.players.map((value) => {
+      if (!value.is_coach&&value.team==team) {totalPlayers.push(value);}
+    });
+    setTotalPlayersState(totalPlayers)
+    totalPlayers2 = totalPlayers
+   }
+
+   initPlayerAfterTeamChange()
+  }, [props.team])
   determineDaysOfWeek();
   const donutPercent = 77;
   const [changedPlayer, setChangedPlayer] = useState(false);
@@ -164,6 +179,10 @@ const PlayerTab = (props) => {
   const selectPlayer = (e) => {
     setChangedPlayer(true);
     if (e) {
+      fatigue2 = 0;
+      enjoyment2 = 0;
+      sleeping2 = 0;
+      counter = 0
       totalPlayers.map((value) => {
         if (value.firstName == e.target.value) {
           if (value.injuries) setInjuries(value.injuries);
@@ -172,9 +191,10 @@ const PlayerTab = (props) => {
               counter++;
               fatigue2 = fatigue2 + parseInt(train.fatigue);
               enjoyment2 = enjoyment2 + parseInt(train.wellness1);
-              sleeping2 = sleeping2 + parseInt(train.fatigue);
+              sleeping2 = sleeping2 + parseInt(train.sleep);
             }
           });
+          console.log(counter)
           setFatigue(fatigue2 / counter);
           setEnjoyment(enjoyment2 / counter);
           setSleeping(sleeping2 / counter);
@@ -197,7 +217,7 @@ const PlayerTab = (props) => {
               counter++;
               fatigue2 = fatigue2 + parseInt(train.fatigue);
               enjoyment2 = enjoyment2 + parseInt(train.wellness1);
-              sleeping2 = sleeping2 + parseInt(train.fatigue);
+              sleeping2 = sleeping2 + parseInt(train.slee);
             }
           });
 
@@ -209,7 +229,6 @@ const PlayerTab = (props) => {
             setFatigueAvg(fatigue2 / counter);
             setEnjoymentAvg(enjoyment2 / counter);
             setSleepingAvg(sleeping2 / counter);
-            console.log(counter);
           }
         }
       });
@@ -219,6 +238,7 @@ const PlayerTab = (props) => {
     initChart();
   }, [activeTab]);
   const initFirstPlayer = () => {
+
     if (!changedPlayer) {
       counter = 0;
       if (totalPlayers[0]) {
@@ -228,7 +248,7 @@ const PlayerTab = (props) => {
             counter++;
             fatigue2 = fatigue2 + parseInt(train.fatigue);
             enjoyment2 = enjoyment2 + parseInt(train.wellness1);
-            sleeping2 = sleeping2 + parseInt(train.fatigue);
+            sleeping2 = sleeping2 + parseInt(train.sleep);
           }
         });
         setFatigue(fatigue2 / counter);
@@ -250,7 +270,7 @@ const PlayerTab = (props) => {
             counter++;
             fatigue2 = fatigue2 + parseInt(train.fatigue);
             enjoyment2 = enjoyment2 + parseInt(train.wellness1);
-            sleeping2 = sleeping2 + parseInt(train.fatigue);
+            sleeping2 = sleeping2 + parseInt(train.sleep);
           }
         });
 
@@ -269,6 +289,56 @@ const PlayerTab = (props) => {
       }
     }
   };
+  const initPlayerAfterTeamChange = () =>{
+    console.log(totalPlayers2)
+    fatigue2 = 0;
+    enjoyment2 = 0;
+    sleeping2 = 0
+    if(totalPlayers2[0]) {
+      setActivePlayer(totalPlayers2[0]);
+        totalPlayers2[0].training.map((train) => {
+          if (daysOfWeek.includes(train.date)) {
+            counter++;
+            fatigue2 = fatigue2 + parseInt(train.fatigue);
+            enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+            sleeping2 = sleeping2 + parseInt(train.sleep);
+          }
+        });
+        setFatigue(fatigue2 / counter);
+        setEnjoyment(enjoyment2 / counter);
+        setSleeping(sleeping2 / counter);
+        if (counter == 0) {
+          setFatigue(0);
+          setEnjoyment(0);
+          setSleeping(0);
+        }
+        counter = 0;
+        fatigue2 = 0;
+        enjoyment2 = 0;
+        sleeping2 = 0
+        totalPlayers2[0].training.map((train) => {
+        if (daysOf4Weeks.includes(train.date)) {
+          counter++;
+          fatigue2 = fatigue2 + parseInt(train.fatigue);
+          enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+          sleeping2 = sleeping2 + parseInt(train.sleep);
+        }
+      });
+
+      if (counter == 0) {
+        setFatigueAvg(0);
+        setEnjoymentAvg(0);
+        setSleepingAvg(0);
+      } else {
+        setFatigueAvg(fatigue2 / counter);
+        setEnjoymentAvg(enjoyment2 / counter);
+        setSleepingAvg(sleeping2 / counter);
+        fatigue2 = 0;
+        enjoyment2 = 0;
+        sleeping2 = 0;
+      }
+    }
+  }
   useEffect(() => {
     initFirstPlayer();
   }, [totalPlayers]);
@@ -293,9 +363,9 @@ const PlayerTab = (props) => {
             style={{ color: "black" }}
             className="coach-team2"
           >
-            {totalPlayers.map((player) => (
+            {!totalPlayersState? totalPlayers.map((player) => (
               <option style={{ color: "black" }}>{player.firstName}</option>
-            ))}
+            )):totalPlayersState.map(player=>(<option style={{ color: "black" }}>{player.firstName}</option>))}
           </select>
         </div>
         <div className="forward-backward-buts">
@@ -307,7 +377,7 @@ const PlayerTab = (props) => {
           </button>
         </div>
         <div className="week-div">
-          <label onClick={()=>console.log(daysOfWeek)} className="week-label">
+          <label className="week-label">
             {startDay}-{endDay}
           </label>
         </div>
