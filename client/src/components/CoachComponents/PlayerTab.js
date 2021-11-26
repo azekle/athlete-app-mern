@@ -11,8 +11,8 @@ const PlayerTab = (props) => {
   let load = [];
   var counter = 0;
   var totalPlayers2 = []
-  const startDay = moment().startOf("week").format("DD.MM");
-  const endDay = moment().endOf("week").format("DD.MM");
+  const [startDay,setStartDay] = useState(moment().startOf("week").format("DD.MM"));
+  const [endDay,setEndDay] = useState(moment().endOf("week").format("DD.MM"));
   var daysOfWeek = [];
   const daysOf4Weeks = [];
   const [totalPlayersState,setTotalPlayersState] = useState()
@@ -351,9 +351,17 @@ const PlayerTab = (props) => {
   initChart();
   const weekGoBack = () => {
     setWeeksBefore(weeksBefore + 1);
+    setStartDay(moment().startOf("week").subtract(weeksBefore+1,"w").format("DD.MM"));
+    setEndDay(moment().endOf("week").subtract(weeksBefore+1,"w").format("DD.MM"))
   };
   const weekGoForward = () => {
-    if(weeksBefore>0)setWeeksBefore(weeksBefore -1);
+    if(weeksBefore>0){
+      setWeeksBefore(weeksBefore -1);
+      setStartDay(moment().startOf("week").subtract(weeksBefore+1,"w").format("DD.MM"));
+      setEndDay(moment().endOf("week").subtract(weeksBefore+1,"w").format("DD.MM"))
+  
+  }
+   
   };
   return (
     <div className="option-week-field">
