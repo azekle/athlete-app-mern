@@ -295,6 +295,7 @@ const PlayerTab = (props) => {
     enjoyment2 = 0;
     sleeping2 = 0
     if(totalPlayers2[0]) {
+      setInjuries(totalPlayers[0].injuries)
       setActivePlayer(totalPlayers2[0]);
         totalPlayers2[0].training.map((train) => {
           if (daysOfWeek.includes(train.date)) {
