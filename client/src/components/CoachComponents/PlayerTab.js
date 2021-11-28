@@ -17,6 +17,8 @@ const PlayerTab = (props) => {
   const daysOf4Weeks = [];
   const [totalPlayersState,setTotalPlayersState] = useState()
   const [weeksBefore, setWeeksBefore] = useState(0);
+  const [averageBars,setAverageBars] = useState(0)
+  let averageBars2 = 0
   const determineDaysOfWeek = () => {
     daysOfWeek = [];
     for (let i = 0; i < 7; i++) {
@@ -32,6 +34,7 @@ const PlayerTab = (props) => {
       );
     }
   };
+  
   useEffect(() => {
    team = props.team;
    if(team){
@@ -57,6 +60,7 @@ const PlayerTab = (props) => {
   const [sleepingAvg, setSleepingAvg] = useState();
   const [injuryActive, setInjuryActive] = useState();
   const [measurementActive, setMeasurementActive] = useState(true);
+  const [fireAfterLoad,setFireAfterLoad] = useState(false);
 
   props.players.map((value) => {
     if (!value.is_coach) totalPlayers.push(value);
@@ -79,6 +83,7 @@ const PlayerTab = (props) => {
   const changeMonitoringTab = () => {
     setActiveTab(!activeTab);
   };
+  let load2 = []
   const initLoad = () => {
     if (activePlayer) {
       daysOfWeek.map((date, index) => {
@@ -87,14 +92,42 @@ const PlayerTab = (props) => {
             load.push(
               activePlayer.training[i].rpe1 * activePlayer.training[i].duration1
             );
+            load2.push(
+              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1
+            );
             break;
           }
         }
         if (index >= load.length) load.push(0);
       });
     }
-   
+    averageBars2 = 0
+    counter = 0;
+    load2.map(value=>{
+      if(value) {averageBars2+=value;
+      counter++}
+    })
+    averageBars2/=counter
+    averageBars2 = Math.ceil(averageBars2)
+    averageBars2 = averageBars2/100
+    averageBars2 = Math.round(averageBars2)
+    averageBars2 = averageBars2 * 100
+    console.log(averageBars2);
   };
+  const determineAverageLine = () =>{
+    averageBars2 = 0
+    counter = 0;
+    load2.map(value=>{
+      if(value) {averageBars2+=value;
+      counter++}
+    })
+    averageBars2/=counter
+    averageBars2 = Math.ceil(averageBars2)
+    averageBars2 = averageBars2/100
+    averageBars2 = Math.round(averageBars2)
+    averageBars2 = averageBars2 * 100
+    if(fireAfterLoad) setAverageBars(averageBars2)
+  }
   initLoad();
   useEffect(() => {}, [activePlayer]);
   let chartData = {
@@ -156,7 +189,7 @@ const PlayerTab = (props) => {
         ticks: {
           beginAtZero: true,
           callback: function (value, index, values) {
-            return value == 300 ? "300" : null;
+            return value == averageBars2 ? averageBars2 : null;
           },
         },
       },
@@ -194,7 +227,7 @@ const PlayerTab = (props) => {
               sleeping2 = sleeping2 + parseInt(train.sleep);
             }
           });
-          console.log(counter)
+         
           setFatigue(fatigue2 / counter);
           setEnjoyment(enjoyment2 / counter);
           setSleeping(sleeping2 / counter);
@@ -234,6 +267,59 @@ const PlayerTab = (props) => {
       });
     }
   };
+  const initCurrentPlayerAfterWeekChange = (player,ie) =>{
+    counter = 0;
+    let daysOfWeek2 = []
+    if (player) {
+      for (let i = 0; i < 7; i++) {
+        daysOfWeek2.push(moment().startOf("week").add(i, "d").subtract((weeksBefore+ie)*7,"d").format("DD/MM/YY"));
+      }
+      setActivePlayer(player);
+      player.training.map((train) => {
+        if (daysOfWeek2.includes(train.date)) {
+          counter++;
+          fatigue2 = fatigue2 + parseInt(train.fatigue);
+          enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+          sleeping2 = sleeping2 + parseInt(train.sleep);
+        }
+      });
+      setFatigue(fatigue2 / counter);
+      setEnjoyment(enjoyment2 / counter);
+      setSleeping(sleeping2 / counter);
+      if (counter == 0) {
+        setFatigue(0);
+        setEnjoyment(0);
+        setSleeping(0);
+      }
+      counter = 0;
+    }
+    fatigue2 = 0;
+    enjoyment2 = 0;
+    sleeping2 = 0;
+    if (player) {
+      player.training.map((train) => {
+        if (daysOf4Weeks.includes(train.date)) {
+          counter++;
+          fatigue2 = fatigue2 + parseInt(train.fatigue);
+          enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+          sleeping2 = sleeping2 + parseInt(train.sleep);
+        }
+      });
+
+      if (counter == 0) {
+        setFatigueAvg(0);
+        setEnjoymentAvg(0);
+        setSleepingAvg(0);
+      } else {
+        setFatigueAvg(fatigue2 / counter);
+        setEnjoymentAvg(enjoyment2 / counter);
+        setSleepingAvg(sleeping2 / counter);
+        fatigue2 = 0;
+        enjoyment2 = 0;
+        sleeping2 = 0;
+      }
+    }
+  }
   useEffect(() => {
     initChart();
   }, [activeTab]);
@@ -290,7 +376,6 @@ const PlayerTab = (props) => {
     }
   };
   const initPlayerAfterTeamChange = () =>{
-    console.log(totalPlayers2)
     fatigue2 = 0;
     enjoyment2 = 0;
     sleeping2 = 0
@@ -353,13 +438,16 @@ const PlayerTab = (props) => {
     setWeeksBefore(weeksBefore + 1);
     setStartDay(moment().startOf("week").subtract(weeksBefore+1,"w").format("DD.MM"));
     setEndDay(moment().endOf("week").subtract(weeksBefore+1,"w").format("DD.MM"))
+    initCurrentPlayerAfterWeekChange(activePlayer,+1);
+    determineAverageLine()
   };
   const weekGoForward = () => {
     if(weeksBefore>0){
       setWeeksBefore(weeksBefore -1);
-      setStartDay(moment().startOf("week").subtract(weeksBefore+1,"w").format("DD.MM"));
-      setEndDay(moment().endOf("week").subtract(weeksBefore+1,"w").format("DD.MM"))
-  
+      setStartDay(moment().startOf("week").subtract(weeksBefore-1,"w").format("DD.MM"));
+      setEndDay(moment().endOf("week").subtract(weeksBefore-1,"w").format("DD.MM"))
+      initCurrentPlayerAfterWeekChange(activePlayer,-1);
+      determineAverageLine()
   }
    
   };

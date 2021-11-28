@@ -106,6 +106,9 @@
     font-weight: 400;
     margin-top: 15px;
     font-size: 1.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .monitoring-load{
     width: 80%;
