@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoBandageOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft,MdKeyboardArrowRight } from "react-icons/md";
@@ -209,6 +210,7 @@ useEffect(() => {
   const changeMonitoringTab = () => {
     setActiveTab(!activeTab);
   };
+
   let chartData = {
     labels: [
       `${/*determineDatePlus(0)*/ "Su"}`,
@@ -246,6 +248,17 @@ useEffect(() => {
   };
 
   var options = {
+    plugins: {
+      datalabels: {
+        color:"red",
+        anchor: 'end',
+        align: 'end',
+        labels: {
+          value: {
+            color: 'blue'
+          }
+        }}
+   },
     responsive: true,
     scales: {
       x: {
@@ -292,7 +305,18 @@ useEffect(() => {
           {startDay}-{endDay}{" "}
         </div>
       ) : (
-        <label className="subtitle-monitoring">Wellness</label>
+        <div className="subtitle-monitoring">
+          <label>Wellness</label>
+          <div className="forward-backward-buts">
+            <button onClick={weekGoBack} className="forward-backward-but">
+              <MdKeyboardArrowLeft />
+            </button>
+            <button onClick={weekGoForward} className="forward-backward-but">
+              <MdKeyboardArrowRight />
+            </button>
+          </div>{" "}
+          {startDay}-{endDay}{" "}
+        </div>
       )}
       <div className="monitoring-load">
         <button
@@ -302,7 +326,7 @@ useEffect(() => {
           <IoIosArrowBack />
         </button>
         {activeTab ? (
-          <Bar height="300" options={options} data={chartData}></Bar>
+          <Bar height="300" options={options} plugins={[ChartDataLabels]} data={chartData}></Bar>
         ) : (
           <div className="monitor-wellness">
             <div
@@ -334,7 +358,7 @@ useEffect(() => {
               <label className="stats-label">Fatigue</label>
               <div className="wellness-progress-bar">
                 <div
-                  style={{ width: `${fatigueProgress * 20}%` }}
+                  style={{ width: `${fatigueProgress?fatigueProgress * 20:0}%` }}
                   className="wellness-progress-bar-fill"
                 ></div>
                 <div
@@ -342,11 +366,11 @@ useEffect(() => {
                   className="progress-bar-average"
                 ></div>
               </div>
-              <label className="stats-nr">{fatigueProgress}/5</label>
+              <label className="stats-nr">{fatigueProgress?fatigueProgress:0}/5</label>
               <label className="stats-label">Enjoyment</label>
               <div className="wellness-progress-bar">
                 <div
-                  style={{ width: `${enjoymentProgress * 20}%` }}
+                  style={{ width: `${enjoymentProgress?enjoymentProgress * 20:0}%` }}
                   className="wellness-progress-bar-fill"
                 ></div>
                 <div
@@ -354,11 +378,11 @@ useEffect(() => {
                   className="progress-bar-average"
                 ></div>
               </div>
-              <label className="stats-nr">{enjoymentProgress}/5</label>
+              <label className="stats-nr">{enjoymentProgress?enjoymentProgress:0}/5</label>
               <label className="stats-label">Sleeping T</label>
               <div className="wellness-progress-bar">
                 <div
-                  style={{ width: `${sleepingProgress * 8.333}%` }}
+                  style={{ width: `${sleepingProgress?sleepingProgress * 8.333:0}%` }}
                   className="wellness-progress-bar-fill"
                 ></div>
                 <div
@@ -366,7 +390,7 @@ useEffect(() => {
                   className="progress-bar-average"
                 ></div>
               </div>
-              <label className="stats-nr">{sleepingProgress}</label>
+              <label className="stats-nr">{sleepingProgress?sleepingProgress:0}</label>
             </div>
             <div className="wellness-legend">
               <div className="legend">

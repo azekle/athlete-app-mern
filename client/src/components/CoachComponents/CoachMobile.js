@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch,Redirect } from "react-router-dom";
 import "./CoachMobile.css";
 import Monitoring from "./Monitoring.js";
 import CoachCalendar from "./CoachCalendar.js";
@@ -32,6 +32,7 @@ const CoachMobile = (props) => {
     if(window.location.pathname.split("/")[window.location.pathname.split("/").length-1]=="playertab") {setMonitoringActive(false);setPlayerTabActive(true);setCalendarActive(false)}
     if(window.location.pathname.split("/")[window.location.pathname.split("/").length-1]=="calendar") {setMonitoringActive(false);setPlayerTabActive(false);setCalendarActive(true)}
   }, [window.location.pathname])
+  if(window.location.pathname=="/dashboard/dashboard-panel") return<Redirect to= "/dashboard/dashboard-panel/monitoring" />
   return (
     <div className="coach-mobile">
       <BrowserRouter>

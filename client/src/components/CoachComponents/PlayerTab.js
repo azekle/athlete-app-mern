@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const PlayerTab = (props) => {
@@ -112,7 +113,6 @@ const PlayerTab = (props) => {
     averageBars2 = averageBars2/100
     averageBars2 = Math.round(averageBars2)
     averageBars2 = averageBars2 * 100
-    console.log(averageBars2);
   };
   const determineAverageLine = () =>{
     averageBars2 = 0
@@ -167,6 +167,17 @@ const PlayerTab = (props) => {
   };
 
   var options = {
+    plugins: {
+      datalabels: {
+        color:"red",
+        anchor: 'end',
+        align: 'end',
+        labels: {
+          value: {
+            color: 'blue'
+          }
+        }}
+   },
     responsive: true,
     scales: {
       x: {
@@ -486,8 +497,8 @@ const PlayerTab = (props) => {
         >
           <IoIosArrowBack />
         </button>
-        {activeTab ? (
-          <Bar height="300" options={options} data={chartData}></Bar>
+        {!activeTab ? (
+          <Bar height="300" options={options} plugins={[ChartDataLabels]} data={chartData}></Bar>
         ) : (
           <div className="monitor-wellness readiness-field">
             <div className="readiness-circle">
