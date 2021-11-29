@@ -287,13 +287,21 @@ useEffect(() => {
       },
     },
   };
-
+const changeTeam = (e) =>{
+  props.changeTeamState(e.target.value)
+}
   return (
     <div className="monitoring">
       <label className="title-monitoring">Team Dashboard</label>
       {activeTab ? (
         <div className="subtitle-monitoring">
-          <label>Weekly Load</label>
+          <div className="select-div">
+              <select onChange={changeTeam} className="coach-team">
+                <option style={{ color: "black" }}>Team A</option>
+                <option style={{ color: "black" }}>Team B</option>
+                <option style={{ color: "black" }}>Team C</option>
+              </select>
+            </div>
           <div className="forward-backward-buts">
             <button onClick={weekGoBack} className="forward-backward-but">
               <MdKeyboardArrowLeft />

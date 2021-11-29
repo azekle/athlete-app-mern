@@ -6,15 +6,15 @@
 }
 .coach-mobile-header{
     width: 100%;
-    background: #043354;
+    background: #065A95;
 }
 .logo-team{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding:30px;
-    padding-top: 10px;
-    padding-bottom: 20px;
+    align-items: center;
+    padding:20px;
+    
 }
 .coach-logo{
     color:black;
@@ -22,41 +22,52 @@
     font-size: 2em;
     background: #F6F6F6;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 100px;
     padding-bottom: 12px;
     width: 30px;
     height: 30px;
     text-align: center;
     
 }
+.logo-header{
+    height: 100%;
+    width: 34%;
+    object-fit: contain
+    
+}
+.left-part-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.coach-emek{
+    display: flex;
+    font-size: .8em;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10px;
+    justify-self: flex-start;
+    color: white;
+}
+.coach-namee{
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-top: 5px;
+}
 .select-div{
     width: 45%;
     height: 80%;
 }
 
-.select-div:after {
-    content: '>';
-    font-weight: 600;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.6em;
-    color: white;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    right: 50px;
-    top: 22px;
-    position: absolute;
-    pointer-events: none;
-  }
+
   
 .coach-team{
     border:none;
     background: none;
-    color:white;
-    width: 100%;
-    font-size: 2em;
-    appearance: none;
+    color:black;
+    width: 70%;
+    font-size: 1.2em;
+    
     background-color: none;
     padding:5px;
 }

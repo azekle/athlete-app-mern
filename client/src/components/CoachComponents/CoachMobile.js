@@ -9,6 +9,7 @@ import { useState,useEffect } from "react";
 import {IoMdCalendar} from 'react-icons/io'
 import {AiOutlineUser} from 'react-icons/ai'
 import {FaUsers} from 'react-icons/fa'
+import logo  from '../../assets/logo3.svg'
 const CoachMobile = (props) => {
   const [monitoringActive, setMonitoringActive] = useState(false);
   const [calendarActive, setCalendarActive] = useState(false);
@@ -38,8 +39,12 @@ const CoachMobile = (props) => {
       <BrowserRouter>
         <div className="coach-mobile-header">
           <div className="logo-team">
-            <div onClick={goLogOut} className="coach-logo">
-              Y
+            <div className="left-part-header">
+              <div onClick={goLogOut} className="coach-logo"></div>
+              <div className="coach-emek">
+                <label className="emek" >{"Emek Hefer"}</label>
+                <label className="coach-namee">{user.firstName} {user.lastName}</label>
+              </div>
             </div>
 
             {canLogOut ? (
@@ -67,13 +72,7 @@ const CoachMobile = (props) => {
             ) : (
               ""
             )}
-            <div className="select-div">
-              <select onChange={changeTeam} className="coach-team">
-                <option style={{ color: "black" }}>Team A</option>
-                <option style={{ color: "black" }}>Team B</option>
-                <option style={{ color: "black" }}>Team C</option>
-              </select>
-            </div>
+            <img className="logo-header" src={logo}/>
           </div>
           <div className="coach-mobile-tabs">
             <Link
@@ -114,7 +113,7 @@ const CoachMobile = (props) => {
 
         <Switch>
           <Route path="/dashboard/dashboard-panel/monitoring">
-            <Monitoring team={team} players={props.players} />
+            <Monitoring changeTeamState = {setTeam} team={team} players={props.players} />
           </Route>
           <Route path="/dashboard/dashboard-panel/calendar">
             <CoachCalendar />
