@@ -292,7 +292,6 @@ const changeTeam = (e) =>{
 }
   return (
     <div className="monitoring">
-      <label className="title-monitoring">Team Dashboard</label>
       {activeTab ? (
         <div className="subtitle-monitoring">
           <div className="select-div">
@@ -309,9 +308,10 @@ const changeTeam = (e) =>{
             <button onClick={weekGoForward} className="forward-backward-but">
               <MdKeyboardArrowRight />
             </button>
-          </div>{" "}
-          {startDay}-{endDay}{" "}
+          </div>
+          <label>{startDay}-{endDay}</label>
         </div>
+        
       ) : (
         <div className="subtitle-monitoring">
           <label>Wellness</label>

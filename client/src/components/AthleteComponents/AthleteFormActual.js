@@ -333,11 +333,7 @@ useEffect(()=>{
 				<input className="training-yes" onChange={playerHasTraining} checked={hasTraining} type="checkbox"></input>
 				<label className="did-label"> </label>
 			</div>:""}
-			<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>
-			<div>
-				<input className="training-yes" onChange={playerHasTraining2} checked={hasTraining2} type="checkbox"></input>
-				<label className="did-label"></label>
-			</div>
+			
             {hasTraining&&!isSecondSession?<div className="form-part">
                 <label className="form-part-title">Session1</label>
                 <div className="sub-subtitle-field">
@@ -352,25 +348,25 @@ useEffect(()=>{
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
                     <select onChange={updateDuration1} className="form-part-select">
-                    <option value="0">0</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-					          <option value="40">40</option>
-                    <option value="50">50</option>
-                    <option value="60">60</option>
-                    <option value="70">70</option>
-					          <option value="80">80</option>
-                    <option value="90">90</option>
-                    <option value="100">100</option>
-                    <option value="110">110</option>
-					          <option value="120">120</option>
-					          <option value="130">130</option>
-					          <option value="140">140</option>
-					          <option value="150">150</option>
-					          <option value="160">160</option>
-					          <option value="170">170</option>
-					          <option value="180">180</option>
+							  <option value="0">0 min</option>
+							  <option value="10">10 min</option>
+							  <option value="20">20 min</option>
+							  <option value="30">30 min</option>
+					          <option value="40">40 min</option>
+							  <option value="50">50 min</option>
+						      <option value="60">60 min</option>
+							  <option value="70">70 min</option>
+					          <option value="80">80 min</option>
+							  <option value="90">90 min</option>
+							  <option value="100">100 min</option>
+							  <option value="110">110 min</option>
+					          <option value="120">120 min</option>
+					          <option value="130">130 min</option>
+					          <option value="140">140 min</option>
+					          <option value="150">150 min</option>
+					          <option value="160">160 min</option>
+					          <option value="170">170 min</option>
+					          <option value="180">180 min</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
@@ -402,7 +398,12 @@ useEffect(()=>{
                   <label style={{textAlign:"end"}} className="slider-index2">Excellent</label>
                 </div>
             </div>:""}
-			{hasTraining2?<div className="separator"></div>:""}
+			{hasTraining?<div className="separator"></div>:""}
+			<label className="did-label">Did you have a 2nd training session on {dateForForm}?</label>
+			<div>
+				<input className="training-yes" onChange={playerHasTraining2} checked={hasTraining2} type="checkbox"></input>
+				<label className="did-label"></label>
+			</div>
              {hasTraining2?<div className="form-part">
                 <label className="form-part-title">Session2</label>
                 <div className="sub-subtitle-field">
@@ -417,42 +418,71 @@ useEffect(()=>{
                 </select> 
                     <label className="form-part-subtitle">Duration</label>
                     <select onChange={updateDuration2} value={duration2ForForm} className="form-part-select">
-                    <option value="0">0</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-					          <option value="40">40</option>
-                    <option value="50">50</option>
-                    <option value="60">60</option>
-                    <option value="70">70</option>
-					          <option value="80">80</option>
-                    <option value="90">90</option>
-                    <option value="100">100</option>
-                    <option value="110">110</option>
-					          <option value="120">120</option>
-					          <option value="130">130</option>
-					          <option value="140">140</option>
-					          <option value="150">150</option>
-					          <option value="160">160</option>
-					          <option value="170">170</option>
-					          <option value="180">180</option>
+							  <option value="0">0 min</option>
+							  <option value="10">10 min</option>
+							  <option value="20">20 min</option>
+							  <option value="30">30 min</option>
+					          <option value="40">40 min</option>
+                              <option value="50">50 min</option>
+                              <option value="60">60 min</option>
+                              <option value="70">70 min</option>
+					          <option value="80">80 min</option>
+                              <option value="90">90 min</option>
+                              <option value="100">100 min</option>
+                              <option value="110">110 min</option>
+					          <option value="120">120 min</option>
+					          <option value="130">130 min</option>
+					          <option value="140">140 min</option>
+					          <option value="150">150 min</option>
+					          <option value="160">160 min</option>
+					          <option value="170">170 min</option>
+					          <option value="180">180 min</option>
                 </select>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
                 </div>
-                <input onChange={updateRpe2} value={rpe2ForForm} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
+				<div className="slider-indexes-top">
+				  <label style={rpe2ForForm==1.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">1.5</label>
+            
+				  <label style={rpe2ForForm==2.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">2.5</label>
+            
+				  <label style={rpe2ForForm==3.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">3.5</label>
+            
+				  <label style={rpe2ForForm==4.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">4.5</label>
+            
+				  <label style={rpe2ForForm==5.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">5.5</label>
+            
+				  <label style={rpe2ForForm==6.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">6.5</label>
+            
+				  <label style={rpe2ForForm==7.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">7.5</label>
+            
+				  <label style={rpe2ForForm==8.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">8.5</label>
+            
+				  <label style={rpe2ForForm==9.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">9.5</label>
+                  
+                </div>
+                <input onChange={updateRpe2} value={rpe2ForForm} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" step=".5" max="10"></input>
                 <div className="slider-indexes">
-                  <label className="slider-index">1</label>
-                  <label className="slider-index">2</label>
-                  <label className="slider-index">3</label>
-                  <label className="slider-index">4</label>
-                  <label className="slider-index">5</label>
-                  <label className="slider-index">6</label>
-                  <label className="slider-index">7</label>
-                  <label className="slider-index">8</label>
-                  <label className="slider-index">9</label>
-                  <label className="slider-index">10</label>
+				<label style={rpe2ForForm==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
+				  
+                  <label style={rpe2ForForm==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>
+				  
+                  <label style={rpe2ForForm==3?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">3</label>
+				  
+                  <label style={rpe2ForForm==4?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">4</label>
+				  
+                  <label style={rpe2ForForm==5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">5</label>
+				  
+                  <label style={rpe2ForForm==6?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">6</label>
+				  
+                  <label style={rpe2ForForm==7?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">7</label>
+				  
+                  <label style={rpe2ForForm==8?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">8</label>
+				  
+                  <label style={rpe2ForForm==9?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">9</label>
+				  
+                  <label style={rpe2ForForm==10?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">10</label>
                 </div>
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Wellness</label>

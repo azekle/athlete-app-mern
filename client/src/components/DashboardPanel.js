@@ -3,10 +3,10 @@ import "./componentsCss/DashboardPanel.css";
 import imag from "../assets/ball.png";
 import { Bar } from "react-chartjs-2";
 import {AiOutlineQuestionCircle} from "react-icons/ai"
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {BiEnvelope} from 'react-icons/bi'
 import moment from "moment";
 import { useEffect } from "react";
-import { requests } from "../utils/axios";
 import defaultImag from "../assets/sportsman.svg"
 import { Link } from "react-router-dom";
 const DashboardPanel = (props) => {
@@ -154,6 +154,17 @@ const initChart =  () =>{
     ],
   };
   var options = {
+    plugins: {
+      datalabels: {
+        color:"red",
+        anchor: 'end',
+        align: 'end',
+        labels: {
+          value: {
+            color: 'blue'
+          }
+        }}
+   },
     maintainAspectRatio: false,
     scales: {
       x: {
@@ -219,7 +230,7 @@ const initChart =  () =>{
         </div>
       </div>
       <div className="match-overview">
-        <div className="chart"><Bar height="500" options={options} data={chartData}></Bar></div>
+      <div className="chart"><Bar height="500" options={options} plugins={[ChartDataLabels]} data={chartData}></Bar></div>
         <div className="readiness">
         <div className="monitor-wellness">
                          <div onClick={()=> {if(injuryLabel<20)setInjuriesProgress([...injuriesProgress,1]);initChart();if(injuryLabel<20)setInjuryLabel(injuriesProgress.length+1);else setInjuryLabel("21+")}} className="readiness-circle">
@@ -258,7 +269,7 @@ const initChart =  () =>{
       <div className="selected-tab-desktop">
                 {totalPlayers.map((value,index)=>
                 <Link style={{textDecoration:"none",color:"black"}} to={"/dashboard/player-summary/overview"}><div key={value} className="selected-player-desktop">
-                  <img src={defaultImag} className="selected-player-img"></img>
+                  <img src={value.image!=" "?value.image:defaultImag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
                       <label className="injury-desktop">{value.injury}</label>

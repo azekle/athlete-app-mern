@@ -123,13 +123,19 @@
 }
 .slider{
     width: 100%;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .slider-indexes{
     font-weight: 500;
     width: 100%;
     display: flex;
     justify-content: space-between
+}
+.slider-indexes-top{
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly
 }
 .slider-index{
    font-size: .8em;
@@ -181,7 +187,7 @@
     align-items: center;
 }
 .training-yes{
-    transform: scale(3);
+    transform: scale(2.2);
     margin:3vw;
     margin-top: 6vw;
 }
