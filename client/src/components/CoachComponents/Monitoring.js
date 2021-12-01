@@ -279,6 +279,7 @@ useEffect(() => {
           drawBorder: false,
         },
         ticks: {
+          stepSize:50,
           beginAtZero: true,
           callback: function (value, index, values) {
             return value == averageBars ? averageBars : null;

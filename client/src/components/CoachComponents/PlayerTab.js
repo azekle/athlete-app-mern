@@ -198,6 +198,7 @@ const PlayerTab = (props) => {
           drawBorder: false,
         },
         ticks: {
+          stepSize:50,
           beginAtZero: true,
           callback: function (value, index, values) {
             return value == averageBars2 ? averageBars2 : null;
