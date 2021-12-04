@@ -244,18 +244,39 @@ useEffect(() => {
         maxBarThickness: 10,
         borderRadius: 10,
       },
+      {
+        label: "                              ",
+        maxBarThickness: 0,
+        borderRadius: 0,
+        borderColor:"#fff",
+        backgroundColor:"#fff",
+        type:"line"
+      },
     ],
   };
 
   var options = {
+    
     plugins: {
+      legend:{
+        position:"top",
+        padding:10,
+        maxHeight:0,
+        maxWidth:10,
+        labels:{
+          color:"#ccc",
+          boxHeight:10,
+          boxWidth:60,
+
+        }
+      },
       datalabels: {
         color:"red",
         anchor: 'end',
         align: 'end',
         labels: {
           value: {
-            color: 'blue'
+            color: 'black',
           }
         }}
    },
