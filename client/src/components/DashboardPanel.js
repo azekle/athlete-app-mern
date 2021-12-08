@@ -9,6 +9,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import defaultImag from "../assets/sportsman.svg"
 import { Link } from "react-router-dom";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 const DashboardPanel = (props) => {
   const today = moment();
   let user = props.user;
@@ -38,6 +39,11 @@ const DashboardPanel = (props) => {
   const [donutPercent, setDonutPercent] = useState(77); //0-100
   const [selectedActive, setSelectedActive] = useState(true);
   const [alertActive, setAlertActive] = useState(false);
+  const [weeksBefore, setWeeksBefore] = useState(0);
+  const [startDay, setStartDay] = useState(
+    moment().startOf("week").format("DD.MM")
+  );
+  const [endDay, setEndDay] = useState(moment().endOf("week").format("DD.MM"));
   const [firstEffect,setFirstEffect] = useState(true)
   useEffect(()=>{
     initChart();
@@ -47,7 +53,7 @@ const DashboardPanel = (props) => {
     for (let i = 0; i < 7; i++) {
       const theDay = today.startOf("week").add(i, "d").toDate().getDate();
       totalDays.push(theDay);
-      currentWeekDates.push(today.startOf("week").add(i,"d").format("DD/MM/YY"));
+      currentWeekDates.push(today.startOf("week").subtract(weeksBefore,"w").add(i,"d").format("DD/MM/YY"));
     }
     totalDays.map((value, index) => {
       if (value === moment().toDate().getDate()) {
@@ -62,7 +68,7 @@ const DashboardPanel = (props) => {
     });
   };
   var universalCounter=0;
-    let load = [0,0,0,0,0,0,0]
+    let load = []
     const determineAverageForEverything = () =>{
      
       totalPlayers.map((value)=>{value.training.map((value2)=>{;if(currentWeekDates.includes(value2.date)) {
@@ -83,9 +89,48 @@ const DashboardPanel = (props) => {
       sleepingProgress=sleepingProgress/universalCounter;
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
-      currentWeekDates.map((value,index)=>{totalPlayers.map((value2)=>{value2.training.map((value3)=>{if(value3.date==value){value3.duration1=parseInt(value3.duration1);value3.duration2=parseInt(value3.duration2);value3.rpe1=parseInt(value3.rpe1);value3.rpe2=parseInt(value3.rpe2);load[index]+=(value3.duration1+value3.duration2)*(value3.rpe1+value3.rpe2);}})})})
-     
+     console.log(currentWeekDates)
+     currentWeekDates.map((date,index)=>{
+       totalPlayers.map(player=>{
+         player.training.map(train=>{
+           if(train.date==date) {load.push(train.rpe1*train.duration1)}
+         })
+       })
+       if (index >= load.length) load.push(0);
+     })
     }
+    const weekGoBack = () => {
+      setWeeksBefore(weeksBefore + 1);
+      setStartDay(
+        moment()
+          .startOf("week")
+          .subtract(weeksBefore + 1, "w")
+          .format("DD.MM")
+      );
+      setEndDay(
+        moment()
+          .endOf("week")
+          .subtract(weeksBefore + 1, "w")
+          .format("DD.MM")
+      );
+    };
+    const weekGoForward = () => {
+      if (weeksBefore > 0) {
+        setWeeksBefore(weeksBefore - 1);
+        setStartDay(
+          moment()
+            .startOf("week")
+            .subtract(weeksBefore - 1, "w")
+            .format("DD.MM")
+        );
+        setEndDay(
+          moment()
+            .endOf("week")
+            .subtract(weeksBefore - 1, "w")
+            .format("DD.MM")
+        );
+      }
+    };
   function createCircleChart(percent, color, size, stroke) {
     let svg = `<svg class="mkc_circle-chart" viewbox="0 0 36 36" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
         <path class="mkc_circle-bg" stroke="#eeeeee" stroke-width="${stroke * 0.5}" fill="none" d="M18 2.0845
@@ -151,6 +196,14 @@ const initChart =  () =>{
         maxBarThickness: 15,
         borderRadius: 0,
       },
+      {
+        label: "                                                                                                             ",
+        maxBarThickness: 0,
+        borderRadius: 0,
+        borderColor:"#fff",
+        backgroundColor:"#fff",
+        type:"line"
+      },
     ],
   };
   var options = {
@@ -161,7 +214,7 @@ const initChart =  () =>{
         align: 'end',
         labels: {
           value: {
-            color: 'blue'
+            color: 'black'
           }
         }}
    },
@@ -185,9 +238,7 @@ const initChart =  () =>{
         },
         ticks: {
           beginAtZero: true,
-          callback: function (value, index, values) {
-            return value == 5 ? "5" : null;
-          },
+          
         },
       },
     },
@@ -230,7 +281,18 @@ const initChart =  () =>{
         </div>
       </div>
       <div className="match-overview">
-      <div className="chart"><Bar height="500" options={options} plugins={[ChartDataLabels]} data={chartData}></Bar></div>
+      <div className="chart">
+      <div className="forward-backward-buts">
+            <button style={{background:"white"}} onClick={weekGoBack} className="forward-backward-but">
+              <MdKeyboardArrowLeft />
+            </button>
+            <button style={{background:"white"}} onClick={weekGoForward} className="forward-backward-but">
+              <MdKeyboardArrowRight />
+            </button>
+            {startDay}-{endDay}
+          </div>
+        <Bar height="500" options={options} plugins={[ChartDataLabels]} data={chartData}></Bar>
+      </div>
         <div className="readiness">
         <div className="monitor-wellness">
                          <div onClick={()=> {if(injuryLabel<20)setInjuriesProgress([...injuriesProgress,1]);initChart();if(injuryLabel<20)setInjuryLabel(injuriesProgress.length+1);else setInjuryLabel("21+")}} className="readiness-circle">
