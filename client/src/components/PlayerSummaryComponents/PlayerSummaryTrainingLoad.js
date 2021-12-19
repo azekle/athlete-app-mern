@@ -34,14 +34,14 @@ const PlayerSummaryTrainingLoad = (props) => {
       return(value.rpe1)
   }
   const findRPE2 = (value) =>{
-      return(value.rpe2)
+      return(parseInt(value.rpe2)||"")
   }
   const findDuration1 = (value) =>{
       return(value.duration1)
   }
   
   const findDuration2 = (value) =>{
-      return(value.duration2)
+    return(parseInt(value.duration2)||"")
   }
   const findWtoW = () =>{
     const daysForWtoW = [];

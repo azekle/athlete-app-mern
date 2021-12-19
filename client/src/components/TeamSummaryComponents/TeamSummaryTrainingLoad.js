@@ -45,7 +45,7 @@ const TeamSummaryTrainingLoad = (props) => {
         if(value2.date==theDay) {forReturn += parseInt(value2.rpe1);forNumber++}
       })
     })
-    return(forReturn/forNumber||"")
+    return(forReturn/forNumber||"-")
   }
   const determineDuration1=(days)=>{
     var forReturn=""
@@ -107,7 +107,8 @@ const TeamSummaryTrainingLoad = (props) => {
         if(value2.date==theDay) {forReturn += parseInt(value2.rpe2);forNumber++}
       })
     })
-    return(forReturn/forNumber||"")
+    console.log(forReturn)
+    return(forReturn/forNumber||"-")
   }
   const determineDuration2=(days)=>{
     var forReturn=""
@@ -117,7 +118,8 @@ const TeamSummaryTrainingLoad = (props) => {
         if(value2.date==theDay) forReturn = value2.duration2
       })
     })
-    return(forReturn)
+    
+    return(parseInt(forReturn)||"")
   }
   const verToday = (days)=>{
     if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1

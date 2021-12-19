@@ -87,61 +87,61 @@
 }
 
 .attr-team-overview{
-    width: 90%;
+    width: 40px;
     height: 90%;
     background: rgb(209, 209, 209);
     padding-top: 5px;
     color:rgb(87, 87, 87);
     padding-bottom: 5px;
-    margin:0;
+    margin:auto;
     align-self: center;
     justify-self: center;
     border-radius: 5px;
 }
 .attr-team-overview-red{
-    width: 90%;
+    width: 40px;
     height: 90%;
     background: #F3CDD1;
     padding-top: 5px;
     color:#EC5555;
     padding-bottom: 5px;
-    margin:0;
+    margin:auto;
     align-self: center;
     justify-self: center;
     border-radius: 5px;
 }
 .attr-team-overview-green{
-    width: 90%;
+    width: 40px;
     height: 90%;
     background: #ECF7E1;
     padding-top: 5px;
     color:#A0D468;
     padding-bottom: 5px;
-    margin:0;
+    margin:auto;
     align-self: center;
     justify-self: center;
     border-radius: 5px;
 }
 .attr-team-overview-yellow{
-    width: 90%;
+    width: 40px;
     height: 90%;
     background: #F3E6CA;
     padding-top: 5px;
     color:#F6BB42;
     padding-bottom: 5px;
-    margin:0;
+    margin:auto;
     align-self: center;
     justify-self: center;
     border-radius: 5px;
 }
 .attr-team-overview-blue{
-    width: 90%;
+    width: 40px;
     height: 90%;
     background: #CEE1F9;
     padding-top: 5px;
     color:#5D9CEC;
     padding-bottom: 5px;
-    margin:0;
+    margin:auto;
     align-self: center;
     justify-self: center;
     border-radius: 5px;
