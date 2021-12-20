@@ -153,7 +153,7 @@ const TeamSummaryOverview = (props) => {
         </thead>
         <tbody>
           {players.map((value)=>{return(
-          <tr>
+          <tr className="row-for-each">
             <td colSpan="3">{value.firstName} {value.lastName}</td>
             <td><div className={(findACWR(value)<.8&&findACWR(value)>0?"attr-team-overview-blue":findACWR(value)>.8&&findACWR(value)<1.3?"attr-team-overview-green":findACWR(value)>1.5?"attr-team-overview-red":"")} >{findACWR(value)?findACWR(value):" "}</div></td>
             <td><div className={findDailyLoad(value,0)?"attr-team-overview":" "}>{findDailyLoad(value,0)}</div></td>

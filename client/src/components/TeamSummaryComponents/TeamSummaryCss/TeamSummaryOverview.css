@@ -163,6 +163,9 @@
 .left-arrow:hover{
     cursor: pointer;
 }
+.row-for-each{
+    height: 45px;
+}
 @media  (max-width:600px){
     .table-header-cell{
         font-size: .5em;
