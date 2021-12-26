@@ -9,6 +9,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import defaultImag from "../assets/sportsman.svg"
 import { Link } from "react-router-dom";
+import { IoBandageOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 const DashboardPanel = (props) => {
   const today = moment();
@@ -339,9 +340,13 @@ const initChart =  () =>{
                   <img src={value.image!=" "?value.image:defaultImag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
-                      <label className="injury-desktop">{value.injury}</label>
+                      {value.injuries.length>0?
+                      <div>
+                        <IoBandageOutline className="player-info-icon" />
+                        <label className="injury-desktop">{value.injuries[0].name}</label>
+                      </div>:""}
                     </div>
-                  <div className={value.injury ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>
+                  <div className={value.injuries.length>0 ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>
                 </div></Link>)}
             </div>
     </div>
