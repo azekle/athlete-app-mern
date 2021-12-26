@@ -91,10 +91,10 @@ const PlayerTab = (props) => {
         for (let i = 0; i < activePlayer.training.length; i++) {
           if (activePlayer.training[i].date == date) {
             load.push(
-              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1
+              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1+activePlayer.training[i].rpe2 * activePlayer.training[i].duration2
             );
             load2.push(
-              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1
+              activePlayer.training[i].rpe1 * activePlayer.training[i].duration1+activePlayer.training[i].rpe2 * activePlayer.training[i].duration2
             );
             break;
           }
@@ -113,6 +113,7 @@ const PlayerTab = (props) => {
     averageBars2 = averageBars2/100
     averageBars2 = Math.round(averageBars2)
     averageBars2 = averageBars2 * 100
+    console.log(load)
   };
   const determineAverageLine = () =>{
     averageBars2 = 0

@@ -15,7 +15,7 @@ const TeamSummaryTest = (props) => {
   var playerId = "";
   const [playerToUpdate,setPlayerToUpdate] = useState("")
   const [tests,setTests] = useState([])
-  const [theaders,setTheaders] = useState(["Athlete","Season","Date","Team"])
+  const [theaders,setTheaders] = useState(["Athlete","Team","Season","Date"])
   const theaders2 = ["Athlete","Season","Date","Height","Weight","Fat","BMI"]
   const measurements = ["Height","Weight","Fat","BMI"]
   const [test1Name,setTest1Name] = useState()
@@ -509,11 +509,11 @@ const TeamSummaryTest = (props) => {
                   {theaders.map((value2,index)=>{
                 return <td style={{width:"12%"}} id = {value2=="Athlete"?value.username+"/"+index3+"/athletename":value.username+"/"+index3} onClick={!lock&&value.tests.length>1&&index3+1!==value.tests.length?removeRowTests:console.log("")}  className={value2=="Athlete"&&index3+1!==value.tests.length&&!lock?"removeRow table-left-atr-test pso-sub2 ":"table-left-atr-test pso-sub2"}>{
                   value2 == "Athlete" ? value.firstName+" "+value.lastName :
+                  value2 == "Team" ? value.team:
                   value2 == "Season"&&!lock ? <input disabled={lock?true:false} id={value.username} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"season"+"/"+index3} onChange={handleTestValue} placeholder={theTest.season}></input>:
                   value2 == "Season"&&lock ? theTest.season:
                   value2 == "Date"&&!lock ? <input disabled={lock?true:false} id={value.username} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"date"+"/"+index3} onChange={handleTestValue} placeholder={theTest.date}></input>:
                   value2 == "Date"&&lock ?testDate?testDate: theTest.date:
-                  value2 == "Team" ? value.team:
                   value2 == tests[0]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test1"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test1}></input>:
                   value2 == tests[1]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test2"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test2}></input>:
                   value2 == tests[2]&&value.tests ? <input disabled={lock?true:false} className={!lock?"input-test":""} style={lock?styleLockOffField:styleLockOn} name={value.firstName+"/"+value.lastName+"/"+value._id+"/"+"Test3"+"/"+index3} onChange={handleTestValue} placeholder={theTest.test3}></input>:

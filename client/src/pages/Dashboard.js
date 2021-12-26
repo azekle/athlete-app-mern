@@ -17,6 +17,7 @@ function Dashboard({ userData }) {
   const [showSideBar, setShowSideBar] = useState(false);
   const [mobile,setMobile]= useState(window.innerWidth);
   const [players,setPlayers]=useState([]);
+  var players2 = []
   const handleHideShow = () => {
     if (showSideBar) {
       setShowSideBar(false);
@@ -26,12 +27,21 @@ function Dashboard({ userData }) {
   };
   useEffect(() => {
     requests.get("/user/getall")
-    .then(res=>{setPlayers([...res.data])})
-  }, [])
+    .then(res=>{
+      if(userData.team=="Manager") setPlayers([...res.data])
+      else{
+      res.data = res.data.filter(value=>value.team==userData.team);
+      console.log(res.data);
+      setPlayers([...res.data]);} }
+      )
+    console.log("trigger")
+  }, [userData])
   
   if(mobile<600 && userData.is_coach) return(
     <CoachMobile user = {userData} players = {players}/>
   )
+
+  console.log(userData.team)
   return (
     <div className="dash">
       <BrowserRouter>

@@ -45,7 +45,7 @@ const TeamSummaryTrainingLoad = (props) => {
         if(value2.date==theDay) {forReturn += parseInt(value2.rpe1);forNumber++}
       })
     })
-    return(forReturn/forNumber||"-")
+    return((Math.ceil(forReturn/forNumber*10)/10)||"-")
   }
   const determineDuration1=(days)=>{
     var forReturn=""
@@ -108,7 +108,7 @@ const TeamSummaryTrainingLoad = (props) => {
       })
     })
     console.log(forReturn)
-    return(forReturn/forNumber||"-")
+    return(Math.ceil(forReturn/forNumber*10)/10||"-")
   }
   const determineDuration2=(days)=>{
     var forReturn=""
@@ -120,6 +120,20 @@ const TeamSummaryTrainingLoad = (props) => {
     })
     
     return(parseInt(forReturn)||"")
+  }
+  const determineLoad=(days)=>{
+    let forReturn=0
+    let dur1 = determineDuration1(days)
+    let dur2 = determineDuration2(days)
+    let rpe1 = determineRPE1(days)
+    let rpe2 = determineRPE2(days)
+
+    if(typeof(rpe1)!="number") rpe1 = 0
+    if(typeof(rpe2)!="number") rpe2= 0
+    if(typeof(dur1)!="number") dur1 = 0
+    if(typeof(dur2)!="number") dur2 = 0
+    forReturn = Math.ceil((rpe1*dur1 + rpe2*dur2)/10)*10||"-"
+    return(forReturn)
   }
   const verToday = (days)=>{
     if((showDate(currentShownWeek,days)+".0"+(showMonth(currentShownWeek, days) + 1))==(showDate(moment().toDate(),0)+".0"+(showMonth(moment().toDate(), 0) + 1))) return 1
@@ -291,13 +305,13 @@ const TeamSummaryTrainingLoad = (props) => {
             </tr>
             <tr>
                 <td style={contourBottomLeft} className="table-left-atr-bottom">Total Load <br></br>{findLoadForCurrentWeek()}<br></br>W-TO-W<br></br>{findWtoW()}</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottom}>Nr</td>
-                <td style={contourBottomRight}>Nr</td>
+                <td style={contourBottom}>{determineLoad(0)}</td>
+                <td style={contourBottom}>{determineLoad(1)}</td>
+                <td style={contourBottom}>{determineLoad(2)}</td>
+                <td style={contourBottom}>{determineLoad(3)}</td>
+                <td style={contourBottom}>{determineLoad(4)}</td>
+                <td style={contourBottom}>{determineLoad(5)}</td>
+                <td style={contourBottomRight}>{determineLoad(6)}</td>
             </tr>
         </tbody>
       </table>

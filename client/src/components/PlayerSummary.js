@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./componentsCss/PlayerSummary.css";
 import PlayerSummaryHeader from "./PlayerSummaryComponents/PlayerSummaryHeader";
 import PlayerSummaryOverview from "./PlayerSummaryComponents/PlayerSummaryOverview";
-import TeamSummaryHealth from "./TeamSummaryComponents/TeamSummaryHealth";
+import PlayerSummaryHealth from "./PlayerSummaryComponents/PlayerSummaryHealth";
 
 import TeamSummaryPerformance from "./TeamSummaryComponents/TeamSummaryPerformance";
 import TeamSummaryTest from "./TeamSummaryComponents/TeamSummaryTest";
@@ -51,7 +51,7 @@ const PlayerSummary = (props) => {
             <PlayerSummaryTest player={activePlayer} players={players} />
           </Route>
           <Route path="/dashboard/player-summary/health" exact>
-            <TeamSummaryHealth players={props.players} />
+            <PlayerSummaryHealth player={activePlayer} players={props.players} />
           </Route>
         </Switch>
         <TeamSummaryPerformance players={props.players} />

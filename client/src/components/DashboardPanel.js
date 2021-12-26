@@ -53,7 +53,7 @@ const DashboardPanel = (props) => {
     for (let i = 0; i < 7; i++) {
       const theDay = today.startOf("week").add(i, "d").toDate().getDate();
       totalDays.push(theDay);
-      currentWeekDates.push(today.startOf("week").subtract(weeksBefore,"w").add(i,"d").format("DD/MM/YY"));
+      currentWeekDates.push(moment().startOf("week").subtract(weeksBefore,"w").add(i,"d").format("DD/MM/YY"));
     }
     totalDays.map((value, index) => {
       if (value === moment().toDate().getDate()) {
@@ -69,6 +69,7 @@ const DashboardPanel = (props) => {
   };
   var universalCounter=0;
     let load = []
+    let itemForLoad = 0 
     const determineAverageForEverything = () =>{
      
       totalPlayers.map((value)=>{value.training.map((value2)=>{;if(currentWeekDates.includes(value2.date)) {
@@ -89,14 +90,18 @@ const DashboardPanel = (props) => {
       sleepingProgress=sleepingProgress/universalCounter;
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
-     console.log(currentWeekDates)
+    console.log(currentWeekDates)
      currentWeekDates.map((date,index)=>{
+       
        totalPlayers.map(player=>{
          player.training.map(train=>{
-           if(train.date==date) {load.push(train.rpe1*train.duration1)}
+           if(train.date==date) {itemForLoad+=train.rpe1*train.duration1+train.rpe2*train.duration2;console.log(date)}
          })
-       })
-       if (index >= load.length) load.push(0);
+        
+       }) 
+       if(itemForLoad) {load.push(itemForLoad);console.log("pushed item",)}
+         itemForLoad = 0
+       if (index >= load.length) {load.push(0);console.log("pushed 0")}
      })
     }
     const weekGoBack = () => {
@@ -197,7 +202,7 @@ const initChart =  () =>{
         borderRadius: 0,
       },
       {
-        label: "                                                                                                             ",
+        label: "                                                                                                                                                                                           ",
         maxBarThickness: 0,
         borderRadius: 0,
         borderColor:"#fff",
@@ -247,7 +252,7 @@ const initChart =  () =>{
     const changedPlayers = []
     setFirstEffect(false)
     totalPlayerss.forEach(value=>{
-      if(value.team==e.target.value) {changedPlayers.push(value);console.log("gasit")}
+      if(value.team==e.target.value) {changedPlayers.push(value)}
     })
     //console.log(changedPlayers)
     setTotalPlayers(changedPlayers)
@@ -257,7 +262,7 @@ const initChart =  () =>{
     <div style={{ width: props.sideBarOnOff }} className="dashboard-panel">
       <div className="dashboard-panel-title">
         <label >Dashboard panel</label>
-        <select onClick={changePlayers} className="team-select">
+        <select disabled={user.team!=="Manager"?true:false} defaultValue={user.team!=="Manager"?user.team:""} onClick={changePlayers}className="team-select">
           <option>Team A</option>
           <option>Team B</option>
           <option>Team C</option>

@@ -6,6 +6,9 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoBandageOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft,MdKeyboardArrowRight } from "react-icons/md";
 import defaultImage from "../../assets/sportsman.svg";
+import {BsFillExclamationTriangleFill} from 'react-icons/bs'
+import {GiNightSleep} from 'react-icons/gi'
+import exhausted from '../../assets/exhausted.svg'
 const Monitoring = (props) => {
   var totalPlayers = [];
   props.players.map((value) => {
@@ -52,7 +55,8 @@ const Monitoring = (props) => {
     return startWeek
     }*/
   var universalCounter = 0;
-  let load = [0, 0, 0, 0, 0, 0, 0];
+  let load = []
+  let itemForLoad = 0
   const determineAverageForEverything = () => {
     totalPlayers.map((value) => {
       value.training.map((value2) => {
@@ -75,21 +79,18 @@ const Monitoring = (props) => {
     sleepingProgress = sleepingProgress / universalCounter;
     sleepingProgress = Math.round(sleepingProgress * 10) / 10;
     //determine data for weekly load↓↓↓
-    currentWeekDates.map((value, index) => {
-      playersToDisplay.map((value2) => {
-        value2.training.map((value3) => {
-          if (value3.date == value) {
-            value3.duration1 = parseInt(value3.duration1);
-            value3.duration2 = parseInt(value3.duration2);
-            value3.rpe1 = parseInt(value3.rpe1);
-            value3.rpe2 = parseInt(value3.rpe2);
-            load[index] +=
-              (value3.duration1 + value3.duration2) *
-              (value3.rpe1 + value3.rpe2);
-          }
-        });
-      });
-    });
+    currentWeekDates.map((date,index)=>{
+       
+      playersToDisplay.map(player=>{
+        player.training.map(train=>{
+          if(train.date==date) {itemForLoad+=train.rpe1*train.duration1+train.rpe2*train.duration2;}
+        })
+       
+      }) 
+      if(itemForLoad) {load.push(itemForLoad)}
+        itemForLoad = 0
+      if (index >= load.length) {load.push(0)}
+    })
     const reducer = (accumulator, curr) => accumulator + curr;
     let counter = 0;
     load.map((value) => {
@@ -103,9 +104,15 @@ useEffect(() => {
   averageBars2 = averageBars2/100
   averageBars2 = Math.round(averageBars2)
   averageBars2 = averageBars2 * 100
-  averageBars2 = averageBars2 / 2
   setAverageBars(averageBars2)
 }, [averageBars2,weeksBefore])
+useEffect(()=>{
+  averageBars2 = Math.ceil(averageBars2)
+  averageBars2 = averageBars2/100
+  averageBars2 = Math.round(averageBars2)
+  averageBars2 = averageBars2 * 100
+  setAverageBars(averageBars2)
+},[averageBars2,load])
   const findWeek = () => {
     for (let i = 0; i < 7; i++) {
       const theDay = today.startOf("week").add(i, "d").toDate().getDate();
@@ -210,7 +217,56 @@ useEffect(() => {
   const changeMonitoringTab = () => {
     setActiveTab(!activeTab);
   };
-
+  var startOfWeek = moment().startOf("week").toDate();
+  const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
+  const findSleep = (player) =>{
+    var forReturn = 0
+    var counter = 0
+    player.training.map(value=>{
+      if(currentWeekDates.includes(value.date)) {forReturn+=value.sleep;counter++}
+    })
+    return forReturn/counter||99
+  }
+  const findFatigue = (player) =>{
+    var forReturn = 0
+    var counter = 0
+    player.training.map(value=>{
+      if(currentWeekDates.includes(value.date)) {forReturn+=value.fatigue;counter++}
+    })
+    console.log(forReturn)
+    return forReturn/counter||99
+  }
+  const findACWR = (player) =>{
+    const daysForACWR = [];
+    var loadFor4Weeks = 0;
+    const fourWeekAgo = currentShownWeek;
+    var fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+    for (var i=0;i<28;i++){
+      fourWeekAgoStart = moment(fourWeekAgo).subtract(28,"day");
+      daysForACWR.push(fourWeekAgoStart.add(i,"d").format("DD/MM/YY"))
+    }
+    daysForACWR.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadFor4Weeks+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    const currentWeek = currentShownWeek;
+    var currentWeekStart = moment(currentWeek)
+    var loadForCurrenWeek  = 0
+    const daysForCurrentWeekLoad = []
+    for(var i = 0 ; i<7; i++){
+      currentWeekStart = moment(currentWeek)
+      daysForCurrentWeekLoad.push(currentWeekStart.add(i,"d").format("DD/MM/YY"))
+    }
+    
+    daysForCurrentWeekLoad.map((day=>{
+     if(player) player.training.map((value)=>{
+        if(day===value.date) loadForCurrenWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
+      })
+    }))
+    loadFor4Weeks=loadFor4Weeks/4
+    return((Math.round(loadForCurrenWeek/loadFor4Weeks*100)/100)||0)
+  }
   let chartData = {
     labels: [
       `${/*determineDatePlus(0)*/ "Su"}`,
@@ -317,7 +373,7 @@ const changeTeam = (e) =>{
       {activeTab ? (
         <div className="subtitle-monitoring">
           <div className="select-div">
-              <select onChange={changeTeam} className="coach-team">
+              <select  onChange={changeTeam} disabled={props.userData.team!="Manager"?true:false} defaultValue={props.userData?props.userData.team:""} className="coach-team">
                 <option style={{ color: "black" }}>Team A</option>
                 <option style={{ color: "black" }}>Team B</option>
                 <option style={{ color: "black" }}>Team C</option>
@@ -476,12 +532,24 @@ const changeTeam = (e) =>{
                 <label className="injury">
                   {value.injuries.length > 0 ? (
                     <div>
-                      <IoBandageOutline />
+                      <IoBandageOutline className="player-info-icon" />
                       <label>{value.injuries[0].name}</label>
                     </div>
                   ) : (
                     ""
                   )}
+                  {findACWR(value)>1.5?<div>
+                    <BsFillExclamationTriangleFill className="player-info-icon"/>
+                    <label>ACWR {findACWR(value)}</label>
+                    </div>:"" }
+                    {findSleep(value)<7?<div>
+                    <GiNightSleep className="player-info-icon"/>
+                    <label>{findSleep(value)} hours</label>
+                    </div>:"" }
+                    {findFatigue(value)<3?<div>
+                    <img src={exhausted} className="player-info-icon2"/>
+                    <label>{"Exhausted"} </label>
+                    </div>:"" }
                 </label>
               </div>
             </div>

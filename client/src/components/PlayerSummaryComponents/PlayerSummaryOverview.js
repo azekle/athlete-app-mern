@@ -164,84 +164,93 @@ const PlayerSummaryOverview = (props) => {
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">s</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
             </tr>
@@ -251,93 +260,103 @@ const PlayerSummaryOverview = (props) => {
                 1
               )}.0${showMonth(currentShownWeek, 1) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,1) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                   
                   })
                 : ""}
             </tr>
@@ -347,93 +366,103 @@ const PlayerSummaryOverview = (props) => {
                 2
               )}.0${showMonth(currentShownWeek, 2) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,2) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                    
                   })
                 : ""}
             </tr>
@@ -443,93 +472,103 @@ const PlayerSummaryOverview = (props) => {
                 3
               )}.0${showMonth(currentShownWeek, 3) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,3) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                   
                   })
                 : ""}
             </tr>
@@ -539,93 +578,103 @@ const PlayerSummaryOverview = (props) => {
                 4
               )}.0${showMonth(currentShownWeek, 4) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,4) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                   
                   })
                 : ""}
             </tr>
@@ -635,88 +684,97 @@ const PlayerSummaryOverview = (props) => {
                 5
               )}.0${showMonth(currentShownWeek, 5) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,5) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
@@ -731,93 +789,103 @@ const PlayerSummaryOverview = (props) => {
                 6
               )}.0${showMonth(currentShownWeek, 6) + 1}`}</td>
               {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findACWR()<.8?"inside-blue":findACWR()>.8&&findACWR()<1.3?"inside-green":findACWR()>1.5?"inside-red":"")+ " inside-overview"}>{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findDailyLoad(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findACWR()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findWtoW()>10&&findWtoW()<15?"inside-yellow":findWtoW()>15?"inside-red":"")+ " inside-overview"}>{findWtoW()}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{"ewma"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek,6) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className="inside-overview">{"strain"}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className={(findSleep(val)<7?"inside-red":"")+ " inside-overview"}>{findSleep(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} className="pso-sub2"><div className="inside-overview">{findMood(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td key={val} style={{borderRight:"2px solid #E6E9EE"}} className="pso-sub2"><div className={(findFatigue(val)<2?"inside-red":"")+ " inside-overview"}>{findFatigue(val)}</div></td>;
+                    else if(index==player.training.length-1) {return <td className="pso-sub2"></td>};
                   })
                 : ""}
                 {player
-                ? player.training.map((val) => {
+                ? player.training.map((val,index) => {
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
                     return<td colSpan="3" key={val} className="pso-sub2"><div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div></td>;
+                  
                   })
                 : ""}
             </tr>

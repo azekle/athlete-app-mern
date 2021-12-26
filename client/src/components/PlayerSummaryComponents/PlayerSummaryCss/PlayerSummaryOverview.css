@@ -9,18 +9,24 @@
     
 }
 .pso-sub2{
-    padding: 10px;text-transform:capitalize
+    padding: 5px;text-transform:capitalize
 }
 .pso-header-cell{
     font-size: 1.25em;
     padding:5px
 }
 .inside-overview{
-    background: rgb(221, 221, 221);
+    font-size: 15px;
+    width: 70px;
+    height: 90%;
+    background: rgb(209, 209, 209);
+    padding-top: 5px;
+    color:rgb(87, 87, 87);
+    padding-bottom: 5px;
+    margin:auto;
+    align-self: center;
+    justify-self: center;
     border-radius: 5px;
-    padding: 5px 0;
-    width: 50%;
-    margin-left: 25%;
 }
 .inside-blue{
     background: #95DFFF;

@@ -85,8 +85,11 @@
     height: fit-content;
     height: 10%;
 }
-
+:root {
+    --main-attr-font-size: 12px;
+  }
 .attr-team-overview{
+    font-size: var(--main-attr-font-size);
     width: 40px;
     height: 90%;
     background: rgb(209, 209, 209);
@@ -99,6 +102,7 @@
     border-radius: 5px;
 }
 .attr-team-overview-red{
+    font-size: var(--main-attr-font-size);
     width: 40px;
     height: 90%;
     background: #F3CDD1;
@@ -111,6 +115,7 @@
     border-radius: 5px;
 }
 .attr-team-overview-green{
+    font-size: var(--main-attr-font-size);
     width: 40px;
     height: 90%;
     background: #ECF7E1;
@@ -123,6 +128,7 @@
     border-radius: 5px;
 }
 .attr-team-overview-yellow{
+    font-size: var(--main-attr-font-size);
     width: 40px;
     height: 90%;
     background: #F3E6CA;
@@ -135,6 +141,7 @@
     border-radius: 5px;
 }
 .attr-team-overview-blue{
+    font-size: var(--main-attr-font-size);
     width: 40px;
     height: 90%;
     background: #CEE1F9;
