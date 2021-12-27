@@ -53,6 +53,7 @@ const schema = new mongoose.Schema({
     createdDate: {type: Date, default: Date.now},
     image:{type:String,unique: false,required:true},
     injuries:[injury],
+    soreness:{type:String,unique:false},
     severity:{type:String,required:false,unique:false}
 })
 

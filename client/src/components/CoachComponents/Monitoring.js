@@ -279,7 +279,7 @@ useEffect(()=>{
     ],
     datasets: [
       {
-        label: "Weekly Load",
+        label: "Daily Load",
         backgroundColor: [
           "#1195FF",
           "#1195FF",

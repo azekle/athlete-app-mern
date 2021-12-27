@@ -14,6 +14,7 @@ const AthleteFormActual = (props) => {
   const [dateForForm,setDateForForm] = useState(props.theDayForForm);
   const [sleepForForm,setSleepForForm]= useState(1)
   const [fatigueForForm,setFatigueForForm] = useState(5)
+  const [sorenessForForm,setSorenessForForm] = useState(user.soreness||5)
   const [session1ForForm,setSession1ForForm] = useState("basketball")
   const [duration1ForForm,setDuration1ForForm] = useState(0)
   const [rpe1ForForm,setRpe1ForForm] = useState(10)
@@ -49,6 +50,9 @@ useEffect(()=>{
   }
   const updateFatigue = (e)=>{
     setFatigueForForm(e.target.value)
+  }
+  const updateSoreness = (e)=>{
+    setSorenessForForm(e.target.value)
   }
     const updateSession1 = (e)=>{
       setSession1ForForm(e.target.value)
@@ -95,6 +99,7 @@ useEffect(()=>{
 	  user.injuries = injuryNames;
 	  user.injury = injuryName;
 	  user.severity = severity
+	  user.soreness = sorenessForForm
 	  await requests.put("/user/update",user).then(res=>console.log(res))
       reque={username:user.username,
       details:{
@@ -109,7 +114,8 @@ useEffect(()=>{
               duration2:duration2ForForm,
               rpe2:rpe2ForForm,
               wellness2:wellness2ForForm,
-              }}       
+              }} 
+	 console.log(user)
      return(requests.post("/form/post",reque)
       .then(res => console.log(res)))
       .then(()=>setFormSubmitted(true))
@@ -153,6 +159,7 @@ useEffect(()=>{
     const submitSecondSession = async(e) =>{
       e.preventDefault()
 	  user.injuries = injuryNames;
+	  user.soreness = sorenessForForm
 	  await requests.put("/user/update",user).then(res=>console.log(res))
 	  user.severity = severity
       var indexOfSecondTraining = 0
@@ -249,6 +256,7 @@ useEffect(()=>{
 	const SubmitBothSessions = async (e,reque) =>{
 		e.preventDefault()
 		user.injuries = injuryNames;
+		user.soreness = sorenessForForm
 		console.log("both sessions are going to be submitted")
 		await requests.put("/user/update",user).then(res=>console.log(res))
 		
@@ -298,6 +306,7 @@ useEffect(()=>{
             <div className="separator"></div>
             {!isSecondSession? <div className="form-part">
                 <label className="form-part-title">Wellness</label>
+				
                 <label className="form-part-subtitle">Sleep Time</label>
                 <select onChange={updateSleep} className="form-part-select">
                     <option value="1">1 Hour</option>
@@ -317,13 +326,25 @@ useEffect(()=>{
                     <label className="form-part-subtitle">Fatigue</label>
                     <label className="form-part-subsubtitle">How tired are you?</label>
                 </div>
-                <input className="slider" onChange={updateFatigue} type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
-                <div className="slider-indexes">
+                <input value={fatigueForForm} className="slider" onChange={updateFatigue} type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
+				<div className="slider-indexes">
                   <label className="slider-index">Exhausted</label>
                   <label className="slider-index tired">Tired</label>
                   <label className="slider-index">Normal</label>
                   <label className="slider-index fresh">Fresh</label>
                   <label className="slider-index">Very Fresh</label>
+                </div>
+				<div className="sub-subtitle-field">
+                    <label className="form-part-subtitle">Soreness</label>
+                    <label className="form-part-subsubtitle">Do you have muscle soreness?</label>
+                </div>
+                <input value={sorenessForForm} className="slider" onChange={updateSoreness} type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
+                <div className="slider-indexes">
+                  <label style={{fontSize:"12px",textAlign:"left"}} className="slider-index">Not sore at all</label>
+                  <label style={{fontSize:"12px",textAlign:"center"}}  className="slider-index ">Slighty sore</label>
+                  <label style={{fontSize:"12px",textAlign:"center"}}  className="slider-index">Increase in soreness/tightness</label>
+                  <label style={{fontSize:"12px",textAlign:"center"}}  className="slider-index ">Very sore</label>
+                  <label style={{fontSize:"12px",textAlign:"right"}}  className="slider-index">Extremely sore</label>
                 </div>
             </div>:""}
             <div className="separator"></div>

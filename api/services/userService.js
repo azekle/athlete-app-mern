@@ -68,6 +68,7 @@ async function update(id, userParam) {
     Object.assign(user.training,userParam.training);
     user.measurements = userParam.measurements
     user.injuries=userParam.injuries;
+    user.soreness = userParam.soreness
     user.image = userParam.image
     await user.save();
 }

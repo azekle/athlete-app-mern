@@ -39,7 +39,9 @@ const PlayerSummaryTrainingLoad = (props) => {
   const findDuration1 = (value) =>{
       return(value.duration1)
   }
-  
+  const findLoad = (value)=>{
+    return (value.rpe1*value.duration1+value.rpe2*value.duration2)
+  }
   const findDuration2 = (value) =>{
     return(parseInt(value.duration2)||"")
   }
@@ -630,13 +632,83 @@ const PlayerSummaryTrainingLoad = (props) => {
             </tr>
             <tr>
                 <td className="table-left-atr-bottom">Total Load <br></br><label style={{fontWeight:"700"}}>{findLoadForCurrentWeek()}</label><br/>W-to-W<br></br><label style={{fontWeight:"700"}}>{findWtoW()}</label></td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
-                <td>Nr</td>
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
+                {player
+                ?(emp= true, player.training.map((val) => {
+                    if (
+                      val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
+                      val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
+                    )
+                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    else if(emp&&player.training[player.training.length-1]==val) return <td></td>
+                  }))
+                  
+                : ""}
             </tr>
         </tbody>
       </table>

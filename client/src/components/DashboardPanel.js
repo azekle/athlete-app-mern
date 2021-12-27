@@ -203,7 +203,7 @@ const initChart =  () =>{
         borderRadius: 0,
       },
       {
-        label: "                                                                                                                                                                                           ",
+        label: "                                                                                                                                                                                                                         ",
         maxBarThickness: 0,
         borderRadius: 0,
         borderColor:"#fff",

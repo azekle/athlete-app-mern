@@ -485,6 +485,9 @@ const PlayerTab = (props) => {
   }
    
   };
+  const findBMI = (player) =>{
+    return(Math.round(player.weight/(player.height*player.height/10000)*10)/10)
+  }
   return (
     <div className="option-week-field">
       <div className="option-week">
@@ -676,15 +679,7 @@ const PlayerTab = (props) => {
               </label>
               <label className="athlete-body-measurements-value">
                 {activePlayer
-                  ? activePlayer.measurements[
-                      activePlayer.measurements.length - 1
-                    ].weight /
-                    activePlayer.measurements[
-                      activePlayer.measurements.length - 1
-                    ].height /
-                    activePlayer.measurements[
-                      activePlayer.measurements.length - 1
-                    ].height
+                  ? findBMI(activePlayer.measurements[activePlayer.measurements.length-1]) 
                   : ""}
               </label>
             </div>
