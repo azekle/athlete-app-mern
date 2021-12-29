@@ -221,20 +221,19 @@ useEffect(()=>{
   const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
   const findSleep = (player) =>{
     var forReturn = 0
-    var counter = 0
     player.training.map(value=>{
-      if(currentWeekDates.includes(value.date)) {forReturn+=value.sleep;counter++}
+      if(value.date==moment().format("DD/MM/YY")) {forReturn=value.sleep}
+      else forReturn = undefined
     })
-    return forReturn/counter||99
+    return forReturn
   }
   const findFatigue = (player) =>{
     var forReturn = 0
-    var counter = 0
     player.training.map(value=>{
-      if(currentWeekDates.includes(value.date)) {forReturn+=value.fatigue;counter++}
+      if(value.date==moment().format("DD/MM/YY")) {forReturn=value.fatigue}
+      else forReturn = undefined
     })
-    console.log(forReturn)
-    return forReturn/counter||99
+    return forReturn
   }
   const findACWR = (player) =>{
     const daysForACWR = [];
@@ -264,6 +263,7 @@ useEffect(()=>{
         if(day===value.date) loadForCurrenWeek+=parseInt(value.rpe1)*parseInt(value.duration1)+parseInt(value.rpe2)*parseInt(value.duration2)
       })
     }))
+    
     loadFor4Weeks=loadFor4Weeks/4
     return((Math.round(loadForCurrenWeek/loadFor4Weeks*100)/100)||0)
   }
@@ -516,6 +516,7 @@ const changeTeam = (e) =>{
             <div className="selected-player">
               <div
                 className={
+                  !findSleep(value)?"not-filled selected-player-readiness":
                   value.injuries.length > 0
                     ? "not-ready selected-player-readiness"
                     : "ready selected-player-readiness"
