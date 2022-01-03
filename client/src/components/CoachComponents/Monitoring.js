@@ -219,10 +219,21 @@ useEffect(()=>{
   };
   var startOfWeek = moment().startOf("week").toDate();
   const [currentShownWeek, setCurrentShownWeek] = useState(startOfWeek);
+  const findBadInjury = (player) =>{
+    var severityForReturn = ''
+    var nameForReturn = ''
+    if(player.training[player.training.length-1].injuries[0]) severityForReturn = player.training[player.training.length-1].injuries[0].severity
+    if(player.training[player.training.length-1].injuries[0]) nameForReturn = player.training[player.training.length-1].injuries[0].name
+    player.training[player.training.length-1].injuries.map(value=>{if(value.severity>severityForReturn) {severityForReturn = value.severity; nameForReturn = value.name}})
+    return({
+      name:nameForReturn,
+      severity:severityForReturn
+    })
+  }
   const findSleep = (player) =>{
     var forReturn = 0
     player.training.map(value=>{
-      if(value.date==moment().format("DD/MM/YY")) {forReturn=value.sleep}
+      if(value.date==moment().format("DD/MM/YY")||value.date==moment().subtract(1,'d').format("DD/MM/YY")) {forReturn=value.sleep}
       else forReturn = undefined
     })
     return forReturn
@@ -230,7 +241,7 @@ useEffect(()=>{
   const findFatigue = (player) =>{
     var forReturn = 0
     player.training.map(value=>{
-      if(value.date==moment().format("DD/MM/YY")) {forReturn=value.fatigue}
+      if(value.date==moment().format("DD/MM/YY")||value.date==moment().subtract(1,'d').format("DD/MM/YY")) {forReturn=value.fatigue}
       else forReturn = undefined
     })
     return forReturn
@@ -512,42 +523,40 @@ const changeTeam = (e) =>{
       </div>
       {selectedActive ? (
         <div className="selected-tab">
-          {playersToDisplay.map((value) => (
+          {playersToDisplay.map((player) => (
             <div className="selected-player">
               <div
                 className={
-                  !findSleep(value)?"not-filled selected-player-readiness":
-                  value.injuries.length > 0
+                  !findSleep(player)?"not-filled selected-player-readiness":
+                  findBadInjury(player).severity>5||findSleep(player)<6||findFatigue(player)==5
                     ? "not-ready selected-player-readiness"
                     : "ready selected-player-readiness"
                 }
               ></div>
               <img
-                src={value.image.length > 1 ? value.image : defaultImage}
+                src={player.image.length > 1 ? player.image : defaultImage}
                 className="selected-player-img"
               ></img>
               <div className="injured-player-info">
                 <label className="selected-player-name">
-                  {value.firstName} {value.lastName}
+                  {player.firstName} {player.lastName}
                 </label>
                 <label className="injury">
-                  {value.injuries.length > 0 ? (
+                  {player.training[player.training.length-1].injuries.length>0 && findBadInjury(player).severity>5? (
                     <div>
                       <IoBandageOutline className="player-info-icon" />
-                      <label>{value.injuries[0].name}</label>
+                      <label>{findBadInjury(player).name}</label>
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  {findACWR(value)>1.5?<div>
+                  ) : ("")}
+                  {findACWR(player)>1.5?<div>
                     <BsFillExclamationTriangleFill className="player-info-icon"/>
-                    <label>ACWR {findACWR(value)}</label>
+                    <label>ACWR {findACWR(player)}</label>
                     </div>:"" }
-                    {findSleep(value)<7?<div>
+                    {findSleep(player)<6?<div>
                     <GiNightSleep className="player-info-icon"/>
-                    <label>{findSleep(value)} hours</label>
+                    <label>{findSleep(player)} hours</label>
                     </div>:"" }
-                    {findFatigue(value)<3?<div>
+                    {findFatigue(player)==5?<div>
                     <img src={exhausted} className="player-info-icon2"/>
                     <label>{"Exhausted"} </label>
                     </div>:"" }

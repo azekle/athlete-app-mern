@@ -91,18 +91,17 @@ const DashboardPanel = (props) => {
       sleepingProgress=sleepingProgress/universalCounter;
       sleepingProgress=Math.round(sleepingProgress*10)/10;
       //determine data for weekly load↓↓↓
-    console.log(currentWeekDates)
      currentWeekDates.map((date,index)=>{
        
        totalPlayers.map(player=>{
          player.training.map(train=>{
-           if(train.date==date) {itemForLoad+=train.rpe1*train.duration1+train.rpe2*train.duration2;console.log(date)}
+           if(train.date==date) {itemForLoad+=train.rpe1*train.duration1+train.rpe2*train.duration2;}
          })
         
        }) 
-       if(itemForLoad) {load.push(itemForLoad);console.log("pushed item",)}
+       if(itemForLoad) {load.push(itemForLoad);}
          itemForLoad = 0
-       if (index >= load.length) {load.push(0);console.log("pushed 0")}
+       if (index >= load.length) {load.push(0)}
      })
     }
     const weekGoBack = () => {
@@ -259,6 +258,16 @@ const initChart =  () =>{
     setTotalPlayers(changedPlayers)
     
   }
+  const findBadInjury = (player) =>{
+    console.log(player)
+    if(player.training[player.training.length-1].injuries[0]) var severityForReturn = player.training[player.training.length-1].injuries[0].severity
+    if(player.training[player.training.length-1].injuries[0]) var nameForReturn = player.training[player.training.length-1].injuries[0].name
+    player.training[player.training.length-1].injuries.map(value=>{if(value.severity>severityForReturn) {severityForReturn = value.severity; nameForReturn = value.name}})
+    return({
+      name:nameForReturn,
+      severity:severityForReturn
+    })
+  }
   return (
     <div style={{ width: props.sideBarOnOff }} className="dashboard-panel">
       <div className="dashboard-panel-title">
@@ -340,13 +349,13 @@ const initChart =  () =>{
                   <img src={value.image!=" "?value.image:defaultImag} className="selected-player-img"></img>
                   <div className="injured-player-info">
                       <label className="selected-player-name-desktop">{value.firstName} {value.lastName}</label>
-                      {value.injuries.length>0?
+                      {value.training[value.training.length-1].injuries.length>0?
                       <div>
                         <IoBandageOutline className="player-info-icon" />
-                        <label className="injury-desktop">{value.injuries[0].name}</label>
+                        <label className="injury-desktop">{findBadInjury(value).name}</label>
                       </div>:""}
                     </div>
-                  <div className={value.injuries.length>0 ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>
+                  <div className={value.training[value.training.length-1].injuries.length>0 ? "not-ready selected-player-readiness-desktop" : "ready selected-player-readiness-desktop"}></div>
                 </div></Link>)}
             </div>
     </div>

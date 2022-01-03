@@ -31,11 +31,12 @@ const AthleteFormActual = (props) => {
   const [hasTraining2,setHasTraining2] = useState(false)
   const [injuryName,setInjuryName] = useState("")
   const [counter,setCounter] = useState(0)
-  const [injuryNames,setInjuryNames] = useState(user.injuries)
+  const [injuryNames,setInjuryNames] = useState(user.training[user.training.length-1].injuries)
   const [injuryExist,setInjuryExist] = useState(false)
   const [severity,setSeverity] = useState(user.severity)
   const [showSeverity,setShowSeverity] = useState(false)
   const [front,setFront] = useState(true)
+  const [injuries,setInjuries] = useState()
 {// UPDATE FUNCTIONS ---START---
 }
 useEffect(() => {
@@ -114,6 +115,7 @@ useEffect(()=>{
               duration2:duration2ForForm,
               rpe2:rpe2ForForm,
               wellness2:wellness2ForForm,
+			  injuries:injuryNames
               }} 
 	 console.log(user)
      return(requests.post("/form/post",reque)
@@ -202,6 +204,7 @@ useEffect(()=>{
 		}
 		setInjuryNames(injuryArray)
 		setCounter(counter+1)
+		
 	}
 	const setSeverityForInjury = (e) =>{
 		
@@ -462,26 +465,6 @@ useEffect(()=>{
                 <div className="sub-subtitle-field">
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
-                </div>
-				<div className="slider-indexes-top">
-				  <label style={rpe2ForForm==1.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">1.5</label>
-            
-				  <label style={rpe2ForForm==2.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">2.5</label>
-            
-				  <label style={rpe2ForForm==3.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">3.5</label>
-            
-				  <label style={rpe2ForForm==4.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">4.5</label>
-            
-				  <label style={rpe2ForForm==5.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">5.5</label>
-            
-				  <label style={rpe2ForForm==6.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">6.5</label>
-            
-				  <label style={rpe2ForForm==7.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">7.5</label>
-            
-				  <label style={rpe2ForForm==8.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">8.5</label>
-            
-				  <label style={rpe2ForForm==9.5?{fontWeight:"700",color:"black",fontSize:"1em"}:{opacity:""}} className="slider-index">9.5</label>
-                  
                 </div>
                 <input onChange={updateRpe2} value={rpe2ForForm} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" step=".5" max="10"></input>
                 <div className="slider-indexes">

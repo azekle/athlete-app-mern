@@ -241,7 +241,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -339,7 +339,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -437,7 +437,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -531,11 +531,12 @@ const PlayerSummaryOverview = (props) => {
                 : ""}</td>
                  <td colSpan="3"  className="pso-sub2"> {player
                 ? player.training.map((val,index) => {
+                  console.log(val.injuries.length)
                     if (
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -633,7 +634,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -731,7 +732,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>
@@ -829,7 +830,7 @@ const PlayerSummaryOverview = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    return<div className={player.injuries.length>0? "inside-health-i":"inside-health-h"}>{player.injuries.length>0?"Injured":"Healthy"}</div>
+                    return<div className={val.injuries.length? "inside-health-i":"inside-health-h"}>{val.injuries.length?"Injured":"Healthy"}</div>
                     
                   })
                 : ""}</td>

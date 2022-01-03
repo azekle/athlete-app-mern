@@ -1,7 +1,10 @@
 
 const { Int32 } = require("bson");
 const mongoose = require("mongoose");
-
+const injury = new mongoose.Schema({
+    name:{type:String,required:false,unique:false},
+    severity:{type:String,required:false,unique:false}
+})
 const training = new mongoose.Schema({
      date: {type:String,},
      sleep:{type:String},
@@ -14,6 +17,7 @@ const training = new mongoose.Schema({
      duration2:{type:String},
      rpe2:{type:String},
      wellness2: {type:String},
+     injuries:[injury],
      });
      const measurements = new mongoose.Schema({
         weight:{type:String},
@@ -35,10 +39,7 @@ const tests = new mongoose.Schema({
     season:{type:String},
     nrOfCols:{type:Number}
 })
-const injury = new mongoose.Schema({
-    name:{type:String,required:false,unique:false},
-    severity:{type:String,required:false,unique:false}
-})
+
 const schema = new mongoose.Schema({
     national_id: {type: String, unique: false, required: true},
     is_coach: {type: Boolean, required: true},
@@ -52,7 +53,7 @@ const schema = new mongoose.Schema({
     measurements:[measurements],
     createdDate: {type: Date, default: Date.now},
     image:{type:String,unique: false,required:true},
-    injuries:[injury],
+   
     soreness:{type:String,unique:false},
     severity:{type:String,required:false,unique:false}
 })

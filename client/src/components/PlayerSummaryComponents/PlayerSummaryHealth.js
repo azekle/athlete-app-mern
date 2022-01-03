@@ -1,8 +1,8 @@
 import React, { useState ,useEffect} from 'react'
 import "../TeamSummaryComponents/TeamSummaryCss/TeamSummaryTest.css"
 import "../TeamSummaryComponents/TeamSummaryCss/TeamSummaryHealth.css"
+import moment from 'moment'
 const PlayerSummaryHealth = (props) => {
-    console.log(props.player)
   const [players,setPlayers] = useState([])
   const players2 = []
   useEffect(() => {
@@ -28,9 +28,9 @@ const PlayerSummaryHealth = (props) => {
               {players.map(player=>
               <tr>
                   <td className="table-left-atr ">{player.firstName} {player.lastName}</td>
-                  <td className="table-left-atr ">{player.injuries.length>0?<div className="injury-details">Injured</div>:<div className="injury-details-h"> Healthy</div>}</td>
-                  <td className="table-left-atr ">{player.injuries.map(value=><div className="injury-details">{value.name} </div>)}</td>
-                  <td className="table-left-atr ">{player.injuries.map(value=><div className="injury-details">{value.severity}/10</div>)}</td>
+                  <td className="table-left-atr ">{player.training[player.training.length-1].injuries.length>0?<div className="injury-details">Injured</div>:<div className="injury-details-h"> Healthy</div>}</td>
+                  <td className="table-left-atr ">{player.training[player.training.length-1].injuries.map(value=><div className="injury-details">{value.name}</div>)}</td>
+                  <td className="table-left-atr ">{player.training[player.training.length-1].injuries.map(value=><div className="injury-details">{value.severity}/10</div>)}</td>
               </tr>)}
               
           </tbody>
