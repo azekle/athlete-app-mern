@@ -10,6 +10,7 @@ import {IoMdCalendar} from 'react-icons/io'
 import {AiOutlineUser} from 'react-icons/ai'
 import {FaUsers} from 'react-icons/fa'
 import logo  from '../../assets/logo3.svg'
+import logoCoach from '../../assets/coach.jpg'
 const CoachMobile = (props) => {
   const [monitoringActive, setMonitoringActive] = useState(false);
   const [calendarActive, setCalendarActive] = useState(false);
@@ -40,7 +41,9 @@ const CoachMobile = (props) => {
         <div className="coach-mobile-header">
           <div className="logo-team">
             <div className="left-part-header">
-              <div onClick={goLogOut} className="coach-logo"></div>
+              <div onClick={goLogOut} className="coach-logo">
+                <img style={{height:"130%",borderRadius:"100px"}} src={logoCoach}></img>
+              </div>
               <div className="coach-emek">
                 <label className="emek" >{"Emek Hefer"}</label>
                 <label className="coach-namee">{user.firstName} {user.lastName}</label>
