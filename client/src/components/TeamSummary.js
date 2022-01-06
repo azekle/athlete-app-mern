@@ -10,7 +10,7 @@ import TeamSummaryPerformance from './TeamSummaryComponents/TeamSummaryPerforman
 const TeamSummary = (props) => {
     var players = props.players;
     return (
-        <div  className="team-summary" style={{ width: props.sideBarOnOff }}>
+        <div  className="team-summary-for-test" style={{ width: "100%" }}>
             <BrowserRouter>
             <TeamSummaryHeader user={props.user} players={props.players}/>
             <Switch>

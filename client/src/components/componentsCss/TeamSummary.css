@@ -2,11 +2,23 @@
 .team-summary{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     justify-content: flex-start;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
     height: fit-content;
+    background-color: #F1F3F5;
+}
+
+.team-summary-for-test{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    height: fit-content;
+    background-color: #F1F3F5;
 }
 .field-over:hover{
     background-color: #62b5f8;
