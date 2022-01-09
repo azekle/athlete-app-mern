@@ -9,7 +9,8 @@
     
 }
 .pso-sub2{
-    padding: 5px;text-transform:capitalize
+    padding: 5px;
+    text-transform:capitalize;
 }
 .pso-header-cell{
     font-size: 1.25em;
@@ -56,4 +57,33 @@
     width: 100%;
     border-radius: 5px;
     padding:5% 0
+}
+.load-cell-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.load-cell-bar-red{
+        width: 15px;
+        border-radius: 10px 10px 0 0;
+        background:linear-gradient(90deg, rgb(248, 3, 3) 0%, rgb(235, 124, 114) 100%);
+        justify-self: center;
+        align-self: center;
+    }
+
+.load-cell-bar{
+    width: 15px;
+    border-radius: 10px 10px 0 0;
+   background:linear-gradient(90deg, rgba(17,149,255,1) 0%, rgba(90,181,255,1) 100%);
+    justify-self: center;
+    align-self: center;
+}
+.pso-subb2{
+
+    justify-content: center;
+    align-items: flex-end;
+    height: 120px;
 }

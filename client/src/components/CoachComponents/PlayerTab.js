@@ -3,6 +3,7 @@ import moment from "moment";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import {Link} from 'react-router-dom'
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const PlayerTab = (props) => {
   const [activeTab, setActiveTab] = useState(false);
@@ -11,7 +12,10 @@ const PlayerTab = (props) => {
   var totalPlayers = [];
   let load = [];
   var counter = 0;
-  var totalPlayers2 = []
+  var totalPlayers2 = [];
+  var playerFromMonitoringUsername = window.location.pathname
+  playerFromMonitoringUsername =  playerFromMonitoringUsername.split(":")[1]
+  var playerFromMonitoring
   const [startDay,setStartDay] = useState(moment().startOf("week").format("DD.MM"));
   const [endDay,setEndDay] = useState(moment().endOf("week").format("DD.MM"));
   var daysOfWeek = [];
@@ -244,6 +248,7 @@ const PlayerTab = (props) => {
   let enjoyment2 = 0;
   let sleeping2 = 0;
   const selectPlayer = (e) => {
+    
     setChangedPlayer(true);
     if (e) {
       fatigue2 = 0;
@@ -354,12 +359,67 @@ const PlayerTab = (props) => {
       }
     }
   }
+  totalPlayers.map(player=>{
+    if(player.username==playerFromMonitoringUsername) playerFromMonitoring = player
+  })
   useEffect(() => {
     initChart();
   }, [activeTab]);
   const initFirstPlayer = () => {
-
-    if (!changedPlayer) {
+    if(playerFromMonitoringUsername) { 
+      
+      {
+        counter = 0;
+        if (playerFromMonitoring) {
+          setActivePlayer(playerFromMonitoring);
+          playerFromMonitoring.training.map((train) => {
+            if (daysOfWeek.includes(train.date)) {
+              counter++;
+              fatigue2 = fatigue2 + parseInt(train.fatigue);
+              enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+              sleeping2 = sleeping2 + parseInt(train.sleep);
+            }
+          });
+          setFatigue(fatigue2 / counter);
+          setEnjoyment(enjoyment2 / counter);
+          setSleeping(sleeping2 / counter);
+          if (counter == 0) {
+            setFatigue(0);
+            setEnjoyment(0);
+            setSleeping(0);
+          }
+          counter = 0;
+        }
+        fatigue2 = 0;
+        enjoyment2 = 0;
+        sleeping2 = 0;
+        if (playerFromMonitoring) {
+          playerFromMonitoring.training.map((train) => {
+            if (daysOf4Weeks.includes(train.date)) {
+              counter++;
+              fatigue2 = fatigue2 + parseInt(train.fatigue);
+              enjoyment2 = enjoyment2 + parseInt(train.wellness1);
+              sleeping2 = sleeping2 + parseInt(train.sleep);
+            }
+          });
+  
+          if (counter == 0) {
+            setFatigueAvg(0);
+            setEnjoymentAvg(0);
+            setSleepingAvg(0);
+          } else {
+            setFatigueAvg(fatigue2 / counter);
+            setEnjoymentAvg(enjoyment2 / counter);
+            setSleepingAvg(sleeping2 / counter);
+            fatigue2 = 0;
+            enjoyment2 = 0;
+            sleeping2 = 0;
+          }
+        }
+      }
+      
+    }
+    else if (!changedPlayer) {
       counter = 0;
       if (totalPlayers[0]) {
         setActivePlayer(totalPlayers[0]);
@@ -492,15 +552,16 @@ const PlayerTab = (props) => {
     <div className="option-week-field">
       <div className="option-week">
         <div className="select-div2">
-          <select
+         <Link to="/dashboard/dashboard-panel/playertab:"> <select
             onChange={selectPlayer}
+            defaultValue={playerFromMonitoring?playerFromMonitoring.firstName:""}
             style={{ color: "black" }}
             className="coach-team2"
           >
             {!totalPlayersState? totalPlayers.map((player) => (
               <option style={{ color: "black" }}>{player.firstName}</option>
             )):totalPlayersState.map(player=>(<option style={{ color: "black" }}>{player.firstName}</option>))}
-          </select>
+          </select></Link>
         </div>
         <div className="forward-backward-buts">
           <button onClick={weekGoBack} className="forward-backward-but">

@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import {Link} from 'react-router-dom'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoBandageOutline } from "react-icons/io5";
@@ -524,7 +525,7 @@ const changeTeam = (e) =>{
       {selectedActive ? (
         <div className="selected-tab">
           {playersToDisplay.map((player) => (
-            <div className="selected-player">
+            <Link to={`/dashboard/dashboard-panel/playertab:${player.username}`} query={{ the: 'query' }} style={{textDecoration:"none",color:"black"}}> <div className="selected-player">
               <div
                 className={
                   !findSleep(player)?"not-filled selected-player-readiness":
@@ -563,6 +564,7 @@ const changeTeam = (e) =>{
                 </label>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       ) : (

@@ -331,11 +331,11 @@ useEffect(()=>{
                 </div>
                 <input value={fatigueForForm} className="slider" onChange={updateFatigue} type="range" id="fatigue" name="fatigue" min="1" max="5"></input>
 				<div className="slider-indexes">
-                  <label className="slider-index">Exhausted</label>
-                  <label className="slider-index tired">Tired</label>
-                  <label className="slider-index">Normal</label>
-                  <label className="slider-index fresh">Fresh</label>
                   <label className="slider-index">Very Fresh</label>
+                  <label className="slider-index fresh">Fresh</label>
+                  <label className="slider-index">Normal</label>
+                  <label className="slider-index tired">Tired</label>
+                  <label className="slider-index">Exhausted</label>
                 </div>
 				<div className="sub-subtitle-field">
                     <label className="form-part-subtitle">Soreness</label>
@@ -396,7 +396,7 @@ useEffect(()=>{
                     <label className="form-part-subtitle">RPE</label>
                     <label className="form-part-subsubtitle">How hard was your training?</label>
                 </div>
-                <input onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" max="10"></input>
+                <input onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" step="0.5" max="10"></input>
                 <div className="slider-indexes">
                   <label style={rpe1ForForm==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
                   <label style={rpe1ForForm==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>

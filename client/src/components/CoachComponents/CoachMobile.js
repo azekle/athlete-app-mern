@@ -106,7 +106,7 @@ const CoachMobile = (props) => {
                 setMonitoringActive(false);
                 setPlayerTabActive(true)
               }}
-              to="/dashboard/dashboard-panel/playertab"
+              to="/dashboard/dashboard-panel/playertab:"
               className="coach-mobile-tab"
             >
               <AiOutlineUser className={PlayerTabActive? "tab-active":""}/>
@@ -121,7 +121,7 @@ const CoachMobile = (props) => {
           <Route path="/dashboard/dashboard-panel/calendar">
             <CoachCalendar />
           </Route>
-          <Route path="/dashboard/dashboard-panel/playertab">
+          <Route path="/dashboard/dashboard-panel/playertab:player" >
             <PlayerTab team = {team} players={props.players} />
           </Route>
         </Switch>

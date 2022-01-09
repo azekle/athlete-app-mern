@@ -42,6 +42,9 @@ const PlayerSummaryTrainingLoad = (props) => {
   const findLoad = (value)=>{
     return (value.rpe1*value.duration1+value.rpe2*value.duration2)
   }
+  const findLoadForBar = (value)=>{
+    return ((value.rpe1*value.duration1+value.rpe2*value.duration2)/6)
+  }
   const findDuration2 = (value) =>{
     return(parseInt(value.duration2)||"")
   }
@@ -638,7 +641,13 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 0) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 0) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
+                        
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -649,7 +658,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 1) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 1) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -660,7 +674,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 2) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 2) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -671,7 +690,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 3) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 3) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -682,7 +706,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 4) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 4) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -693,7 +722,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 5) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 5) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
@@ -704,7 +738,12 @@ const PlayerSummaryTrainingLoad = (props) => {
                       val.date.split("/")[0] == showDate(currentShownWeek, 6) &&
                       val.date.split("/")[1] == showMonth(currentShownWeek, 6) + 1
                     )
-                    {emp = false;return <td className="pso-sub2">{findLoad(val)}</td>;}
+                    {emp = false;return <td  className="pso-subb2">
+                      <div className="load-cell-container">
+                        <label>{findLoad(val)}</label>
+                        <div style={{height:findLoadForBar(val)}} className={findLoad(val)<500?"load-cell-bar":"load-cell-bar-red"}></div>
+                      </div>
+                        </td>;}
                     else if(emp&&player.training[player.training.length-1]==val) return <td></td>
                   }))
                   
