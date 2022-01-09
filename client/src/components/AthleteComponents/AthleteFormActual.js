@@ -399,14 +399,23 @@ useEffect(()=>{
                 <input onChange={updateRpe1} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" step="0.5" max="10"></input>
                 <div className="slider-indexes">
                   <label style={rpe1ForForm==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
+				  		<label style={rpe1ForForm==1.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">1.5</label>
                   <label style={rpe1ForForm==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>
+				 		 <label style={rpe1ForForm==2.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">2.5</label>
                   <label style={rpe1ForForm==3?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">3</label>
+				 		 <label style={rpe1ForForm==3.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">3.5</label>
                   <label style={rpe1ForForm==4?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">4</label>
+				 		 <label style={rpe1ForForm==4.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">4.5</label>
                   <label style={rpe1ForForm==5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">5</label>
+				 		 <label style={rpe1ForForm==5.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">5.5</label>
                   <label style={rpe1ForForm==6?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">6</label>
+				 		 <label style={rpe1ForForm==6.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">6.5</label>
                   <label style={rpe1ForForm==7?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">7</label>
+				 		 <label style={rpe1ForForm==7.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">7.5</label>
                   <label style={rpe1ForForm==8?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">8</label>
+				 		 <label style={rpe1ForForm==8.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">8.5</label>
                   <label style={rpe1ForForm==9?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">9</label>
+				 		 <label style={rpe1ForForm==9.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">9.5</label>
                   <label style={rpe1ForForm==10?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">10</label>
                 </div>
                 <div className="sub-subtitle-field">
@@ -469,23 +478,23 @@ useEffect(()=>{
                 <input onChange={updateRpe2} value={rpe2ForForm} className="slider slider2" type="range" id="fatigue" name="fatigue" min="1" step=".5" max="10"></input>
                 <div className="slider-indexes">
 				<label style={rpe2ForForm==1?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">1</label>
-				  
+				  		<label style={rpe2ForForm==1.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">1.5</label>
                   <label style={rpe2ForForm==2?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">2</label>
-				  
+				 		 <label style={rpe2ForForm==2.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">2.5</label>
                   <label style={rpe2ForForm==3?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">3</label>
-				  
+				 		 <label style={rpe2ForForm==3.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">3.5</label>
                   <label style={rpe2ForForm==4?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">4</label>
-				  
+				 		 <label style={rpe2ForForm==4.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">4.5</label>
                   <label style={rpe2ForForm==5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">5</label>
-				  
+				 		 <label style={rpe2ForForm==5.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">5.5</label>
                   <label style={rpe2ForForm==6?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">6</label>
-				  
+				 		 <label style={rpe2ForForm==6.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">6.5</label>
                   <label style={rpe2ForForm==7?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">7</label>
-				  
+				 		 <label style={rpe2ForForm==7.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">7.5</label>
                   <label style={rpe2ForForm==8?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">8</label>
-				  
+				 		 <label style={rpe2ForForm==8.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">8.5</label>
                   <label style={rpe2ForForm==9?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">9</label>
-				  
+				 		 <label style={rpe2ForForm==9.5?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{opacity:0}} className="slider-index">9.5</label>
                   <label style={rpe2ForForm==10?{fontWeight:"700",color:"black",fontSize:"1.2em"}:{}} className="slider-index">10</label>
                 </div>
                 <div className="sub-subtitle-field">
